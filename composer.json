@@ -1,0 +1,44 @@
+{
+    "name": "lil-nabz/laravel-kyanda",
+    "type": "library",
+    "keywords": ["Library", "Kyanda", "Payments", "Utilities", "Payment Collections"],
+    "description": "Kyanda API library",
+    "license": "MIT",
+    "require": {
+        "php": "^7.4|^8.0",
+        "illuminate/support": "^8.64"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lil-Nabz\\kyanda\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lil-Nabz\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "src\\KyandaServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "authors": [
+        {
+            "name": "Dr H",
+            "email": "jmnabangi@gmail.com"
+        },
+        {
+            "name": "Lil Nabz",
+            "email": "nabcellent.dev@gmail.com"
+        }
+    ]
+}
