@@ -1,31 +1,41 @@
 {
-    "name": "lil-nabz/laravel-kyanda",
+    "name": "nabcellent/laravel-kyanda",
     "type": "library",
     "keywords": ["Library", "Kyanda", "Payments", "Utilities", "Payment Collections"],
     "description": "Kyanda API library",
     "license": "MIT",
     "require": {
         "php": "^7.4|^8.0",
+        "guzzlehttp/guzzle": "^7.3",
         "illuminate/support": "^8.64"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.21",
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
-            "Lil-Nabz\\kyanda\\": "src"
+            "Nabcellent\\Src\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Lil-Nabz\\Tests\\": "tests"
+            "Nabcellent\\Tests\\": "tests"
         }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
+        "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
+        "post-autoload-dump": [
+            "@php ./vendor/bin/testbench package:discover --ansi"
+        ]
     },
     "extra": {
         "laravel": {
             "providers": [
-                "src\\KyandaServiceProvider"
-            ],
-            "aliases": {
-
-            }
+                "Nabcellent\\Src\\KyandaServiceProvider"
+            ]
         }
     },
     "config": {
@@ -34,11 +44,13 @@
     "authors": [
         {
             "name": "Dr H",
-            "email": "jmnabangi@gmail.com"
+            "email": "jmnabangi@gmail.com",
+            "role": "Developer"
         },
         {
             "name": "Lil Nabz",
-            "email": "nabcellent.dev@gmail.com"
+            "email": "nabcellent.dev@gmail.com",
+            "role": "Developer"
         }
     ]
 }
