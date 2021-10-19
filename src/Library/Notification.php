@@ -10,6 +10,4 @@ class Notification extends Core
 {
 //    TODO: callback registration
 //    Add callback registration function/process here
-
-
 }

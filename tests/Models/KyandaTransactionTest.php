@@ -41,7 +41,6 @@ class KyandaTransactionTest extends TestCase
         $this->assertEquals(['biller_receiptNo' => '0105781244210'], $request->details);
         $this->assertEquals(1500, $request->amount);
         $this->assertEquals(Carbon::createFromFormat('Ymdhis', '20210401091002'), $request->transaction_date);
-
     }
 
     /** @test */
@@ -78,6 +77,5 @@ class KyandaTransactionTest extends TestCase
         } catch (QueryException $e) {
             $this->assertStringContainsString("UNIQUE constraint failed", $e->getMessage());
         }
-
     }
 }

@@ -48,6 +48,5 @@ class KyandaRequestTest extends TestCase
         } catch (QueryException $e) {
             $this->assertStringContainsString("UNIQUE constraint failed", $e->getMessage());
         }
-
     }
 }
