@@ -55,8 +55,8 @@ class Controller extends BaseController
      */
     public function airtimePurchase(Request $request): array {
         $validation = Validator::make($request->all(), [
-            'phone_number' => 'required|int',
-            'amount' => 'required|number'
+            'phone_number' => 'required|integer',
+            'amount' => 'required|numeric'
         ]);
 
         if($validation->fails()) throw new KyandaException($validation->errors()->first());
