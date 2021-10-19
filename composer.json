@@ -1,57 +1,64 @@
 {
-    "name": "nabcellent/laravel-kyanda",
-    "type": "library",
-    "keywords": ["Library", "Kyanda", "Payments", "Utilities", "Payment Collections"],
-    "description": "Kyanda API library",
-    "license": "MIT",
-    "require": {
-        "php": "^7.4|^8.0",
-        "guzzlehttp/guzzle": "^7.3",
-        "illuminate/support": "^8.64"
+  "name": "nabcellent/laravel-kyanda",
+  "type": "library",
+  "keywords": [
+    "Library",
+    "Kyanda",
+    "Payments",
+    "Utilities",
+    "Payment Collections"
+  ],
+  "description": "Kyanda API library",
+  "license": "MIT",
+  "require": {
+    "php": "^7.4|^8.0",
+    "guzzlehttp/guzzle": "^7.3",
+    "illuminate/support": "^8.64",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^6.21",
+    "phpunit/phpunit": "^9.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Nabcellent\\Kyanda\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Nabcellent\\Kyanda\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "phpunit",
+    "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
+    "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
+    "post-autoload-dump": [
+      "@php ./vendor/bin/testbench package:discover --ansi"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Nabcellent\\Kyanda\\KyandaServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "authors": [
+    {
+      "name": "Dr H",
+      "email": "jmnabangi@gmail.com",
+      "role": "Developer"
     },
-    "require-dev": {
-        "orchestra/testbench": "^6.21",
-        "phpunit/phpunit": "^9.5"
-    },
-    "autoload": {
-        "psr-4": {
-            "Nabcellent\\Kyanda\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Nabcellent\\Kyanda\\Tests\\": "tests"
-        }
-    },
-    "scripts": {
-        "test": "phpunit",
-        "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
-        "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
-        "post-autoload-dump": [
-            "@php ./vendor/bin/testbench package:discover --ansi"
-        ]
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Nabcellent\\Kyanda\\KyandaServiceProvider"
-            ]
-        }
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "authors": [
-        {
-            "name": "Dr H",
-            "email": "jmnabangi@gmail.com",
-            "role": "Developer"
-        },
-        {
-            "name": "Lil Nabz",
-            "email": "nabcellent.dev@gmail.com",
-            "role": "Developer"
-        }
-    ],
-    "prefer-stable": true
+    {
+      "name": "Lil Nabz",
+      "email": "nabcellent.dev@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "prefer-stable": true
 }

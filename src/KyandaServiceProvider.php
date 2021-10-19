@@ -15,11 +15,7 @@ class KyandaServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        try {
-            $this->mergeConfigFrom(__DIR__ . '/../config/kyanda.php', 'kyanda');
-        } catch (\TypeError $e) {
-            error_log("Could not load config");
-        }
+        $this->mergeConfigFrom(__DIR__ . '/../config/kyanda.php', 'kyanda');
 
 //        TODO: Change this to bind for a stateless sort of lib
         $this->app->singleton(Core::class, function ($app) {
