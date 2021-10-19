@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         bootstrap="vendor/autoload.php"
         backupGlobals="false"
         backupStaticAttributes="false"
@@ -18,11 +17,8 @@
         </include>
     </coverage>
     <testsuites>
-        <testsuite name="Unit">
-            <directory suffix=".php">./tests/Unit</directory>
-        </testsuite>
-        <testsuite name="Feature">
-            <directory suffix=".php">./tests/Feature</directory>
+        <testsuite name="Kyanda Test Suite">
+            <directory suffix=".php">./tests</directory>
         </testsuite>
     </testsuites>
     <php>

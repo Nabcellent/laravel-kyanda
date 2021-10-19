@@ -35,12 +35,23 @@ class KyandaServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadRoutesFrom(__DIR__ . '/Http/routes.php');
-        $this->loadMigrationsFrom(__DIR__ . '/Database/Migrations');
         $this->publishes([
             __DIR__ . '/../config/kyanda.php' => config_path('kyanda.php'),
         ], 'config');
 
+        $this->registerMigrations();
+
         $this->registerCommands();
+    }
+
+    /**
+     * Register the package's migrations.
+     *
+     * @return void
+     */
+    protected function registerMigrations()
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
     }
 
     /**
