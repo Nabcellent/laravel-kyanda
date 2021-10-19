@@ -15,12 +15,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Nabcellent\\Src\\": "src"
+            "Nabcellent\\Kyanda\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Nabcellent\\Tests\\": "tests"
+            "Nabcellent\\Kyanda\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -34,7 +34,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Nabcellent\\Src\\KyandaServiceProvider"
+                "Nabcellent\\Kyanda\\KyandaServiceProvider"
             ]
         }
     },
@@ -52,5 +52,6 @@
             "email": "nabcellent.dev@gmail.com",
             "role": "Developer"
         }
-    ]
+    ],
+    "prefer-stable": true
 }

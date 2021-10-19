@@ -1,11 +1,10 @@
 <?php
 
-namespace Nabcellent\Src;
+namespace Nabcellent\Kyanda;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
-use Nabcellent\Src\Console\InstallCommand;
-use Nabcellent\Src\Library\Core;
+use Nabcellent\Kyanda\Library\Core;
 
 class KyandaServiceProvider extends ServiceProvider
 {
@@ -16,12 +15,16 @@ class KyandaServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $core = new Core(new Client(['http_errors' => false]));
-        $this->app->bind(Core::class, function () use ($core) {
-            return $core;
-        });
+        try {
+            $this->mergeConfigFrom(__DIR__ . '/../config/kyanda.php', 'kyanda');
+        } catch (\TypeError $e) {
+            error_log("Could not load config");
+        }
 
-        $this->mergeConfigFrom(__DIR__ . '/../config/kyanda.php', 'kyanda');
+//        TODO: Change this to bind for a stateless sort of lib
+        $this->app->singleton(Core::class, function ($app) {
+            return new Core(new Client(['http_errors' => false]));
+        });
     }
 
     /**
@@ -33,7 +36,9 @@ class KyandaServiceProvider extends ServiceProvider
     {
         $this->loadRoutesFrom(__DIR__ . '/Http/routes.php');
         $this->loadMigrationsFrom(__DIR__ . '/Database/Migrations');
-        $this->publishes([__DIR__ . '/../config/kyanda.php' => config_path('kyanda.php'),]);
+        $this->publishes([
+            __DIR__ . '/../config/kyanda.php' => config_path('kyanda.php'),
+        ], 'config');
 
         $this->registerCommands();
     }
@@ -47,7 +52,7 @@ class KyandaServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                InstallCommand::class,
+                Console\InstallCommand::class,
             ]);
         }
     }

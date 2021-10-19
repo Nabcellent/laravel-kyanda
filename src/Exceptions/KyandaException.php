@@ -1,6 +1,6 @@
 <?php
 
-namespace Nabcellent\src\Exceptions;
+namespace Nabcellent\Kyanda\Exceptions;
 
 use Exception;
 

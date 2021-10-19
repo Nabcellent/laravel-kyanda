@@ -1,14 +1,15 @@
 <?php
 
-namespace Nabcellent\Tests;
+namespace Nabcellent\Kyanda\Tests;
 
-use Nabcellent\src\KyandaServiceProvider;
+use Nabcellent\Kyanda\KyandaServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 /**
  * Class TestCase
  * @package Nabcellent\Tests
  */
-class TestCase extends \Orchestra\Testbench\TestCase
+class TestCase extends Orchestra
 {
     public function setUp(): void
     {

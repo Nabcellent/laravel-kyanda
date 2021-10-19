@@ -1,21 +1,23 @@
 <?php
 
-namespace Nabcellent\Src\Library;
+namespace Nabcellent\Kyanda\Library;
 
 use GuzzleHttp\ClientInterface;
 
 /**
  * Class Core
  *
- * @package Nabcellent\Src\Library
+ * @package Nabcellent\Kyanda\Library
  */
-class Core {
+class Core
+{
     /**
      * @var ClientInterface
      */
     public ClientInterface $client;
 
-    public function __construct(ClientInterface $client) {
+    public function __construct(ClientInterface $client)
+    {
         $this->client = $client;
     }
 }
