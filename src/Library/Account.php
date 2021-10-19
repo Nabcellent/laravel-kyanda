@@ -10,6 +10,8 @@ use Nabcellent\Kyanda\Exceptions\KyandaException;
  */
 class Account extends Core
 {
+    protected bool $attachMerchantStart = true;
+
 //    TODO: account balance
 //    Add Account balance function/process here
     /**

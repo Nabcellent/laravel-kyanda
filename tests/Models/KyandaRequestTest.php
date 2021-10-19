@@ -21,7 +21,6 @@ class KyandaRequestTest extends TestCase
             'message' => 'Your request has been posted successfully!'
         ]);
 
-
         $this->assertEquals(0000, $request->status_code);
         $this->assertEquals('Success', $request->status);
         $this->assertEquals('KYAAPI677833', $request->merchant_reference);
