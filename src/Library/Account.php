@@ -28,7 +28,7 @@ class Account extends Core
     /**
      * @throws KyandaException
      */
-    function transaction_status(string $reference): array
+    function transactionStatus(string $reference): array
     {
         $body = [
             "transactionRef" => $reference,
