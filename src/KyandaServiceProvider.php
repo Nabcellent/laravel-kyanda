@@ -15,11 +15,7 @@ class KyandaServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        try {
-            $this->mergeConfigFrom(__DIR__ . '/../config/kyanda.php', 'kyanda');
-        } catch (\TypeError $e) {
-            error_log("Could not load config");
-        }
+        $this->mergeConfigFrom(__DIR__ . '/../config/kyanda.php', 'kyanda');
 
 //        TODO: Change this to bind for a stateless sort of lib
         $this->app->singleton(Core::class, function ($app) {
@@ -35,12 +31,23 @@ class KyandaServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadRoutesFrom(__DIR__ . '/Http/routes.php');
-        $this->loadMigrationsFrom(__DIR__ . '/Database/Migrations');
         $this->publishes([
             __DIR__ . '/../config/kyanda.php' => config_path('kyanda.php'),
         ], 'config');
 
+        $this->registerMigrations();
+
         $this->registerCommands();
+    }
+
+    /**
+     * Register the package's migrations.
+     *
+     * @return void
+     */
+    protected function registerMigrations()
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
     }
 
     /**
