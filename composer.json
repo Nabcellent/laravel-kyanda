@@ -5,7 +5,9 @@
     "Library",
     "Kyanda",
     "Payments",
-    "Utilities",
+    "Bank",
+    "mobile Money",
+    "Utility Payments",
     "Payment Collections"
   ],
   "description": "Kyanda API library",
@@ -14,7 +16,8 @@
     "php": "^7.4|^8.0",
     "guzzlehttp/guzzle": "^7.3",
     "illuminate/support": "^8.64",
-    "ext-json": "*"
+    "ext-json": "*",
+    "ext-openssl": "*"
   },
   "require-dev": {
     "orchestra/testbench": "^6.21",

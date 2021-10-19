@@ -28,12 +28,20 @@ class Core
     /**
      * @throws KyandaException
      */
-    function sendRequest($endpoint, $body): ResponseInterface
+    function sendRequest(string $endpoint, array $body): ResponseInterface
     {
         $apiKey = \config('kyanda.api_key', false);
         if (!$apiKey) {
             throw new KyandaException("No API key specified.");
         }
+        $merchantId = \config('kyanda.merchant_id', false);
+        if (!$merchantId) {
+            throw new KyandaException("No Merchant ID specified.");
+        }
+
+//        Added these to reduce redundancy in child classes
+        $body = ['merchantID' => $merchantId] + $body;
+        $body += ['signature' => $this->buildSignature($body)];
 
         return $this->client->request(
             'POST',
@@ -51,7 +59,7 @@ class Core
     /**
      * @throws KyandaException
      */
-    public function makeRequest($body, $endpoint)
+    public function request(string $endpoint, array $body)
     {
         $endpoint = Endpoints::build($endpoint);
         try {
@@ -64,6 +72,13 @@ class Core
         } catch (ClientException $exception) {
             throw $this->generateException($exception);
         }
+    }
+
+    function buildSignature(array $items): bool|string
+    {
+        $signatureString = implode($items);
+
+        return hash_hmac('sha256', $signatureString, config('kyanda.api_key'));
     }
 
     /**
