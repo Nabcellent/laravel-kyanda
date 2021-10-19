@@ -78,7 +78,9 @@ class Core
     {
         $signatureString = implode($items);
 
-        return hash_hmac('sha256', $signatureString, config('kyanda.api_key'));
+        $secretKey = config('kyanda.api_key');
+
+        return hash_hmac('sha256', $signatureString, $secretKey);
     }
 
     /**
@@ -89,5 +91,4 @@ class Core
     {
         return new KyandaException($exception->getResponse()->getBody());
     }
-
 }

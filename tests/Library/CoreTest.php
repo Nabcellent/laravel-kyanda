@@ -49,8 +49,8 @@ class CoreTest extends TestCase
     /** @test */
     function send_request_successfully()
     {
-        Config::set('kyanda.api_key', '***REMOVED***');
-        Config::set('kyanda.merchant_id', '***REMOVED***');
+        Config::set('kyanda.api_key', 'somethinggoeshere');
+        Config::set('kyanda.merchant_id', 'somethinggoeshere');
 
         $req = Core::sendRequest('https://google.com', []);
 
