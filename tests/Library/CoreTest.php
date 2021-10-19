@@ -6,12 +6,9 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Config;
 use Nabcellent\Kyanda\Exceptions\KyandaException;
-
 use Nabcellent\Kyanda\Facades\Core;
 use Nabcellent\Kyanda\Library\Endpoints;
 use Nabcellent\Kyanda\Tests\TestCase;
-use function PHPUnit\Framework\assertInstanceOf;
-use function PHPUnit\Framework\assertStringContainsString;
 
 class CoreTest extends TestCase
 {
@@ -23,7 +20,18 @@ class CoreTest extends TestCase
 
         Config::set('kyanda.api_key', null);
 
-        Core::sendRequest('', '');
+        Core::sendRequest('', []);
+    }
+
+    /** @test */
+    function send_request_throws_exception_with_no_merchant_id_set()
+    {
+        $this->expectException(KyandaException::class);
+
+        Config::set('kyanda.api_key', "null");
+        Config::set('kyanda.merchant_id', null);
+
+        Core::sendRequest('', []);
     }
 
     /** @test */
@@ -32,16 +40,19 @@ class CoreTest extends TestCase
         $this->expectException(RequestException::class);
 
         Config::set('kyanda.api_key', 'somethinggoeshere');
+        Config::set('kyanda.merchant_id', 'somethinggoeshere');
 
-        Core::sendRequest('', '');
+
+        Core::sendRequest('', []);
     }
 
     /** @test */
     function send_request_successfully()
     {
-        Config::set('kyanda.api_key', 'somethinggoeshere');
+        Config::set('kyanda.api_key', '04c83876101c48a4b083bf01812c2349');
+        Config::set('kyanda.merchant_id', 'sidooh');
 
-        $req = Core::sendRequest('https://google.com', '');
+        $req = Core::sendRequest('https://google.com', []);
 
         $this->assertInstanceOf(Response::class, $req);
     }
