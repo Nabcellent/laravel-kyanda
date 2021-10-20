@@ -2,6 +2,7 @@
 
 namespace Nabcellent\Kyanda\Library;
 
+use Nabcellent\Kyanda\Events\KyandaRequestEvent;
 use Nabcellent\Kyanda\Exceptions\KyandaException;
 use Nabcellent\Kyanda\Models\KyandaRequest;
 
@@ -83,7 +84,7 @@ class Utility extends Core
             ]);
 
 //            TODO: Should we make multiple event types? i.e. KyandaAirtimeRequestEvent, KyandaBillRequestEvent ...
-//            event(new KyandaRequestEvent($request));
+            event(new KyandaRequestEvent($request));
             return $request;
         }
 

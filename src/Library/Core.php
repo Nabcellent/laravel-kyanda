@@ -16,25 +16,24 @@ use Psr\Http\Message\ResponseInterface;
 class Core
 {
 
-    /**
-     * @var bool
-     * Determine whether merchant id will be attached at the start or end
-     */
-    protected bool $attachMerchantStart;
+    public function __construct(
+        /**
+         * @var ClientInterface
+         */
+        private ClientInterface $client,
 
-    /**
-     * @var ClientInterface
-     */
-    public ClientInterface $client;
-
-    public function __construct(ClientInterface $client)
+        /**
+         * @var bool
+         * Determine whether merchant id will be attached at the start or end
+         */
+        protected bool          $attachMerchantStart = false
+    )
     {
-        $this->client = $client;
-        $this->attachMerchantStart = false;
     }
 
 
 //    TODO: This should be private but figure out testing
+
     /**
      * @throws KyandaException|\GuzzleHttp\Exception\GuzzleException
      */
@@ -95,6 +94,7 @@ class Core
     }
 
     //    TODO: This should be protected at least but figure out testing
+
     /**
      * @throws KyandaException
      */
