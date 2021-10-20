@@ -4,10 +4,10 @@ namespace Nabcellent\Kyanda\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Core extends Facade
+class Account extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \Nabcellent\Kyanda\Library\Core::class;
+        return \Nabcellent\Kyanda\Library\Account::class;
     }
 }

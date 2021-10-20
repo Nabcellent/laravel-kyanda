@@ -19,7 +19,7 @@ class CoreTest extends TestCase
     {
         $this->expectException(KyandaException::class);
 
-        Config::set('kyanda.api_key', null);
+        Config::set('kyanda.api_key');
 
         Core::sendRequest('', []);
     }
@@ -30,7 +30,7 @@ class CoreTest extends TestCase
         $this->expectException(KyandaException::class);
 
         Config::set('kyanda.api_key', "null");
-        Config::set('kyanda.merchant_id', null);
+        Config::set('kyanda.merchant_id');
 
         Core::sendRequest('', []);
     }
@@ -53,7 +53,7 @@ class CoreTest extends TestCase
         Config::set('kyanda.api_key', 'somethinggoeshere');
         Config::set('kyanda.merchant_id', 'somethinggoeshere');
 
-        $req = Core::sendRequest('http://github.com', []);
+        $req = Core::sendRequest('https://github.com', []);
 
         $this->assertInstanceOf(Response::class, $req);
     }

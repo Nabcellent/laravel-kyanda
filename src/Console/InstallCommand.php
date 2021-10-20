@@ -53,5 +53,4 @@ class InstallCommand extends Command
     {
         return $this->confirm('Config file already exists. Do you want to overwrite it?', false);
     }
-
 }

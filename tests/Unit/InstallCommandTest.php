@@ -37,7 +37,7 @@ class InstallCommandTest extends TestCase
         $command = $this->artisan('kyanda:install');
 
         // We expect a warning that our configuration file exists
-        $command->expectsConfirmation('Config file already exists. Do you want to overwrite it?', 'no');
+        $command->expectsConfirmation('Config file already exists. Do you want to overwrite it?');
 
         // When answered with "no", We should see a message that our file was not overwritten
         $command->expectsOutput('Existing configuration was not overwritten');

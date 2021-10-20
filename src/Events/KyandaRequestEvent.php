@@ -9,14 +9,15 @@ use Nabcellent\Kyanda\Models\KyandaRequest;
 
 class KyandaRequestEvent
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     /**
      * @param KyandaRequest $request
      */
     public function __construct(
-        public KyandaRequest $request
-    )
-    {
+    public KyandaRequest $request
+    ) {
     }
 }

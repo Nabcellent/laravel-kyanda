@@ -9,15 +9,16 @@ use Nabcellent\Kyanda\Models\KyandaTransaction;
 
 class KyandaTransactionFailedEvent
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
 //    TODO: Change this when error returned is confirmed
     /**
      * @param KyandaTransaction $transaction
      */
     public function __construct(
-        public KyandaTransaction $transaction
-    )
-    {
+    public KyandaTransaction $transaction
+    ) {
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Nabcellent\Kyanda\Library;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Nabcellent\Kyanda\Events\KyandaRequestEvent;
 use Nabcellent\Kyanda\Exceptions\KyandaException;
 use Nabcellent\Kyanda\Models\KyandaRequest;
@@ -15,9 +16,13 @@ class Utility extends Core
 //    TODO: airtime purchase
 //    Add airtime purchase function/process here
     /**
+     * @param int $phone
+     * @param int $amount
+     * @return KyandaRequest
+     * @throws GuzzleException
      * @throws KyandaException
      */
-    public function airtimePurchase(int $phone, int $amount): array
+    public function airtimePurchase(int $phone, int $amount): KyandaRequest
     {
         $telco = $this->getTelcoFromPhone($phone);
         $phone = $this->formatPhoneNumber($phone);
@@ -39,9 +44,14 @@ class Utility extends Core
 //    TODO: bill payment
 //    Add bill payment function/process here
     /**
+     * @param int $accountNumber
+     * @param int $amount
+     * @param string $provider
+     * @return KyandaRequest
      * @throws KyandaException
+     * @throws GuzzleException
      */
-    public function billPayment(int $accountNumber, int $amount, Providers $provider)
+    public function billPayment(int $accountNumber, int $amount, string $provider): KyandaRequest
     {
 //        TODO: Should we allow initiator phone as fn parameter?
 
@@ -57,12 +67,12 @@ class Utility extends Core
         }
 
 //        TODO: Confirm whether initiator phone is necessary
-            $body = [
-                'account' => $accountNumber,
-                'amount' => $amount,
-                'telco' => $provider,
+        $body = [
+            'account' => $accountNumber,
+            'amount' => $amount,
+            'telco' => $provider,
 //            'initiatorPhone' => $phone,
-            ];
+        ];
 
         $response = (array)$this->request('bill', $body);
 
@@ -72,8 +82,9 @@ class Utility extends Core
 
     /**
      * @throws KyandaException
+     * @noinspection PhpUndefinedMethodInspection
      */
-    private function saveRequest(array $response)
+    private function saveRequest(array $response): KyandaRequest
     {
         if ($response['status_code'] == 0000) {
             $request = KyandaRequest::create([

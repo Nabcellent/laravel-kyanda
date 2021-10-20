@@ -9,14 +9,15 @@ use Nabcellent\Kyanda\Models\KyandaTransaction;
 
 class KyandaTransactionSuccessEvent
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     /**
      * @param KyandaTransaction $transaction
      */
     public function __construct(
-        public KyandaTransaction $transaction
-    )
-    {
+    public KyandaTransaction $transaction
+    ) {
     }
 }

@@ -35,7 +35,7 @@ class Endpoints
      * @return string
      * @throws KyandaException
      */
-    private static function getUrl($suffix): string
+    private static function getUrl(string $suffix): string
     {
         $baseEndpoint = config('kyanda.urls.base', false);
 
@@ -49,7 +49,7 @@ class Endpoints
     /**
      * @throws KyandaException
      */
-    public static function build($endpoint)
+    public static function build($endpoint): string
     {
         return self::getEndpoint($endpoint);
     }

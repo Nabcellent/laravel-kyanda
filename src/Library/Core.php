@@ -4,9 +4,13 @@ namespace Nabcellent\Kyanda\Library;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Str;
 use Nabcellent\Kyanda\Exceptions\KyandaException;
 use Psr\Http\Message\ResponseInterface;
+use function config;
+use function json_decode;
+use function strlen;
 
 /**
  * Class Core
@@ -35,15 +39,15 @@ class Core
 //    TODO: This should be private but figure out testing
 
     /**
-     * @throws KyandaException|\GuzzleHttp\Exception\GuzzleException
+     * @throws KyandaException|GuzzleException
      */
     public function sendRequest(string $endpoint, array $body): ResponseInterface
     {
-        $apiKey = \config('kyanda.api_key', false);
+        $apiKey = config('kyanda.api_key', false);
         if (!$apiKey) {
             throw new KyandaException("No API key specified.");
         }
-        $merchantId = \config('kyanda.merchant_id', false);
+        $merchantId = config('kyanda.merchant_id', false);
         if (!$merchantId) {
             throw new KyandaException("No Merchant ID specified.");
         }
@@ -67,14 +71,14 @@ class Core
     }
 
     /**
-     * @throws KyandaException
+     * @throws KyandaException|GuzzleException
      */
     public function request(string $endpoint, array $body)
     {
         $endpoint = Endpoints::build($endpoint);
         try {
             $response = $this->sendRequest($endpoint, $body);
-            $_body = \json_decode($response->getBody());
+            $_body = json_decode($response->getBody());
             if ($response->getStatusCode() !== 200) {
                 throw new KyandaException($_body->errorMessage ? $_body->errorCode . ' - ' . $_body->errorMessage : $response->getBody());
             }
@@ -98,7 +102,7 @@ class Core
     /**
      * @throws KyandaException
      */
-    public function getTelcoFromPhone(int $phone)
+    public function getTelcoFromPhone(int $phone): string
     {
         $safReg = '/^(?:254|\+254|0)?((?:7(?:[0129][0-9]|4[0123568]|5[789]|6[89])|(1([1][0-5])))[0-9]{6})$/';
         $airReg = '/^(?:254|\+254|0)?((?:(7(?:(3[0-9])|(5[0-6])|(6[27])|(8[0-9])))|(1([0][0-6])))[0-9]{6})$/';
@@ -128,7 +132,7 @@ class Core
         $replace = static function ($needle, $replacement) use (&$number) {
             if (Str::startsWith($number, $needle)) {
                 $pos = strpos($number, $needle);
-                $length = \strlen($needle);
+                $length = strlen($needle);
                 $number = substr_replace($number, $replacement, $pos, $length);
             }
         };
