@@ -2,7 +2,6 @@
 
 namespace Nabcellent\Kyanda\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -11,11 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use Nabcellent\Kyanda\Exceptions\KyandaException;
 use Nabcellent\Kyanda\Library\Account;
 use Nabcellent\Kyanda\Library\Notification;
-use Nabcellent\Kyanda\Library\Providers;
 use Nabcellent\Kyanda\Library\Utility;
 use Nabcellent\Kyanda\Models\KyandaTransaction;
 
@@ -47,6 +44,7 @@ class Controller extends BaseController
 
         return $this->account->transactionStatus($request->input('reference'));
     }
+
 
 
     /**
@@ -98,6 +96,7 @@ class Controller extends BaseController
             Log::info('Error updating instant payment notification.');
         }
     }
+
 
 
     /**
