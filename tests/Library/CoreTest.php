@@ -53,7 +53,7 @@ class CoreTest extends TestCase
         Config::set('kyanda.api_key', 'somethinggoeshere');
         Config::set('kyanda.merchant_id', 'somethinggoeshere');
 
-        $req = Core::sendRequest('http://127.0.0.1', []);
+        $req = Core::sendRequest('http://github.com', []);
 
         $this->assertInstanceOf(Response::class, $req);
     }
@@ -101,4 +101,7 @@ class CoreTest extends TestCase
         Core::getTelcoFromPhone(108000000);
 
     }
+
+//    TODO: Add tests for formatting phone number : formatPhoneNumber
+
 }

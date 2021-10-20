@@ -5,8 +5,7 @@ namespace Nabcellent\Kyanda\Library;
 use Nabcellent\Kyanda\Exceptions\KyandaException;
 
 /**
- * Class Utility
- *
+ * Class Notification
  * @package Nabcellent\Kyanda\Library
  */
 class Notification extends Core
