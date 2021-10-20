@@ -6,6 +6,7 @@ on:
     branches:
       - main
       - dev-dr
+      - red.dev
   pull_request:
     branches:
       - main
