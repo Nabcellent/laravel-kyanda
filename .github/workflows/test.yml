@@ -1,6 +1,6 @@
 # GithHub Actions Workflow generated with Ghygen
 # Original configuration: https://ghygen.hi-folks.dev?code=5d00c8cd16aa52502e1a8b0308bf3ff1
-name: CI test
+name: TestCI
 on:
   push:
     branches:
