@@ -34,10 +34,11 @@ class Core
     }
 
 
+//    TODO: This should be private but figure out testing
     /**
-     * @throws KyandaException
+     * @throws KyandaException|\GuzzleHttp\Exception\GuzzleException
      */
-    private function sendRequest(string $endpoint, array $body): ResponseInterface
+    public function sendRequest(string $endpoint, array $body): ResponseInterface
     {
         $apiKey = \config('kyanda.api_key', false);
         if (!$apiKey) {
@@ -93,14 +94,15 @@ class Core
         return hash_hmac('sha256', $signatureString, $secretKey);
     }
 
+    //    TODO: This should be protected at least but figure out testing
     /**
      * @throws KyandaException
      */
-    protected function getTelcoFromPhone(int $phone)
+    public function getTelcoFromPhone(int $phone)
     {
 
 //        Is / necessary? Is /gm necessary?
-        $safReg = '/^(?:254|\+254|0)?((?:(?:7(?:(?:[0129][0-9])|(?:4[0123568])|(?:5[789])|(?:6[89])))|(?:1(?:[1][0-5])))[0-9]{6})$/';
+        $safReg = '/^(?:254|\+254|0)?((?:7(?:(?:[0129][0-9])|(?:4[0123568])|(?:5[789])|(?:6[89]))|(?:1(?:[1][0-5])))[0-9]{6})$/';
         $airReg = '/^(?:254|\+254|0)?((?:(?:7(?:(?:3[0-9])|(?:5[0-6])|(?:6[27])|(8[0-9])))|(?:1(?:[0][0-6])))[0-9]{6})$/';
         $telReg = '/^(?:254|\+254|0)?(?:(?:7(?:7[0-9]))[0-9]{6})$/';
         $equReg = '/^(?:254|\+254|0)?(?:(?:7(?:6[3-6]))[0-9]{6})$/';
