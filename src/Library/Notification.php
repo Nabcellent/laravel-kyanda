@@ -5,8 +5,7 @@ namespace Nabcellent\Kyanda\Library;
 use Nabcellent\Kyanda\Exceptions\KyandaException;
 
 /**
- * Class Utility
- *
+ * Class Notification
  * @package Nabcellent\Kyanda\Library
  */
 class Notification extends Core
@@ -16,11 +15,13 @@ class Notification extends Core
     /**
      * @throws KyandaException
      */
-    function registerCallbackURL(string $url = null): array
+    public function registerCallbackURL(string $url = null): array
     {
         $url = $url ?? config('kyanda.urls.callback');
 
-        if(!$url) throw new KyandaException("No callback url provided.");
+        if (!$url) {
+            throw new KyandaException("No callback url provided.");
+        }
 
         $body["callbackURL"] = $url;
 

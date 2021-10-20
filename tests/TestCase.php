@@ -9,7 +9,7 @@ use Orchestra\Testbench\TestCase as Orchestra;
  * Class TestCase
  * @package Nabcellent\Tests
  */
-class TestCase extends Orchestra
+abstract class TestCase extends Orchestra
 {
     public function setUp(): void
     {
