@@ -16,7 +16,7 @@ class Utility extends Core
     /**
      * @throws KyandaException
      */
-    function airtime_purchase(int $phone, int $amount): array
+    function airtimePurchase(int $phone, int $amount): array
     {
         $telco = $this->getTelcoFromPhone($phone);
         $phone = $this->formatPhoneNumber($phone);

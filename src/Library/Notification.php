@@ -19,7 +19,9 @@ class Notification extends Core
     {
         $url = $url ?? config('kyanda.urls.callback');
 
-        if(!$url) throw new KyandaException("No callback url provided.");
+        if (!$url) {
+            throw new KyandaException("No callback url provided.");
+        }
 
         $body["callbackURL"] = $url;
 

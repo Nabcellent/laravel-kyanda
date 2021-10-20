@@ -88,7 +88,6 @@ class CoreTest extends TestCase
 
             $this->assertEquals($value, $no);
         }
-
     }
 
 
@@ -99,9 +98,7 @@ class CoreTest extends TestCase
 
 //            Core::getTelcoFromPhone(12839);
         Core::getTelcoFromPhone(108000000);
-
     }
 
 //    TODO: Add tests for formatting phone number : formatPhoneNumber
-
 }
