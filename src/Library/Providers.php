@@ -2,7 +2,7 @@
 
 namespace Nabcellent\Kyanda\Library;
 
-class Channels
+class Providers
 {
     public const SAFARICOM = "SAFARICOM";
     public const AIRTEL = "AIRTEL";

@@ -1,7 +1,5 @@
 # Kyanda Api
 
-<hr>
-
 [![GitHub CI Workflow Status](https://github.com/Nabcellent/laravel-kyanda/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/Nabcellent/laravel-kyanda/actions/workflows/test.yml)
 
 Coming Soon
@@ -44,6 +42,3 @@ If you discover any security related issues, please email [nabcellent.dev@gmail.
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-
-[![CI test](https://github.com/Nabcellent/laravel-kyanda/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/Nabcellent/laravel-kyanda/actions/workflows/test.yml)
