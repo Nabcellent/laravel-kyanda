@@ -6,6 +6,9 @@ use Nabcellent\Kyanda\Exceptions\KyandaException;
 
 class Endpoints
 {
+//    TODO: Can we use constants for better value checks? Endpoints::AccountBalance?
+
+//    TODO: Refactor to use match if possible
     /**
      * @throws KyandaException
      */
@@ -30,6 +33,7 @@ class Endpoints
     /**
      * @param string $suffix
      * @return string
+     * @throws KyandaException
      */
     private static function getUrl($suffix): string
     {

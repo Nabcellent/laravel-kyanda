@@ -100,20 +100,18 @@ class Core
      */
     public function getTelcoFromPhone(int $phone)
     {
-
-//        Is / necessary? Is /gm necessary?
-        $safReg = '/^(?:254|\+254|0)?((?:7(?:(?:[0129][0-9])|(?:4[0123568])|(?:5[789])|(?:6[89]))|(?:1(?:[1][0-5])))[0-9]{6})$/';
-        $airReg = '/^(?:254|\+254|0)?((?:(?:7(?:(?:3[0-9])|(?:5[0-6])|(?:6[27])|(8[0-9])))|(?:1(?:[0][0-6])))[0-9]{6})$/';
-        $telReg = '/^(?:254|\+254|0)?(?:(?:7(?:7[0-9]))[0-9]{6})$/';
-        $equReg = '/^(?:254|\+254|0)?(?:(?:7(?:6[3-6]))[0-9]{6})$/';
-        $faibaReg = '/^(?:254|\+254|0)?(?:(?:747)[0-9]{6})$/';
+        $safReg = '/^(?:254|\+254|0)?((?:7(?:[0129][0-9]|4[0123568]|5[789]|6[89])|(1([1][0-5])))[0-9]{6})$/';
+        $airReg = '/^(?:254|\+254|0)?((?:(7(?:(3[0-9])|(5[0-6])|(6[27])|(8[0-9])))|(1([0][0-6])))[0-9]{6})$/';
+        $telReg = '/^(?:254|\+254|0)?(7(7[0-9])[0-9]{6})$/';
+        $equReg = '/^(?:254|\+254|0)?(7(6[3-6])[0-9]{6})$/';
+        $faibaReg = '/^(?:254|\+254|0)?(747[0-9]{6})$/';
 
         $result = match (1) {
-            preg_match($safReg, $phone) => Channels::SAFARICOM,
-            preg_match($airReg, $phone) => Channels::AIRTEL,
-            preg_match($telReg, $phone) => Channels::TELKOM,
-            preg_match($equReg, $phone) => Channels::EQUITEL,
-            preg_match($faibaReg, $phone) => Channels::FAIBA,
+            preg_match($safReg, $phone) => Providers::SAFARICOM,
+            preg_match($airReg, $phone) => Providers::AIRTEL,
+            preg_match($telReg, $phone) => Providers::TELKOM,
+            preg_match($equReg, $phone) => Providers::EQUITEL,
+            preg_match($faibaReg, $phone) => Providers::FAIBA,
             default => null
         };
 
