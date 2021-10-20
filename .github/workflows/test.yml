@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
-        php-versions: [ '8.0','7.4' ]
+        php-versions: [ '8.0' ]
         dependency-stability: [ 'prefer-none' ]
 
     name: P${{ matrix.php-versions }} - L${{ matrix.laravel }} - ${{ matrix.dependency-stability }} - ${{ matrix.operating-system}}
@@ -72,10 +72,10 @@ jobs:
       run: vendor/bin/phpunit --testdox
 
 
-    - name: Execute Code Sniffer via phpcs
-      run: |
-        composer require --dev squizlabs/php_codesniffer
-        vendor/bin/phpcs --standard=PSR12 src
+#     - name: Execute Code Sniffer via phpcs
+#       run: |
+#         composer require --dev squizlabs/php_codesniffer
+#         vendor/bin/phpcs --standard=PSR12 src
 
     - name: Execute Code Static Analysis (PHP Stan)
       run: |
