@@ -4,12 +4,12 @@ name: CI test
 on:
   push:
     branches:
-      - main
+      - master
       - dev-dr
       - red.dev
   pull_request:
     branches:
-      - main
+      - master
   workflow_dispatch:
 
 jobs:
