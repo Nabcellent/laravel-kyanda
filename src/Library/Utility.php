@@ -63,9 +63,9 @@ class Utility extends Core
 //            'initiatorPhone' => $phone,
             ];
 
-        $response = (array)$this->request('bill', $body);
+            $response = (array)$this->request('bill', $body);
 
-        return $this->saveRequest($response);
+            return $this->saveRequest($response);
     }
 
 

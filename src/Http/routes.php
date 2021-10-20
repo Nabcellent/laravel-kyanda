@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Nabcellent\Kyanda\Http\Controllers\Controller;
 
-Route::prefix('/kyanda/billing')->namespace(Controller::class)->name('kyanda.')->group(function() {
+Route::prefix('/kyanda/billing')->namespace(Controller::class)->name('kyanda.')->group(function () {
     Route::get('balance', [Controller::class, 'accountBalance'])->name('account.balance');
     Route::post('transaction-status', [Controller::class, 'transactionStatus'])->name('transaction.status');
 

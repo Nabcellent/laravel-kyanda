@@ -18,14 +18,16 @@ use Nabcellent\Kyanda\Models\KyandaTransaction;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
 
     private Account $account;
     private Notification $notification;
     private Utility $utility;
 
     /**
-     * ---------------------------------------------------------------------------------------------------------    ACCOUNT
+     * -----------------------------------------------------------------------------------------------    ACCOUNT
      */
     /**
      * @throws KyandaException
@@ -40,7 +42,9 @@ class Controller extends BaseController
      */
     public function transactionStatus(Request $request): array
     {
-        if(!$request->has('reference')) throw new KyandaException("Transaction reference is missing.");
+        if (!$request->has('reference')) {
+            throw new KyandaException("Transaction reference is missing.");
+        }
 
         return $this->account->transactionStatus($request->input('reference'));
     }
@@ -48,11 +52,12 @@ class Controller extends BaseController
 
 
     /**
-     * ---------------------------------------------------------------------------------------------------------    UTILITY
+     * -----------------------------------------------------------------------------------------------    UTILITY
      *
      * @throws KyandaException
      */
-    public function airtimePurchase(Request $request): array {
+    public function airtimePurchase(Request $request): array
+    {
         $this->validateRequest([
             'phone_number' => 'required|integer',
             'amount' => 'required|numeric'
@@ -64,7 +69,8 @@ class Controller extends BaseController
     /**
      * @throws KyandaException
      */
-    public function billPayment(Request $request) {
+    public function billPayment(Request $request)
+    {
         $this->validateRequest([
             'account_number' => 'required|integer',
             'amount' => 'required|integer',
@@ -80,18 +86,19 @@ class Controller extends BaseController
 
 
     /**
-     * ---------------------------------------------------------------------------------------------------------    NOTIFICATION
+     * -----------------------------------------------------------------------------------------------    NOTIFICATION
      *
      * @throws KyandaException
      */
-    public function registerCallbackURL(Request $request): array {
+    public function registerCallbackURL(Request $request): array
+    {
         return $this->notification->registerCallbackURL($request->input('callback_url'));
     }
 
-    public function instantPaymentNotification(Request $request) {
+    public function instantPaymentNotification(Request $request)
+    {
         try {
             KyandaTransaction::updateOrCreate($request->only('transactionRef'), $request->all());
-
         } catch (QueryException $e) {
             Log::info('Error updating instant payment notification.');
         }
@@ -102,9 +109,12 @@ class Controller extends BaseController
     /**
      * @throws KyandaException
      */
-    public function validateRequest(array $rules, Request $request) {
+    public function validateRequest(array $rules, Request $request)
+    {
         $validation = Validator::make($request->all(), $rules);
 
-        if($validation->fails()) throw new KyandaException($validation->errors()->first());
+        if ($validation->fails()) {
+            throw new KyandaException($validation->errors()->first());
+        }
     }
 }
