@@ -1,4 +1,4 @@
-name: Style test
+name: StyleCI
 on:
   push:
     branches:
