@@ -77,7 +77,7 @@ jobs:
 #         composer require --dev squizlabs/php_codesniffer
 #         vendor/bin/phpcs --standard=PSR12 src
 
-    - name: Execute Code Static Analysis (PHP Stan)
-      run: |
-        composer require --dev phpstan/phpstan
-        vendor/bin/phpstan analyse src --level=4 --no-progress
+#     - name: Execute Code Static Analysis (PHP Stan)
+#       run: |
+#         composer require --dev phpstan/phpstan
+#         vendor/bin/phpstan analyse src --level=4 --no-progress
