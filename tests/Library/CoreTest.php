@@ -7,7 +7,7 @@ use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Config;
 use Nabcellent\Kyanda\Exceptions\KyandaException;
 use Nabcellent\Kyanda\Facades\Core;
-use Nabcellent\Kyanda\Library\Channels;
+use Nabcellent\Kyanda\Library\Providers;
 use Nabcellent\Kyanda\Library\Endpoints;
 use Nabcellent\Kyanda\Tests\TestCase;
 
@@ -72,15 +72,15 @@ class CoreTest extends TestCase
     function gets_correct_telco_channels_from_phone()
     {
         $testArr = [
-            700000000 => Channels::SAFARICOM,
-            748000000 => Channels::SAFARICOM,
-            110000000 => Channels::SAFARICOM,
-            730000000 => Channels::AIRTEL,
-            762000000 => Channels::AIRTEL,
-            106000000 => Channels::AIRTEL,
-            779000000 => Channels::TELKOM,
-            764000000 => Channels::EQUITEL,
-            747000000 => Channels::FAIBA,
+            700000000 => Providers::SAFARICOM,
+            748000000 => Providers::SAFARICOM,
+            110000000 => Providers::SAFARICOM,
+            730000000 => Providers::AIRTEL,
+            762000000 => Providers::AIRTEL,
+            106000000 => Providers::AIRTEL,
+            779000000 => Providers::TELKOM,
+            764000000 => Providers::EQUITEL,
+            747000000 => Providers::FAIBA,
         ];
 
         foreach ($testArr as $key => $value) {

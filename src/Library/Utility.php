@@ -30,17 +30,43 @@ class Utility extends Core
             'initiatorPhone' => $phone,
         ];
 
-        $response = (array)$this->request('transaction_status', $body);
+        $response = (array)$this->request('airtime', $body);
 
         return $this->saveRequest($response);
     }
 
 //    TODO: bill payment
 //    Add bill payment function/process here
+    /**
+     * @throws KyandaException
+     */
+    public function billPayment(int $accountNumber, int $amount, Providers $provider)
+    {
+//        TODO: Should we allow initiator phone as fn parameter?
 
+//        TODO: Refactor this to testable function
+        $allowedProviders = [
+            Providers::KPLC_PREPAID, Providers::KPLC_POSTPAID,
+            Providers::GOTV, Providers::DSTV, Providers::ZUKU, Providers::STARTIMES,
+            Providers::NAIROBI_WTR
+        ];
 
+        if (!in_array($provider, $allowedProviders)) {
+            throw new KyandaException("Provider does not seem to be valid or supported");
+        }
 
-// END Bill payment
+//        TODO: Confirm whether initiator phone is necessary
+            $body = [
+                'account' => $accountNumber,
+                'amount' => $amount,
+                'telco' => $provider,
+//            'initiatorPhone' => $phone,
+            ];
+
+        $response = (array)$this->request('bill', $body);
+
+        return $this->saveRequest($response);
+    }
 
 
     /**
