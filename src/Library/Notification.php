@@ -15,7 +15,7 @@ class Notification extends Core
     /**
      * @throws KyandaException
      */
-    function registerCallbackURL(string $url = null): array
+    public function registerCallbackURL(string $url = null): array
     {
         $url = $url ?? config('kyanda.urls.callback');
 

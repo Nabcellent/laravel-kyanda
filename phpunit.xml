@@ -19,6 +19,7 @@
     <testsuites>
         <testsuite name="Kyanda Test Suite">
             <directory suffix=".php">./tests</directory>
+            <exclude>./tests/Unit/InstallCommandTest.php</exclude>
         </testsuite>
     </testsuites>
     <php>
