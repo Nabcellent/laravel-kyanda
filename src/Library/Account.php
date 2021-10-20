@@ -17,7 +17,7 @@ class Account extends Core
     /**
      * @throws KyandaException
      */
-    function balance(): array
+    public function balance(): array
     {
         return (array) $this->request('account_balance', []);
     }
@@ -28,7 +28,7 @@ class Account extends Core
     /**
      * @throws KyandaException
      */
-    function transactionStatus(string $reference): array
+    public function transactionStatus(string $reference): array
     {
         $body = [
             "transactionRef" => $reference,
