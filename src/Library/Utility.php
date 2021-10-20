@@ -40,7 +40,7 @@ class Utility extends Core
     /**
      * @throws KyandaException
      */
-    public function billPayment(int $accountNumber, int $amount, Providers $provider)
+    public function billPayment(int $accountNumber, int $amount, string $provider)
     {
 //        TODO: Should we allow initiator phone as fn parameter?
 
@@ -51,7 +51,7 @@ class Utility extends Core
             Providers::NAIROBI_WTR
         ];
 
-        if (!in_array($provider, $allowedProviders)) {
+        if (!in_array(strtoupper($provider), $allowedProviders)) {
             throw new KyandaException("Provider does not seem to be valid or supported");
         }
 

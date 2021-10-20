@@ -11,9 +11,11 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Nabcellent\Kyanda\Exceptions\KyandaException;
 use Nabcellent\Kyanda\Library\Account;
 use Nabcellent\Kyanda\Library\Notification;
+use Nabcellent\Kyanda\Library\Providers;
 use Nabcellent\Kyanda\Library\Utility;
 use Nabcellent\Kyanda\Models\KyandaTransaction;
 
@@ -53,14 +55,29 @@ class Controller extends BaseController
      * @throws KyandaException
      */
     public function airtimePurchase(Request $request): array {
-        $validation = Validator::make($request->all(), [
+        $this->validateRequest([
             'phone_number' => 'required|integer',
             'amount' => 'required|numeric'
-        ]);
-
-        if($validation->fails()) throw new KyandaException($validation->errors()->first());
+        ], $request);
 
         return $this->utility->airtimePurchase($request->input('phone_number'), $request->input('amount'));
+    }
+
+    /**
+     * @throws KyandaException
+     */
+    public function billPayment(Request $request) {
+        $this->validateRequest([
+            'account_number' => 'required|integer',
+            'amount' => 'required|integer',
+            'service_provider' => 'required|string',
+        ], $request);
+
+        return $this->utility->billPayment(
+            $request->input('accountNumber'),
+            $request->input('amount'),
+            $request->input('provider')
+        );
     }
 
 
@@ -80,5 +97,15 @@ class Controller extends BaseController
         } catch (QueryException $e) {
             Log::info('Error updating instant payment notification.');
         }
+    }
+
+
+    /**
+     * @throws KyandaException
+     */
+    public function validateRequest(array $rules, Request $request) {
+        $validation = Validator::make($request->all(), $rules);
+
+        if($validation->fails()) throw new KyandaException($validation->errors()->first());
     }
 }

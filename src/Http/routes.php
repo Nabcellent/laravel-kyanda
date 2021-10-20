@@ -10,7 +10,7 @@ Route::group(['prefix' => 'kyanda/billing/', 'namespace' => Controller::class], 
 //    Route::any('bank-payout/create', '$routes');
 //    Route::any('checkout/create', '$routes');
     Route::post('airtime/create', [Controller::class, 'airtimePurchase']);
-//    Route::any('bill/create', '$routes');
+    Route::post('bill/create', [Controller::class, 'billPayment']);
     Route::post('callback-url/create', [Controller::class, 'registerCallbackURL']);
 
     Route::post('/kyanda/callbacks/notification', [Controller::class, 'instantPaymentNotification']);
