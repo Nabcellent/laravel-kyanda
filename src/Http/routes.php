@@ -12,4 +12,6 @@ Route::group(['prefix' => 'kyanda/billing/', 'namespace' => Controller::class], 
     Route::post('airtime/create', [Controller::class, 'airtimePurchase']);
 //    Route::any('bill/create', '$routes');
     Route::post('callback-url/create', [Controller::class, 'registerCallbackURL']);
+
+    Route::post('/kyanda/callbacks/notification', [Controller::class, 'instantPaymentNotification']);
 });

@@ -21,14 +21,9 @@ class Controller extends BaseController
     private Notification $notification;
     private Utility $utility;
 
-    public function __construct()
-    {
-
-    }
-
     /**
      * ---------------------------------------------------------------------------------------------------------    ACCOUNT
-    */
+     */
     /**
      * @throws KyandaException
      */
