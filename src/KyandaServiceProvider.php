@@ -33,7 +33,7 @@ class KyandaServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/Http/routes.php');
         $this->publishes([
             __DIR__ . '/../config/kyanda.php' => config_path('kyanda.php'),
-        ], 'config');
+        ], 'kyanda-config');
 
         $this->registerMigrations();
 
