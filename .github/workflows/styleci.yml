@@ -63,7 +63,7 @@ jobs:
       run: php --version
 
 # Code quality
-    - name: Execute style tests via PHPcs
+#     - name: Execute style tests via PHPcs
 # # Set environment
 #       env:
 #         SESSION_DRIVER: array
