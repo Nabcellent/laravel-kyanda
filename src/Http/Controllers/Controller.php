@@ -58,30 +58,20 @@ class Controller extends BaseController
      */
     public function airtimePurchase(Request $request): array
     {
+        $validation = Validator::make($request->all(), [
+    public function airtimePurchase(Request $request): array
+    {
         $this->validateRequest([
             'phone_number' => 'required|integer',
             'amount' => 'required|numeric'
+        ]);
+
+        if ($validation->fails()) {
+            throw new KyandaException($validation->errors()->first());
+        }
         ], $request);
 
         return $this->utility->airtimePurchase($request->input('phone_number'), $request->input('amount'));
-    }
-
-    /**
-     * @throws KyandaException
-     */
-    public function billPayment(Request $request)
-    {
-        $this->validateRequest([
-            'account_number' => 'required|integer',
-            'amount' => 'required|integer',
-            'service_provider' => 'required|string',
-        ], $request);
-
-        return $this->utility->billPayment(
-            $request->input('accountNumber'),
-            $request->input('amount'),
-            $request->input('provider')
-        );
     }
 
 
