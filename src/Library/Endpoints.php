@@ -8,7 +8,7 @@ class Endpoints
 {
 //    TODO: Can we use constants for better value checks? Endpoints::AccountBalance?
 
-    private const list = [
+    private const URL_LIST = [
         'account_balance' => '/billing/v1/account-balance',
         'transaction_status' => '/billing/v1/transaction-check',
         'send_mobile' => '/billing/v1/mobile-payout/create',
@@ -27,8 +27,8 @@ class Endpoints
      */
     private static function getEndpoint(string $section): string
     {
-        if (isset(self::list[$section])) {
-            return self::getUrl(self::list[$section]);
+        if (isset(self::URL_LIST[$section])) {
+            return self::getUrl(self::URL_LIST[$section]);
         }
 
         throw new KyandaException('Unknown endpoint');
