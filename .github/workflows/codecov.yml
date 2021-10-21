@@ -1,13 +1,11 @@
-name: StyleCI
+name: Coverage
+
 on:
   push:
     branches:
       - master
       - dev-dr
       - red.dev
-#   pull_request:
-#     branches:
-#       - master
   workflow_dispatch:
 
 jobs:
@@ -62,10 +60,10 @@ jobs:
     - name: PHP Version
       run: php --version
 
-# Code quality
+# Code coverage
 
-    - name: Execute Code Sniffer via phpcs
-      run: |
-        composer require --dev squizlabs/php_codesniffer
-        vendor/bin/phpcbf --standard=PSR12 src || vendor/bin/phpcbf --standard=PSR12 src
-        vendor/bin/phpcs --standard=PSR12 src
+    - name: Generate coverage report
+      run: vendor/bin/phpunit --coverage-clover coverage.xml
+        
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v2
