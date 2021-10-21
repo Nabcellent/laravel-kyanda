@@ -3,10 +3,10 @@
 [![GitHub TestCI Workflow](https://github.com/Nabcellent/laravel-kyanda/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/Nabcellent/laravel-kyanda/actions/workflows/test.yml)
 [![Github StyleCI Workflow](https://github.com/Nabcellent/laravel-kyanda/actions/workflows/styleci.yml/badge.svg?branch=master)](https://github.com/Nabcellent/laravel-kyanda/actions/workflows/styleci.yml)
 
-This is a <i>Laravel 8</i> package that interfaces with [Kyanda Payment API](https://kyanda.co.ke/).
+This is a <i>Laravel 8</i> package that interfaces with [Kyanda](https://kyanda.co.ke/) Payments Api.
 The API enables you to initiate mobile payments, disburse payments to mobile and bank, purchase airtime & bundles* and to pay for utility bills.
 
-Check out their [documentation](https://kyanda.co.ke/developer/index.html).
+Check out their [api documentation](https://kyanda.co.ke/developer/index.html).
 
 ## Documentation
 
