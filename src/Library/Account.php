@@ -15,7 +15,9 @@ class Account extends Core
 //    TODO: account balance
 //    Add Account balance function/process here
     /**
+     * @return array
      * @throws KyandaException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function balance(): array
     {
@@ -26,7 +28,10 @@ class Account extends Core
 //    TODO: transaction status
 //    Add transaction check function/process here
     /**
+     * @param string $reference
+     * @return array
      * @throws KyandaException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function transactionStatus(string $reference): array
     {
