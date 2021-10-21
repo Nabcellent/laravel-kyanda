@@ -16,8 +16,8 @@ use function strlen;
  *
  * @package Nabcellent\Kyanda\Library
  */
-class Core
-{
+class Core {
+
 
     public function __construct(
         /**
