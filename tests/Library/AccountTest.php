@@ -2,34 +2,36 @@
 
 namespace Nabcellent\Kyanda\Tests\Library;
 
-use Illuminate\Support\Facades\Config;
-use Nabcellent\Kyanda\Facades\Account;
-use Nabcellent\Kyanda\Tests\TestCase;
+use GuzzleHttp\Psr7\Response;
+use Nabcellent\Kyanda\Tests\MockServerTestCase;
 
 //    TODO: Should we mock the api for these type of tests? CAN we mock?
-class AccountTest extends TestCase
+class AccountTest extends MockServerTestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-        // additional setup
-        Config::set('kyanda.api_key', 'somethinggoeshere');
-        Config::set('kyanda.merchant_id', 'somethinggoeshere');
-    }
 
     /** @test */
     function balance()
     {
-        $bal = Account::balance();
+        $this->mock->append(
+            new Response(200, ['Content_type' => 'application/json'],
+                json_encode($this->mockResponses['balance'])));
+
+        $bal = (new \Nabcellent\Kyanda\Library\Account($this->_client))->balance();
 
         $this->assertIsArray($bal);
+        $this->assertEquals(399930, $bal['Account_Bal']);
     }
 
     /** @test */
-    function trasnsaction_status()
+    function transaction_status()
     {
-        $status = Account::transactionStatus("KYAAPI___");
+        $this->mock->append(
+            new Response(200, ['Content_type' => 'application/json'],
+                json_encode($this->mockResponses['transaction_status'])));
+
+        $status = (new \Nabcellent\Kyanda\Library\Account($this->_client))->transactionStatus("KYAAPI___");
 
         $this->assertIsArray($status);
+        $this->assertEquals(200, $status['status']);
     }
 }

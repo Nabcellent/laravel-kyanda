@@ -7,7 +7,7 @@ use GuzzleHttp\ClientInterface;
 /**
  * Class BaseClient
  *
- * @package Nabcellent\Kyanda\Library
+ * @package Nabcellent\Kyanda\Library\
  */
 class BaseClient
 {
