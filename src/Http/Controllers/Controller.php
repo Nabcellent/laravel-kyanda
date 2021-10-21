@@ -2,6 +2,7 @@
 
 namespace Nabcellent\Kyanda\Http\Controllers;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -14,6 +15,7 @@ use Nabcellent\Kyanda\Exceptions\KyandaException;
 use Nabcellent\Kyanda\Library\Account;
 use Nabcellent\Kyanda\Library\Notification;
 use Nabcellent\Kyanda\Library\Utility;
+use Nabcellent\Kyanda\Models\KyandaRequest;
 use Nabcellent\Kyanda\Models\KyandaTransaction;
 
 class Controller extends BaseController
@@ -28,9 +30,7 @@ class Controller extends BaseController
 
     /**
      * -----------------------------------------------------------------------------------------------    ACCOUNT
-     */
-    /**
-     * @throws KyandaException
+     * @throws KyandaException|GuzzleException
      */
     public function accountBalance(): array
     {
@@ -38,7 +38,9 @@ class Controller extends BaseController
     }
 
     /**
-     * @throws KyandaException
+     * @param Request $request
+     * @return array
+     * @throws KyandaException|GuzzleException
      */
     public function transactionStatus(Request $request): array
     {
@@ -50,25 +52,16 @@ class Controller extends BaseController
     }
 
 
-
     /**
      * -----------------------------------------------------------------------------------------------    UTILITY
      *
-     * @throws KyandaException
+     * @throws KyandaException|GuzzleException
      */
-    public function airtimePurchase(Request $request): array
-    {
-        $validation = Validator::make($request->all(), [
-    public function airtimePurchase(Request $request): array
+    public function airtimePurchase(Request $request): KyandaRequest
     {
         $this->validateRequest([
             'phone_number' => 'required|integer',
             'amount' => 'required|numeric'
-        ]);
-
-        if ($validation->fails()) {
-            throw new KyandaException($validation->errors()->first());
-        }
         ], $request);
 
         return $this->utility->airtimePurchase($request->input('phone_number'), $request->input('amount'));
@@ -78,7 +71,7 @@ class Controller extends BaseController
     /**
      * -----------------------------------------------------------------------------------------------    NOTIFICATION
      *
-     * @throws KyandaException
+     * @throws KyandaException|GuzzleException
      */
     public function registerCallbackURL(Request $request): array
     {
