@@ -54,7 +54,7 @@ class Core
 
 //        Added these to reduce redundancy in child classes
         $body = $this->attachMerchantStart ?
-            ['merchantID' => $merchantId] + $body : $body + ['merchantID' => $merchantId];
+            ['MerchantID' => $merchantId] + $body : $body + ['MerchantID' => $merchantId];
         $body += ['signature' => $this->buildSignature($body)];
 
         return $this->baseClient->clientInterface->request(
