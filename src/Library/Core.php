@@ -78,7 +78,8 @@ class Core
             $response = $this->sendRequest($endpoint, $body);
             $_body = json_decode($response->getBody());
             if ($response->getStatusCode() !== 200) {
-                throw new KyandaException($_body->errorMessage ? $_body->errorCode . ' - ' . $_body->errorMessage : $response->getBody());
+                throw new KyandaException($_body->errorMessage ?
+                    $_body->errorCode . ' - ' . $_body->errorMessage : $response->getBody());
             }
             return $_body;
         } catch (ClientException $exception) {
