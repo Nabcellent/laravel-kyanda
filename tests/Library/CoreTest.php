@@ -125,7 +125,6 @@ class CoreTest extends TestCase
     {
         $this->expectException(KyandaException::class);
 
-//            Core::getTelcoFromPhone(12839);
         Core::getTelcoFromPhone(108000000);
     }
 
@@ -135,12 +134,9 @@ class CoreTest extends TestCase
         $testArr = [
             "+254700000000"   => "0700000000",
             "254750000000"    => "0750000000",
-//            "-0254110000000"  => "0110000000",  //Throws exception
             "0730000000"      => "0730000000",
             "762000000"       => "0762000000",
             "+254100000000"   => "0100000000",
-//            "254256000000"    => "0256000000",  //Throws exception
-//            "-0251110000000"  => "0111000000",  //Throws exception
             "0130000000"      => "0130000000",
             "162000000"       => "0162000000",
         ];
@@ -155,18 +151,22 @@ class CoreTest extends TestCase
     /** @test */
     function format_phone_throws_error_on_invalid_number()
     {
-        $this->expectException(KyandaException::class);
-
         $testArr = [
-            "-0254110000000"  => "0110000000",  //Throws exception
             "254256000000"    => "0256000000",  //Throws exception
+            "-0254110000000"  => "0110000000",  //Throws exception
             "-0251110000000"  => "0111000000",  //Throws exception
         ];
 
+        $errors = [];
+
         foreach ($testArr as $key => $value) {
-
-
-            Core::formatPhoneNumber($key);
+            try {
+                Core::formatPhoneNumber($key);
+            } catch (KyandaException $e) {
+                array_push($errors, $e);
+            }
         }
+
+        $this->assertCount(3, $errors);
     }
 }

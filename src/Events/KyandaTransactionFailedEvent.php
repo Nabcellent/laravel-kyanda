@@ -18,7 +18,7 @@ class KyandaTransactionFailedEvent
      * @param KyandaTransaction $transaction
      */
     public function __construct(
-        public KyandaTransaction $transaction
+    public KyandaTransaction $transaction
     ) {
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Nabcellent\Kyanda\Library;
 
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Str;
@@ -22,19 +21,18 @@ class Core
 
     public function __construct(
         /**
-         * @var ClientInterface
+         * @var BaseClient
          */
-        private ClientInterface $client,
+        private BaseClient $baseClient,
 
         /**
          * @var bool
          * Determine whether merchant id will be attached at the start or end
          */
-        protected bool          $attachMerchantStart = false
+        protected bool     $attachMerchantStart = false
     )
     {
     }
-
 
 //    TODO: This should be private but figure out testing
 
@@ -57,7 +55,7 @@ class Core
             ['merchantID' => $merchantId] + $body : $body + ['merchantID' => $merchantId];
         $body += ['signature' => $this->buildSignature($body)];
 
-        return $this->client->request(
+        return $this->baseClient->clientInterface->request(
             'POST',
             $endpoint,
             [
@@ -84,7 +82,7 @@ class Core
             }
             return $_body;
         } catch (ClientException $exception) {
-            throw $this->generateException($exception);
+            throw new KyandaException($exception->getResponse()->getBody());
         }
     }
 
@@ -166,12 +164,4 @@ class Core
         return $number;
     }
 
-    /**
-     * @param ClientException $exception
-     * @return KyandaException
-     */
-    private function generateException(ClientException $exception): KyandaException
-    {
-        return new KyandaException($exception->getResponse()->getBody());
-    }
 }

@@ -11,11 +11,6 @@ use Orchestra\Testbench\TestCase as Orchestra;
  */
 abstract class TestCase extends Orchestra
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-        // additional setup
-    }
 
     protected function getPackageProviders($app): array
     {
