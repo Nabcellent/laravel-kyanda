@@ -2,6 +2,7 @@
 
 namespace Nabcellent\Kyanda\Library;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Nabcellent\Kyanda\Exceptions\KyandaException;
 
 /**
@@ -16,7 +17,7 @@ class Notification extends Core
      * @param string|null $url
      * @return array
      * @throws KyandaException
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function registerCallbackURL(string $url = null): array
     {

@@ -12,9 +12,9 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Nabcellent\Kyanda\Exceptions\KyandaException;
-use Nabcellent\Kyanda\Library\Account;
-use Nabcellent\Kyanda\Library\Notification;
-use Nabcellent\Kyanda\Library\Utility;
+use Nabcellent\Kyanda\Facades\Account;
+use Nabcellent\Kyanda\Facades\Notification;
+use Nabcellent\Kyanda\Facades\Utility;
 use Nabcellent\Kyanda\Models\KyandaRequest;
 use Nabcellent\Kyanda\Models\KyandaTransaction;
 
@@ -24,23 +24,21 @@ class Controller extends BaseController
     use DispatchesJobs;
     use ValidatesRequests;
 
-    private Account $account;
-    private Notification $notification;
-    private Utility $utility;
-
     /**
-     * -----------------------------------------------------------------------------------------------    ACCOUNT
-     * @throws KyandaException|GuzzleException
+     * -----------------------------------------------------------------------------    ACCOUNT
+     */
+    /**
+     * @return array
      */
     public function accountBalance(): array
     {
-        return $this->account->balance();
+        return Account::balance();
     }
 
     /**
      * @param Request $request
      * @return array
-     * @throws KyandaException|GuzzleException
+     * @throws KyandaException
      */
     public function transactionStatus(Request $request): array
     {
@@ -48,7 +46,7 @@ class Controller extends BaseController
             throw new KyandaException("Transaction reference is missing.");
         }
 
-        return $this->account->transactionStatus($request->input('reference'));
+        return Account::transactionStatus($request->input('reference'));
     }
 
 
@@ -64,18 +62,37 @@ class Controller extends BaseController
             'amount' => 'required|numeric'
         ], $request);
 
-        return $this->utility->airtimePurchase($request->input('phone_number'), $request->input('amount'));
+        return Utility::airtimePurchase($request->input('phone_number'), $request->input('amount'));
+    }
+
+    /**
+     * @throws KyandaException
+     */
+    public function billPayment(Request $request): KyandaRequest
+    {
+        $this->validateRequest([
+            'account_number' => 'required|integer',
+            'amount' => 'required|integer',
+            'service_provider' => 'required|string',
+        ], $request);
+
+        return Utility::billPayment(
+            $request->input('accountNumber'),
+            $request->input('amount'),
+            $request->input('provider')
+        );
     }
 
 
     /**
      * -----------------------------------------------------------------------------------------------    NOTIFICATION
      *
-     * @throws KyandaException|GuzzleException
+     * @param Request $request
+     * @return array
      */
     public function registerCallbackURL(Request $request): array
     {
-        return $this->notification->registerCallbackURL($request->input('callback_url'));
+        return Notification::registerCallbackURL($request->input('callback_url'));
     }
 
     public function instantPaymentNotification(Request $request)

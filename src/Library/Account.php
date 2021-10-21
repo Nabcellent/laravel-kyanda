@@ -2,6 +2,7 @@
 
 namespace Nabcellent\Kyanda\Library;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Nabcellent\Kyanda\Exceptions\KyandaException;
 
 /**
@@ -17,7 +18,7 @@ class Account extends Core
     /**
      * @return array
      * @throws KyandaException
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function balance(): array
     {
@@ -31,7 +32,7 @@ class Account extends Core
      * @param string $reference
      * @return array
      * @throws KyandaException
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function transactionStatus(string $reference): array
     {
