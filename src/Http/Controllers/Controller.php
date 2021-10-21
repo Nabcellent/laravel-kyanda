@@ -2,7 +2,6 @@
 
 namespace Nabcellent\Kyanda\Http\Controllers;
 
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -53,7 +52,7 @@ class Controller extends BaseController
     /**
      * -----------------------------------------------------------------------------------------------    UTILITY
      *
-     * @throws KyandaException|GuzzleException
+     * @throws KyandaException
      */
     public function airtimePurchase(Request $request): KyandaRequest
     {
