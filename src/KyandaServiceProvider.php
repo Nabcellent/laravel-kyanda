@@ -53,37 +53,37 @@ class KyandaServiceProvider extends ServiceProvider
     {
 //        IMPORTANT: Facades are with FQDN. Concrete/Implementations are imported, else there could be an error
 //        TODO: Should we actually use strings like "account"? for facades that is
-        $this->app->bind(
+        $this->app->singleton(
             Facades\Account::class,
-            function () {
+            function ($app) {
                 return $this->app->make(Account::class);
             }
         );
 
-        $this->app->bind(
+        $this->app->singleton(
             Facades\Utility::class,
-            function () {
+            function ($app) {
                 return $this->app->make(Utility::class);
             }
         );
 
-        $this->app->bind(
+        $this->app->singleton(
             Facades\Notification::class,
-            function () {
+            function ($app) {
                 return $this->app->make(Notification::class);
             }
         );
     }
 
-    /**
-     * Register events
-     */
-    private function registerEvents()
-    {
-//        TODO: Is it necessary to register any events? Does our logic depend on listeners?
-//              Or we leave implementation to projects/users?
-//        Event::listen(KyandaTransactionSuccessEvent::class, KyandaTransactionSuccess::class);
-    }
+//    /**
+//     * Register events
+//     */
+//    private function registerEvents()
+//    {
+////        TODO: Is it necessary to register any events? Does our logic depend on listeners?
+////              Or we leave implementation to projects/users?
+////        Event::listen(KyandaTransactionSuccessEvent::class, KyandaTransactionSuccess::class);
+//    }
 
     /**
      * Register the package's migrations.

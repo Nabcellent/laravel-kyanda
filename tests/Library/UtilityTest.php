@@ -9,6 +9,7 @@ use Nabcellent\Kyanda\Library\Utility;
 use Nabcellent\Kyanda\Models\KyandaRequest;
 use Nabcellent\Kyanda\Tests\MockServerTestCase;
 
+
 class UtilityTest extends MockServerTestCase
 {
     /** @test */
@@ -41,7 +42,8 @@ class UtilityTest extends MockServerTestCase
     {
         $this->expectException(KyandaException::class);
 
-        (new Utility($this->_client))->airtimePurchase("123765432100", 10);
+//        Use facade class for testing coverage
+        \Nabcellent\Kyanda\Facades\Utility::airtimePurchase("123765432100", 10);
     }
 
     /** @test */

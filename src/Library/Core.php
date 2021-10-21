@@ -4,6 +4,7 @@ namespace Nabcellent\Kyanda\Library;
 
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\ServerException;
 use Illuminate\Support\Str;
 use Nabcellent\Kyanda\Exceptions\KyandaException;
 use Psr\Http\Message\ResponseInterface;
@@ -16,7 +17,8 @@ use function strlen;
  *
  * @package Nabcellent\Kyanda\Library
  */
-class Core {
+class Core
+{
 
 
     public function __construct(
@@ -71,24 +73,35 @@ class Core {
     /**
      * @throws KyandaException|GuzzleException
      */
-    public function request(string $endpoint, array $body)
+    public function request(string $endpoint, array $body): array
     {
         $endpoint = Endpoints::build($endpoint);
+
+        //        TODO: Refactor try catch; throwing on successful response but even 201?? how?
+//                        why only client exception being caught?
+
         try {
             $response = $this->sendRequest($endpoint, $body);
             $_body = json_decode($response->getBody());
+
             if ($response->getStatusCode() !== 200) {
-                throw new KyandaException($_body->errorMessage ?
-                    $_body->errorCode . ' - ' . $_body->errorMessage : $response->getBody());
+                throw new KyandaException($_body->transactiontxt ?
+                    $_body->status_code . ' - ' . $_body->transactiontxt : $response->getBody());
             }
-            return $_body;
-        } catch (ClientException $exception) {
+
+            return (array)$_body;
+        } catch (ClientException|ServerException $exception) {
             throw new KyandaException($exception->getResponse()->getBody());
         }
     }
 
     private function buildSignature(array $items): bool|string
     {
+//        Check for notification body
+        if (isset($items['callbackURL'])) {
+            unset($items['callbackURL']);
+        }
+
         $signatureString = implode($items);
 
         $secretKey = config('kyanda.api_key');
