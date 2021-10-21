@@ -8,27 +8,27 @@ class Endpoints
 {
 //    TODO: Can we use constants for better value checks? Endpoints::AccountBalance?
 
+    private const list = [
+        'account_balance' => '/billing/v1/account-balance',
+        'transaction_status' => '/billing/v1/transaction-check',
+        'send_mobile' => '/billing/v1/mobile-payout/create',
+        'send_bank' => '/billing/v1/bank-payout/create',
+        'stk_push' => '/billing/v1/checkout/create',
+        'airtime' => '/billing/v1/airtime/create',
+        'bill' => '/billing/v1/bill/create',
+        'callback_register' => '/billing/v1/callback-url/create',
+
+        'test' => '/',
+    ];
+
 //    TODO: Refactor to use match if possible
     /**
      * @throws KyandaException
      */
-    private static function getEndpoint($section): string
+    private static function getEndpoint(string $section): string
     {
-        $list = [
-            'account_balance' => '/billing/v1/account-balance',
-            'transaction_status' => '/billing/v1/transaction-check',
-            'send_mobile' => '/billing/v1/mobile-payout/create',
-            'send_bank' => '/billing/v1/bank-payout/create',
-            'stk_push' => '/billing/v1/checkout/create',
-            'airtime' => '/billing/v1/airtime/create',
-            'bill' => '/billing/v1/bill/create',
-            'callback_register' => '/billing/v1/callback-url/create',
-
-            'test' => '/',
-        ];
-
-        if ($item = $list[$section]) {
-            return self::getUrl($item);
+        if (isset(self::list[$section])) {
+            return self::getUrl(self::list[$section]);
         }
 
         throw new KyandaException('Unknown endpoint');
@@ -53,7 +53,7 @@ class Endpoints
     /**
      * @throws KyandaException
      */
-    public static function build($endpoint): string
+    public static function build(string $endpoint): string
     {
         return self::getEndpoint($endpoint);
     }

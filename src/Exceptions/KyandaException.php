@@ -10,5 +10,6 @@ use Exception;
  */
 class KyandaException extends Exception
 {
+//    TODO: Implement more Exception classes e.g. Validation, Api, Internal
 
 }
