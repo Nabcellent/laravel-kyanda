@@ -18,11 +18,11 @@ class Utility extends Core
     /**
      * @param int $phone
      * @param int $amount
-     * @return KyandaRequest
+     * @return array|KyandaRequest
      * @throws GuzzleException
      * @throws KyandaException
      */
-    public function airtimePurchase(int $phone, int $amount): KyandaRequest
+    public function airtimePurchase(int $phone, int $amount, bool $save = true): array | KyandaRequest
     {
         $telco = $this->getTelcoFromPhone($phone);
         $phone = $this->formatPhoneNumber($phone);
@@ -38,24 +38,29 @@ class Utility extends Core
 
         $response = (array)$this->request('airtime', $body);
 
-        return $this->saveRequest($response);
+        if ($save) {
+            return $this->saveRequest($response);
+        }
+
+        return $response;
     }
 
 //    TODO: bill payment
 //    Add bill payment function/process here
     /**
-     * @param int $accountNumber
+     * @param int $accountNo
      * @param int $amount
      * @param string $provider
-     * @return KyandaRequest
-     * @throws KyandaException
+     * @param bool $save
+     * @return array|KyandaRequest
      * @throws GuzzleException
+     * @throws KyandaException
      */
-    public function billPayment(int $accountNumber, int $amount, string $provider): KyandaRequest
+    public function billPayment(int $accountNo, int $amount, string $provider, bool $save = true): array | KyandaRequest
     {
 //        TODO: Should we allow initiator phone as fn parameter?
 
-//        TODO: Refactor this to testable function
+//        TODO: Refactor this to testable function...seems ok
         $allowedProviders = [
             Providers::KPLC_PREPAID, Providers::KPLC_POSTPAID,
             Providers::GOTV, Providers::DSTV, Providers::ZUKU, Providers::STARTIMES,
@@ -68,7 +73,7 @@ class Utility extends Core
 
 //        TODO: Confirm whether initiator phone is necessary
         $body = [
-            'account' => $accountNumber,
+            'account' => $accountNo,
             'amount' => $amount,
             'telco' => $provider,
 //            'initiatorPhone' => $phone,
@@ -76,7 +81,11 @@ class Utility extends Core
 
         $response = (array)$this->request('bill', $body);
 
-        return $this->saveRequest($response);
+        if ($save) {
+            return $this->saveRequest($response);
+        }
+
+        return $response;
     }
 
 
@@ -99,6 +108,7 @@ class Utility extends Core
             return $request;
         }
 
+//        TODO: We should throw relevant exceptions based on api response
         throw new KyandaException($response['transactiontxt']);
     }
 }

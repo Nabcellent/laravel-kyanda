@@ -101,15 +101,15 @@ class CoreTest extends TestCase
     function gets_correct_telco_channels_from_phone()
     {
         $testArr = [
-            700000000 => Providers::SAFARICOM,
-            748000000 => Providers::SAFARICOM,
-            110000000 => Providers::SAFARICOM,
-            730000000 => Providers::AIRTEL,
-            762000000 => Providers::AIRTEL,
-            106000000 => Providers::AIRTEL,
-            779000000 => Providers::TELKOM,
-            764000000 => Providers::EQUITEL,
-            747000000 => Providers::FAIBA,
+            "700000000" => Providers::SAFARICOM,
+            "748000000" => Providers::SAFARICOM,
+            "110000000" => Providers::SAFARICOM,
+            "730000000" => Providers::AIRTEL,
+            "762000000" => Providers::AIRTEL,
+            "106000000" => Providers::AIRTEL,
+            "779000000" => Providers::TELKOM,
+            "764000000" => Providers::EQUITEL,
+            "747000000" => Providers::FAIBA,
         ];
 
         foreach ($testArr as $key => $value) {
@@ -125,7 +125,7 @@ class CoreTest extends TestCase
     {
         $this->expectException(KyandaException::class);
 
-        Core::getTelcoFromPhone(108000000);
+        Core::getTelcoFromPhone("108000000");
     }
 
     /** @test */
