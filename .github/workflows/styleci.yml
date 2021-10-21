@@ -67,5 +67,5 @@ jobs:
     - name: Execute Code Sniffer via phpcs
       run: |
         composer require --dev squizlabs/php_codesniffer
-        vendor/bin/phpcbf --standard=PSR12 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src
+        vendor/bin/phpcbf --standard=PSR12 src > /dev/null
         vendor/bin/phpcs --standard=PSR12 src
