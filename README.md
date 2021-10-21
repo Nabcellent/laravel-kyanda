@@ -1,6 +1,7 @@
 # Kyanda Api
 
-[![GitHub CI Workflow Status](https://github.com/Nabcellent/laravel-kyanda/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/Nabcellent/laravel-kyanda/actions/workflows/test.yml)
+[![GitHub TestCI Workflow](https://github.com/Nabcellent/laravel-kyanda/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/Nabcellent/laravel-kyanda/actions/workflows/test.yml)
+[![Github StyleCI Workflow](https://github.com/Nabcellent/laravel-kyanda/actions/workflows/styleci.yml/badge.svg?branch=master)](https://github.com/Nabcellent/laravel-kyanda/actions/workflows/styleci.yml)
 
 Coming Soon
 

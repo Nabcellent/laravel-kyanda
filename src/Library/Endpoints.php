@@ -23,10 +23,14 @@ class Endpoints
             'airtime' => '/billing/v1/airtime/create',
             'bill' => '/billing/v1/bill/create',
             'callback_register' => '/billing/v1/callback-url/create',
+
+            'test' => '/',
         ];
+
         if ($item = $list[$section]) {
             return self::getUrl($item);
         }
+
         throw new KyandaException('Unknown endpoint');
     }
 
@@ -35,7 +39,7 @@ class Endpoints
      * @return string
      * @throws KyandaException
      */
-    private static function getUrl($suffix): string
+    private static function getUrl(string $suffix): string
     {
         $baseEndpoint = config('kyanda.urls.base', false);
 
@@ -49,7 +53,7 @@ class Endpoints
     /**
      * @throws KyandaException
      */
-    public static function build($endpoint)
+    public static function build($endpoint): string
     {
         return self::getEndpoint($endpoint);
     }

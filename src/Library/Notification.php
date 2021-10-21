@@ -13,7 +13,10 @@ class Notification extends Core
 //    TODO: callback registration
 //    Add callback registration function/process here
     /**
+     * @param string|null $url
+     * @return array
      * @throws KyandaException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function registerCallbackURL(string $url = null): array
     {

@@ -9,7 +9,7 @@ use Nabcellent\Kyanda\Tests\TestCase;
 class InstallCommandTest extends TestCase
 {
 
-    /** @ignore */
+    /** @test */
     function the_install_command_copies_the_configuration()
     {
         // Make sure we're starting from a clean state
@@ -26,7 +26,7 @@ class InstallCommandTest extends TestCase
         unlink(config_path('kyanda.php'));
     }
 
-    /** @ignore */
+    /** @test */
     public function when_a_config_file_is_present_users_can_choose_to_not_overwrite_it()
     {
         // Given we already have an existing config file
@@ -37,10 +37,12 @@ class InstallCommandTest extends TestCase
         $command = $this->artisan('kyanda:install');
 
         // We expect a warning that our configuration file exists
-        $command->expectsConfirmation('Config file already exists. Do you want to overwrite it?', 'no');
+        $command->expectsConfirmation('Config file already exists. Do you want to overwrite it?');
 
         // When answered with "no", We should see a message that our file was not overwritten
         $command->expectsOutput('Existing configuration was not overwritten');
+
+        $command->execute();
 
         // Assert that the original contents of the config file remain
         $this->assertEquals('test contents', file_get_contents(config_path('kyanda.php')));
@@ -49,7 +51,7 @@ class InstallCommandTest extends TestCase
         unlink(config_path('kyanda.php'));
     }
 
-    /** @ignore */
+    /** @test */
     public function when_a_config_file_is_present_users_can_choose_to_overwrite_it()
     {
         // Given we already have an existing config file
@@ -62,13 +64,13 @@ class InstallCommandTest extends TestCase
         // We expect a warning that our configuration file exists
         $command->expectsConfirmation('Config file already exists. Do you want to overwrite it?', 'yes');
 
+        $command->expectsOutput('Overwriting configuration file...');
+
         // When answered with "yes", execute the command to force override
         $command->execute();
 
-        $command->expectsOutput('Overwriting configuration file...');
-
         // Assert that the original contents are overwritten
-        $this->assertEquals(file_get_contents(__DIR__ . '/../Config/kyanda.php'), file_get_contents(config_path('kyanda.php')));
+        $this->assertEquals(file_get_contents(__DIR__ . '/../../config/kyanda.php'), file_get_contents(config_path('kyanda.php')));
 
         // Clean up
         unlink(config_path('kyanda.php'));

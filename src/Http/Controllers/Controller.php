@@ -15,7 +15,9 @@ use Nabcellent\Kyanda\Library\Utility;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
 
     private Account $account;
     private Notification $notification;
@@ -37,7 +39,9 @@ class Controller extends BaseController
      */
     public function transactionStatus(Request $request): array
     {
-        if(!$request->has('reference')) throw new KyandaException("Transaction reference is missing.");
+        if (!$request->has('reference')) {
+            throw new KyandaException("Transaction reference is missing.");
+        }
 
         return $this->account->transactionStatus($request->input('reference'));
     }
@@ -48,13 +52,16 @@ class Controller extends BaseController
      *
      * @throws KyandaException
      */
-    public function airtimePurchase(Request $request): array {
+    public function airtimePurchase(Request $request): array
+    {
         $validation = Validator::make($request->all(), [
             'phone_number' => 'required|integer',
             'amount' => 'required|numeric'
         ]);
 
-        if($validation->fails()) throw new KyandaException($validation->errors()->first());
+        if ($validation->fails()) {
+            throw new KyandaException($validation->errors()->first());
+        }
 
         return $this->utility->airtimePurchase($request->input('phone_number'), $request->input('amount'));
     }
@@ -65,7 +72,8 @@ class Controller extends BaseController
      *
      * @throws KyandaException
      */
-    public function registerCallbackURL(Request $request): array {
+    public function registerCallbackURL(Request $request): array
+    {
         return $this->notification->registerCallbackURL($request->input('callback_url'));
     }
 }

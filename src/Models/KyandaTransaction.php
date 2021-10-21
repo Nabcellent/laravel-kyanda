@@ -4,6 +4,7 @@ namespace Nabcellent\Kyanda\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Nabcellent\Kyanda\Models\KyandaTransaction
@@ -36,7 +37,7 @@ class KyandaTransaction extends Model
         'details' => 'array'
     ];
 
-    public function request()
+    public function request(): HasOne
     {
         return $this->hasOne(KyandaRequest::class, 'merchant_reference', 'transaction_reference');
     }
