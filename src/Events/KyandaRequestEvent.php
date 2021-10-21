@@ -17,7 +17,7 @@ class KyandaRequestEvent
      * @param KyandaRequest $request
      */
     public function __construct(
-    public KyandaRequest $request
+        public KyandaRequest $request
     ) {
     }
 }

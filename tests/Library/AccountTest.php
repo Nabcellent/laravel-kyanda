@@ -3,9 +3,12 @@
 namespace Nabcellent\Kyanda\Tests\Library;
 
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Support\Facades\Config;
+use Nabcellent\Kyanda\Exceptions\KyandaException;
+use Nabcellent\Kyanda\Facades\Account;
 use Nabcellent\Kyanda\Tests\MockServerTestCase;
 
-//    TODO: Should we mock the api for these type of tests? CAN we mock?
+
 class AccountTest extends MockServerTestCase
 {
 
@@ -33,5 +36,16 @@ class AccountTest extends MockServerTestCase
 
         $this->assertIsArray($status);
         $this->assertEquals(200, $status['status']);
+    }
+
+    /** @test */
+    function test_account_facade()
+    {
+//        This is to enable code coverage for Account facade
+        $this->expectException(KyandaException::class);
+
+        Config::set('kyanda.api_key');
+
+        Account::transactionStatus("KYAAPI___");
     }
 }

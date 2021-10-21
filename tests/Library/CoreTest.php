@@ -2,7 +2,6 @@
 
 namespace Nabcellent\Kyanda\Tests\Library;
 
-use ErrorException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Config;
@@ -10,10 +9,11 @@ use Nabcellent\Kyanda\Exceptions\KyandaException;
 use Nabcellent\Kyanda\Facades\Core;
 use Nabcellent\Kyanda\Library\Providers;
 use Nabcellent\Kyanda\Library\Endpoints;
-use Nabcellent\Kyanda\Tests\TestCase;
+use Nabcellent\Kyanda\Tests\MockServerTestCase;
 
-class CoreTest extends TestCase
+class CoreTest extends MockServerTestCase
 {
+//    TODO: Refactor Class to use MockServerTestCase
 
     /** @test */
     function send_request_throws_exception_with_no_api_key_set()
@@ -30,7 +30,6 @@ class CoreTest extends TestCase
     {
         $this->expectException(KyandaException::class);
 
-        Config::set('kyanda.api_key', "null");
         Config::set('kyanda.merchant_id');
 
         Core::sendRequest('', []);
@@ -41,28 +40,29 @@ class CoreTest extends TestCase
     {
         $this->expectException(RequestException::class);
 
-        Config::set('kyanda.api_key', 'somethinggoeshere');
-        Config::set('kyanda.merchant_id', 'somethinggoeshere');
-
-
         Core::sendRequest('', []);
     }
 
     /** @test */
     function send_request_successfully()
     {
-        Config::set('kyanda.api_key', 'somethinggoeshere');
-        Config::set('kyanda.merchant_id', 'somethinggoeshere');
+        $this->mock->append(
+            new Response(200, ['Content_type' => 'application/json'],
+                json_encode($this->mockResponses['request_success'])));
 
-        $req = Core::sendRequest('https://github.com', []);
+//        test endpoint does not work, it creates '//' url which can't be parsed. fix?
+        $req = (new \Nabcellent\Kyanda\Library\Core($this->_client))->request('bill', []);
 
-        $this->assertInstanceOf(Response::class, $req);
+        $this->assertIsArray($req);
+        $this->assertEquals(0000, $req['status_code']);
+
     }
 
 
     /** @test */
     function builds_correct_endpoint()
     {
+        Config::set('kyanda.urls.base', 'http://localhost');
         $endpoint = Endpoints::build('bill');
 
         $this->assertStringContainsString("/billing/v1/bill/create", $endpoint);
@@ -72,28 +72,42 @@ class CoreTest extends TestCase
     /** @test */
     function request_throws_error_on_non_existing_endpoint()
     {
-//        TODO: Change endpoint class to ensure proper exception is thrown
-        $this->expectException(ErrorException::class);
-
-        Config::set('kyanda.api_key', 'somethinggoeshere');
-        Config::set('kyanda.merchant_id', 'somethinggoeshere');
+        $this->expectException(KyandaException::class);
 
         Core::request('https://github.com', []);
     }
 
 
     /** @test */
-    function request_throws_error_on_existing_endpoint()
+    function successful_request_throws_error_when_server_is_not_200()
     {
-//        TODO: Change endpoint class to ensure proper exception is thrown
-        $this->expectException(ErrorException::class);
+        //    TODO: Confirm what this test below does...!
 
-        Config::set('kyanda.api_key', 'somethinggoeshere');
-        Config::set('kyanda.merchant_id', 'somethinggoeshere');
+        $this->mock->append(
+            new Response(301, ['Content_type' => 'application/json'],
+                json_encode($this->mockResponses['request_failed'])));
 
-        $req = Core::request('test', []);
+        Config::set('kyanda.urls.base', 'http://localhost');
 
-        var_dump($req);
+        $this->expectException(KyandaException::class);
+
+        (new \Nabcellent\Kyanda\Library\Core($this->_client))->request('test', []);
+    }
+
+    /** @test */
+    function request_throws_error_when_server_is_500()
+    {
+        //    TODO: Confirm what this test below does...!
+
+        $this->mock->append(
+            new Response(500, ['Content_type' => 'application/json'],
+                null));
+
+        Config::set('kyanda.urls.base', 'http://localhost');
+
+        $this->expectException(KyandaException::class);
+
+        (new \Nabcellent\Kyanda\Library\Core($this->_client))->request('test', []);
     }
 
 
@@ -132,13 +146,13 @@ class CoreTest extends TestCase
     function formats_phone_numbers_correctly()
     {
         $testArr = [
-            "+254700000000"   => "0700000000",
-            "254750000000"    => "0750000000",
-            "0730000000"      => "0730000000",
-            "762000000"       => "0762000000",
-            "+254100000000"   => "0100000000",
-            "0130000000"      => "0130000000",
-            "162000000"       => "0162000000",
+            "+254700000000" => "0700000000",
+            "254750000000" => "0750000000",
+            "0730000000" => "0730000000",
+            "762000000" => "0762000000",
+            "+254100000000" => "0100000000",
+            "0130000000" => "0130000000",
+            "162000000" => "0162000000",
         ];
 
         foreach ($testArr as $key => $value) {
@@ -152,9 +166,9 @@ class CoreTest extends TestCase
     function format_phone_throws_error_on_invalid_number()
     {
         $testArr = [
-            "254256000000"    => "0256000000",  //Throws exception
-            "-0254110000000"  => "0110000000",  //Throws exception
-            "-0251110000000"  => "0111000000",  //Throws exception
+            "254256000000" => "0256000000",  //Throws exception
+            "-0254110000000" => "0110000000",  //Throws exception
+            "-0251110000000" => "0111000000",  //Throws exception
         ];
 
         $errors = [];
