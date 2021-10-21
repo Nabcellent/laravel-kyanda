@@ -54,21 +54,21 @@ class KyandaServiceProvider extends ServiceProvider
 //        IMPORTANT: Facades are with FQDN. Concrete/Implementations are imported, else there could be an error
 //        TODO: Should we actually use strings like "account"? for facades that is
         $this->app->bind(
-            \Nabcellent\Kyanda\Facades\Account::class,
+            Facades\Account::class,
             function () {
                 return $this->app->make(Account::class);
             }
         );
 
         $this->app->bind(
-            \Nabcellent\Kyanda\Facades\Utility::class,
+            Facades\Utility::class,
             function () {
                 return $this->app->make(Utility::class);
             }
         );
 
         $this->app->bind(
-            \Nabcellent\Kyanda\Facades\Notification::class,
+            Facades\Notification::class,
             function () {
                 return $this->app->make(Notification::class);
             }

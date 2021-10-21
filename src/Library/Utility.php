@@ -62,7 +62,7 @@ class Utility extends Core
             Providers::NAIROBI_WTR
         ];
 
-        if (!in_array($provider, $allowedProviders)) {
+        if (!in_array(strtoupper($provider), $allowedProviders)) {
             throw new KyandaException("Provider does not seem to be valid or supported");
         }
 
