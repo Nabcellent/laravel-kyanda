@@ -126,9 +126,20 @@ class Core
         return $result;
     }
 
-    protected function formatPhoneNumber($number, $strip_plus = true): string
+    /**
+     * @throws KyandaException
+     */
+    public function formatPhoneNumber(string $number, bool $strip_plus = true): string
     {
         $number = preg_replace('/\s+/', '', $number);
+
+        $possibleStartingChars = ['+254', '0', '254', '7', '1'];
+
+        if (!Str::startsWith($number, $possibleStartingChars)) {
+//            Number doesn't have valid starting digits e.g. -0254110000000
+            throw new KyandaException("Number does not seem to be a valid phone");
+        }
+
         $replace = static function ($needle, $replacement) use (&$number) {
             if (Str::startsWith($number, $needle)) {
                 $pos = strpos($number, $needle);
@@ -136,13 +147,22 @@ class Core
                 $number = substr_replace($number, $replacement, $pos, $length);
             }
         };
+
         $replace('2547', '07');
         $replace('7', '07');
         $replace('2541', '01');
         $replace('1', '01');
+
         if ($strip_plus) {
             $replace('+254', '0');
         }
+
+        if (!Str::startsWith($number, "0")) {
+//            Means the number started with correct digits but after replacing, found invalid digit e.g. 254256000000
+//            2547 isn't found and so 0 does not replace it, which means false number
+            throw new KyandaException("Number does not seem to be a valid phone");
+        }
+
         return $number;
     }
 

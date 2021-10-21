@@ -2,6 +2,7 @@
 
 namespace Nabcellent\Kyanda\Tests\Library;
 
+use ErrorException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Config;
@@ -69,6 +70,34 @@ class CoreTest extends TestCase
     }
 
     /** @test */
+    function request_throws_error_on_non_existing_endpoint()
+    {
+//        TODO: Change endpoint class to ensure proper exception is thrown
+        $this->expectException(ErrorException::class);
+
+        Config::set('kyanda.api_key', 'somethinggoeshere');
+        Config::set('kyanda.merchant_id', 'somethinggoeshere');
+
+        Core::request('https://github.com', []);
+    }
+
+
+    /** @test */
+    function request_throws_error_on_existing_endpoint()
+    {
+//        TODO: Change endpoint class to ensure proper exception is thrown
+        $this->expectException(ErrorException::class);
+
+        Config::set('kyanda.api_key', 'somethinggoeshere');
+        Config::set('kyanda.merchant_id', 'somethinggoeshere');
+
+        $req = Core::request('test', []);
+
+        var_dump($req);
+    }
+
+
+    /** @test */
     function gets_correct_telco_channels_from_phone()
     {
         $testArr = [
@@ -100,5 +129,44 @@ class CoreTest extends TestCase
         Core::getTelcoFromPhone(108000000);
     }
 
-//    TODO: Add tests for formatting phone number : formatPhoneNumber
+    /** @test */
+    function formats_phone_numbers_correctly()
+    {
+        $testArr = [
+            "+254700000000"   => "0700000000",
+            "254750000000"    => "0750000000",
+//            "-0254110000000"  => "0110000000",  //Throws exception
+            "0730000000"      => "0730000000",
+            "762000000"       => "0762000000",
+            "+254100000000"   => "0100000000",
+//            "254256000000"    => "0256000000",  //Throws exception
+//            "-0251110000000"  => "0111000000",  //Throws exception
+            "0130000000"      => "0130000000",
+            "162000000"       => "0162000000",
+        ];
+
+        foreach ($testArr as $key => $value) {
+            $no = Core::formatPhoneNumber($key);
+
+            $this->assertEquals($value, $no);
+        }
+    }
+
+    /** @test */
+    function format_phone_throws_error_on_invalid_number()
+    {
+        $this->expectException(KyandaException::class);
+
+        $testArr = [
+            "-0254110000000"  => "0110000000",  //Throws exception
+            "254256000000"    => "0256000000",  //Throws exception
+            "-0251110000000"  => "0111000000",  //Throws exception
+        ];
+
+        foreach ($testArr as $key => $value) {
+
+
+            Core::formatPhoneNumber($key);
+        }
+    }
 }

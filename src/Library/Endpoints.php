@@ -23,10 +23,14 @@ class Endpoints
             'airtime' => '/billing/v1/airtime/create',
             'bill' => '/billing/v1/bill/create',
             'callback_register' => '/billing/v1/callback-url/create',
+
+            'test' => '/',
         ];
+
         if ($item = $list[$section]) {
             return self::getUrl($item);
         }
+
         throw new KyandaException('Unknown endpoint');
     }
 
