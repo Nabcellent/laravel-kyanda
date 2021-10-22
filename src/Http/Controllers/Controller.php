@@ -57,10 +57,12 @@ class Controller extends BaseController
     public function airtimePurchase(Request $request): KyandaRequest
     {
         $this->validateRequest([
-            'phone' => 'required|numeric',
-            'amount' => 'required|numeric'
+            'phone' => 'required|integer|min:9|max:12',
+            'amount' => 'required|integer'
         ], $request, [
-            'phone.required' => 'Phone number is required.'
+            'phone.required' => 'Phone number is required.',
+            'phone.integer' => 'Invalid phone number. Must not start with zero.',
+            'amount.integer' => 'Invalid amount. Must not start with zero.',
         ]);
 
         return Utility::airtimePurchase($request->input('phone'), $request->input('amount'));
@@ -72,17 +74,19 @@ class Controller extends BaseController
     public function billPayment(Request $request): KyandaRequest
     {
         $this->validateRequest([
-            'account_number' => 'required|integer',
+            'account_no' => 'required|integer',
             'amount' => 'required|integer',
-            'telco' => 'required|string',
+            'provider' => 'required|string',
         ], $request, [
-            'telco.required' => 'Service provider(telco) is required.'
+            'account_no.integer' => 'Invalid account number. Must not start with zero.',
+            'amount.integer' => 'Invalid amount. Must not start with zero.',
+            'provider.required' => 'Service provider(telco) is required.',
         ]);
 
         return Utility::billPayment(
-            $request->input('account_number'),
+            $request->input('account_no'),
             $request->input('amount'),
-            $request->input('telco')
+            $request->input('provider')
         );
     }
 
