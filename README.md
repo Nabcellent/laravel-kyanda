@@ -3,13 +3,71 @@
 [![GitHub TestCI Workflow](https://github.com/Nabcellent/laravel-kyanda/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/Nabcellent/laravel-kyanda/actions/workflows/test.yml)
 [![Github StyleCI Workflow](https://github.com/Nabcellent/laravel-kyanda/actions/workflows/styleci.yml/badge.svg?branch=master)](https://github.com/Nabcellent/laravel-kyanda/actions/workflows/styleci.yml)
 
-Coming Soon
+This is a <i>Laravel 8</i> package that interfaces with [Kyanda Payment API](https://kyanda.co.ke/).
+The API enables you to initiate mobile payments, disburse payments to mobile and bank, purchase airtime & bundles* and to pay for utility bills.
+
+Check out their [documentation](https://kyanda.co.ke/developer/index.html).
 
 ## Documentation
 
+### Installation
+
+You can install the package via composer:
+
+``` bash
+composer require nabcellent/laravel-kyanda
+```
+
+The package will automatically register itself.
+
+You can publish the config file with:
+```bash
+php artisan vendor:publish --provider="Nabcellent\Kyanda\KyandaServiceProvider" --tag="kyanda-config"
+```
+
+### Getting Started
+- ### Account
+Enables you to check the status of items
+
+1. Account balance
+```php
+Account::balance();
+```
+
+2. Transaction status
+```php
+Account::transactionStatus("KYAAPI___");
+```
+
+
+- ### Utility
+Enables purchase of payment of goods and services
+
+1. Airtime Purchase
+```php
+Utility::airtimePurchase(0712345678, 100);
+```
+
+2. Bill Payment
+```php
+Utility::billPayment(11011011011, 1000, Providers::KPLC_PREPAID);
+```
+
+
+- ### Notification
+Enables registration of callback url via API call
+
+1. Instant Payment Notification callback registration
+```php
+Notification::registerCallbackURL();
+```
+
+- ### Payments
 Coming soon
 
-- ### Phone Number Validation
+<br>
+
+### NOTE: Phone Number Validation
 The phone validator was built using regex and the latest allocation of prefixes by Communication authority of Kenya (Apr, 2021).
 Check the [docs](docs) to see the pdf listing with allocations.
 
@@ -18,12 +76,8 @@ Check the [docs](docs) to see the pdf listing with allocations.
 You can run the tests with:
 
 ```bash
-vendor/bin/phpunit
+composer test
 ```
-
-### Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
 ## Contributing
 
