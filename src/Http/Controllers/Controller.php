@@ -57,11 +57,13 @@ class Controller extends BaseController
     public function airtimePurchase(Request $request): KyandaRequest
     {
         $this->validateRequest([
-            'phone_number' => 'required|integer',
+            'phone' => 'required|numeric',
             'amount' => 'required|numeric'
-        ], $request);
+        ], $request, [
+            'phone.required' => 'Phone number is required.'
+        ]);
 
-        return Utility::airtimePurchase($request->input('phone_number'), $request->input('amount'));
+        return Utility::airtimePurchase($request->input('phone'), $request->input('amount'));
     }
 
     /**
@@ -72,13 +74,15 @@ class Controller extends BaseController
         $this->validateRequest([
             'account_number' => 'required|integer',
             'amount' => 'required|integer',
-            'service_provider' => 'required|string',
-        ], $request);
+            'telco' => 'required|string',
+        ], $request, [
+            'telco.required' => 'Service provider(telco) is required.'
+        ]);
 
         return Utility::billPayment(
-            $request->input('accountNumber'),
+            $request->input('account_number'),
             $request->input('amount'),
-            $request->input('provider')
+            $request->input('telco')
         );
     }
 
@@ -108,9 +112,9 @@ class Controller extends BaseController
     /**
      * @throws KyandaException
      */
-    public function validateRequest(array $rules, Request $request)
+    public function validateRequest(array $rules, Request $request, $messages = [])
     {
-        $validation = Validator::make($request->all(), $rules);
+        $validation = Validator::make($request->all(), $rules, $messages);
 
         if ($validation->fails()) {
             throw new KyandaException($validation->errors()->first());
