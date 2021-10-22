@@ -75,10 +75,14 @@ class Controller extends BaseController
     public function billPayment(Request $request): KyandaRequest
     {
         $this->validateRequest([
+            'phone' => 'required|integer|digits_between:9,12',
             'account_no' => 'required|integer',
             'amount' => 'required|integer',
             'provider' => 'required|string',
         ], $request, [
+            'phone.required' => 'Phone number is required.',
+            'phone.integer' => 'Invalid phone number. Must not start with zero.',
+            'phone.digits_between' => 'The phone number must be between 9 and 12 digits long.',
             'account_no.integer' => 'Invalid account number. Must not start with zero.',
             'amount.integer' => 'Invalid amount. Must not start with zero.',
             'provider.required' => 'Service provider(telco) is required.',
@@ -87,7 +91,8 @@ class Controller extends BaseController
         return Utility::billPayment(
             $request->input('account_no'),
             $request->input('amount'),
-            $request->input('provider')
+            $request->input('provider'),
+            $request->input('phone'),
         );
     }
 
