@@ -57,11 +57,12 @@ class Controller extends BaseController
     public function airtimePurchase(Request $request): KyandaRequest
     {
         $this->validateRequest([
-            'phone' => 'required|integer|min:9|max:12',
+            'phone' => 'required|integer|digits_between:9,12',
             'amount' => 'required|integer'
         ], $request, [
             'phone.required' => 'Phone number is required.',
             'phone.integer' => 'Invalid phone number. Must not start with zero.',
+            'phone.digits_between' => 'The phone number must be between 9 and 12 digits long.',
             'amount.integer' => 'Invalid amount. Must not start with zero.',
         ]);
 
