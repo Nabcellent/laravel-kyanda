@@ -30,8 +30,8 @@ class Utility extends Core
 //        TODO: Amount Limits? Amount validation?
 //        TODO: Should we allow initiator phone as fn parameter?
         $body = [
-            'phone' => $phone,
             'amount' => $amount,
+            'phone' => $phone,
             'telco' => $telco,
             'initiatorPhone' => $phone,
         ];
