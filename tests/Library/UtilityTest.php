@@ -80,7 +80,7 @@ class UtilityTest extends MockServerTestCase
 
         $res = (new Utility($this->_client))->billPayment(765432100, 10, Providers::DSTV, false);
 
-        $this->assertIsArray($res);
+        $this->assertTrue(is_array($res) || $res instanceof KyandaRequest);
         $this->assertEquals('0000', $res['status_code']);
     }
 
@@ -91,7 +91,7 @@ class UtilityTest extends MockServerTestCase
             new Response(200, ['Content_type' => 'application/json'],
                 json_encode($this->mockResponses['request_success'])));
 
-        $res = (new Utility($this->_client))->billPayment(765432100, 10, Providers::DSTV);
+        $res = (new Utility($this->_client))->billPayment(765432100, 10, Providers::DSTV, 765432100);
 
         $this->assertInstanceOf(KyandaRequest::class, $res);
     }
@@ -101,6 +101,6 @@ class UtilityTest extends MockServerTestCase
     {
         $this->expectException(KyandaException::class);
 
-        (new Utility($this->_client))->billPayment(765432100, 10, Providers::SAFARICOM);
+        (new Utility($this->_client))->billPayment(765432100, 10, Providers::SAFARICOM, 765432100);
     }
 }
