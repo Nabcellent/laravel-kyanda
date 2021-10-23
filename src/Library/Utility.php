@@ -9,6 +9,7 @@ use Nabcellent\Kyanda\Models\KyandaRequest;
 
 /**
  * Class Utility
+ *
  * @package Nabcellent\Kyanda\Library
  */
 class Utility extends Core
@@ -23,23 +24,22 @@ class Utility extends Core
      * @throws GuzzleException
      * @throws KyandaException
      */
-    public function airtimePurchase(int $phone, int $amount, bool $save = true): array | KyandaRequest
-    {
+    public function airtimePurchase(int $phone, int $amount, bool $save = true): array | KyandaRequest {
         $telco = $this->getTelcoFromPhone($phone);
         $phone = $this->formatPhoneNumber($phone);
 
 //        TODO: Amount Limits? Amount validation?
 //        TODO: Should we allow initiator phone as fn parameter?
         $body = [
-            'amount' => $amount,
-            'phone' => $phone,
-            'telco' => $telco,
+            'amount'         => $amount,
+            'phone'          => $phone,
+            'telco'          => $telco,
             'initiatorPhone' => $phone,
         ];
 
         $response = $this->request('airtime', $body);
 
-        if ($save) {
+        if($save) {
             return $this->saveRequest($response);
         }
 
@@ -58,18 +58,21 @@ class Utility extends Core
      * @throws GuzzleException
      * @throws KyandaException
      */
-    public function billPayment(int $accountNo, int $amount, string $provider, int $phone, bool $save = true): array | KyandaRequest
-    {
+    public function billPayment(int $accountNo, int $amount, string $provider, int $phone, bool $save = true): array | KyandaRequest {
 //        TODO: Should we allow initiator phone as fn parameter?
 
 //        TODO: Refactor this to testable function...seems ok
         $allowedProviders = [
-            Providers::KPLC_PREPAID, Providers::KPLC_POSTPAID,
-            Providers::GOTV, Providers::DSTV, Providers::ZUKU, Providers::STARTIMES,
+            Providers::KPLC_PREPAID,
+            Providers::KPLC_POSTPAID,
+            Providers::GOTV,
+            Providers::DSTV,
+            Providers::ZUKU,
+            Providers::STARTIMES,
             Providers::NAIROBI_WTR
         ];
 
-        if (!in_array(strtoupper($provider), $allowedProviders)) {
+        if(!in_array(strtoupper($provider), $allowedProviders)) {
             throw new KyandaException("Provider does not seem to be valid or supported");
         }
 
@@ -77,15 +80,15 @@ class Utility extends Core
 
 //        TODO: Confirm whether initiator phone is necessary
         $body = [
-            'amount' => $amount,
-            'account' => $accountNo,
-            'telco' => $provider,
+            'amount'         => $amount,
+            'account'        => $accountNo,
+            'telco'          => $provider,
             'initiatorPhone' => $phone,
         ];
 
         $response = $this->request('bill', $body);
 
-        if ($save) {
+        if($save) {
             return $this->saveRequest($response);
         }
 
@@ -97,14 +100,13 @@ class Utility extends Core
      * @throws KyandaException
      * @noinspection PhpUndefinedMethodInspection
      */
-    private function saveRequest(array $response): KyandaRequest
-    {
-        if ($response['status_code'] == 0000) {
+    private function saveRequest(array $response): KyandaRequest {
+        if($response['status_code'] == 0000) {
             $request = KyandaRequest::create([
-                'status_code' => $response['status_code'],
-                'status' => $response['status'],
+                'status_code'        => $response['status_code'],
+                'status'             => $response['status'],
                 'merchant_reference' => $response['transactionId'],
-                'message' => $response['transactiontxt']
+                'message'            => $response['transactiontxt']
             ]);
 
 //            TODO: Should we make multiple event types? i.e. KyandaAirtimeRequestEvent, KyandaBillRequestEvent ...
