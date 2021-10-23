@@ -58,12 +58,13 @@ class Controller extends BaseController
     {
         $this->validateRequest([
             'phone' => 'required|integer|digits_between:9,12',
-            'amount' => 'required|integer'
+            'amount' => 'required|integer|min:10'
         ], $request, [
             'phone.required' => 'Phone number is required.',
             'phone.integer' => 'Invalid phone number. Must not start with zero.',
             'phone.digits_between' => 'The phone number must be between 9 and 12 digits long.',
             'amount.integer' => 'Invalid amount. Must not start with zero.',
+            'amount.min' => 'Minimum allowed amount is KSH.10/=',
         ]);
 
         return Utility::airtimePurchase($request->input('phone'), $request->input('amount'));
