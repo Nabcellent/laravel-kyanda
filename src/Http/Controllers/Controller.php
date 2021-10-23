@@ -106,9 +106,11 @@ class Controller extends BaseController
      */
     public function registerCallbackURL(Request $request): array
     {
-        if (!$request->has('callback_url')) {
-            throw new KyandaException("Please provide a callback URL.");
-        }
+        $this->validateRequest([
+            'callback_url' => 'required|url',
+        ], $request, [
+            'callback_url.url' => 'Invalid callback URL.',
+        ]);
 
         return Notification::registerCallbackURL($request->input('callback_url'));
     }
