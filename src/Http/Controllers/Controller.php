@@ -102,9 +102,14 @@ class Controller extends BaseController
      *
      * @param Request $request
      * @return array
+     * @throws KyandaException
      */
     public function registerCallbackURL(Request $request): array
     {
+        if (!$request->has('callback_url')) {
+            throw new KyandaException("Please provide a callback URL.");
+        }
+
         return Notification::registerCallbackURL($request->input('callback_url'));
     }
 
