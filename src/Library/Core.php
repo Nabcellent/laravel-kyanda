@@ -47,7 +47,9 @@ public function sendRequest(string $endpoint, array $body): ResponseInterface
     }
 
 //        Added these to reduce redundancy in child classes
-    $body = $this->attachMerchantStart ? ['MerchantID' => $merchantId] + $body : $body + ['MerchantID' => $merchantId];
+    $body = $this->attachMerchantStart
+        ? ['MerchantID' => $merchantId] + $body
+        : $body + ['MerchantID' => $merchantId];
     $body += ['signature' => $this->buildSignature($body)];
 
     return $this->baseClient->clientInterface->request('POST', $endpoint, [
@@ -161,8 +163,9 @@ public function getTelcoFromPhone(int $phone): string
     }
 
     if (!Str::startsWith($number, "0")) {
-//            Means the number started with correct digits but after replacing, found invalid digit e.g. 254256000000
-//            2547 isn't found and so 0 does not replace it, which means false number
+        //  Means the number started with correct digits but after replacing,
+        //  found invalid digit e.g. 254256000000
+        //  2547 isn't found and so 0 does not replace it, which means false number
         throw new KyandaException("Number does not seem to be a valid phone");
     }
 
