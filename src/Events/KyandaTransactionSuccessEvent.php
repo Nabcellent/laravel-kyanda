@@ -16,8 +16,7 @@ class KyandaTransactionSuccessEvent
     /**
      * @param KyandaTransaction $transaction
      */
-    public function __construct(
-    public KyandaTransaction $transaction
-    ) {
+    public function __construct(public KyandaTransaction $transaction)
+    {
     }
 }
