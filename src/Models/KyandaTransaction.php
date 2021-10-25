@@ -3,8 +3,10 @@
 namespace Nabcellent\Kyanda\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Nabcellent\Kyanda\Database\Factories\KyandaTransactionFactory;
 
 /**
  * Nabcellent\Kyanda\Models\KyandaTransaction
@@ -27,6 +29,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class KyandaTransaction extends Model
 {
+    use HasFactory;
+
     protected $guarded = ['id'];
 
     protected $dates = [
@@ -40,5 +44,10 @@ class KyandaTransaction extends Model
     public function request(): HasOne
     {
         return $this->hasOne(KyandaRequest::class, 'merchant_reference', 'transaction_reference');
+    }
+
+    protected static function newFactory(): KyandaTransactionFactory
+    {
+        return KyandaTransactionFactory::new();
     }
 }

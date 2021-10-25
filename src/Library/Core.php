@@ -75,10 +75,9 @@ public function request(string $endpoint, array $body): array
         $response = $this->sendRequest($endpoint, $body);
         $_body = json_decode($response->getBody());
 
+//        TODO: What about 201? Is this necessary?
         if ($response->getStatusCode() !== 200) {
-            $message = $_body->transactiontxt
-                ? $_body->status_code . ' - ' . $_body->transactiontxt
-                : $response->getBody();
+            $message = $_body->status_code . ' - ' . $_body->transactiontxt;
             throw new KyandaException($message);
         }
 

@@ -78,9 +78,9 @@ class UtilityTest extends MockServerTestCase
             new Response(200, ['Content_type' => 'application/json'],
                 json_encode($this->mockResponses['request_success'])));
 
-        $res = (new Utility($this->_client))->billPayment(765432100, 10, Providers::DSTV, false);
+        $res = (new Utility($this->_client))->billPayment(765432100, 10, Providers::DSTV, 765432100, false);
 
-        $this->assertTrue(is_array($res) || $res instanceof KyandaRequest);
+        $this->assertIsArray($res);
         $this->assertEquals('0000', $res['status_code']);
     }
 
