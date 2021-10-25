@@ -11,8 +11,6 @@ use Nabcellent\Kyanda\Exceptions\KyandaException;
  */
 class Account extends Core
 {
-    protected bool $attachMerchantStart = true;
-
 //    TODO: account balance
 //    Add Account balance function/process here
     /**
@@ -36,6 +34,8 @@ class Account extends Core
      */
     public function transactionStatus(string $reference): array
     {
+        $this->attachMerchantStart = true;
+
         $body = [
             "transactionRef" => $reference,
         ];

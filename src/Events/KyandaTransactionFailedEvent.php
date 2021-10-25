@@ -14,11 +14,11 @@ class KyandaTransactionFailedEvent
     use SerializesModels;
 
 //    TODO: Change this when error returned is confirmed
+
     /**
      * @param KyandaTransaction $transaction
      */
-    public function __construct(
-        public KyandaTransaction $transaction
-    ) {
+    public function __construct(public KyandaTransaction $transaction)
+    {
     }
 }
