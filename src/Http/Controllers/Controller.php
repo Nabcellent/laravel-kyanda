@@ -57,11 +57,17 @@ class Controller extends BaseController
     public function airtimePurchase(Request $request): KyandaRequest
     {
         $this->validateRequest([
-            'phone_number' => 'required|integer',
-            'amount' => 'required|numeric'
-        ], $request);
+            'phone' => 'required|integer|digits_between:9,12',
+            'amount' => 'required|integer|min:10'
+        ], $request, [
+            'phone.required' => 'Phone number is required.',
+            'phone.integer' => 'Invalid phone number. Must not start with zero.',
+            'phone.digits_between' => 'The phone number must be between 9 and 12 digits long.',
+            'amount.integer' => 'Invalid amount. Must not start with zero.',
+            'amount.min' => 'Minimum allowed amount is KSH.10/=',
+        ]);
 
-        return Utility::airtimePurchase($request->input('phone_number'), $request->input('amount'));
+        return Utility::airtimePurchase($request->input('phone'), $request->input('amount'));
     }
 
     /**
@@ -70,15 +76,24 @@ class Controller extends BaseController
     public function billPayment(Request $request): KyandaRequest
     {
         $this->validateRequest([
-            'account_number' => 'required|integer',
+            'phone' => 'required|integer|digits_between:9,12',
+            'account_no' => 'required|integer',
             'amount' => 'required|integer',
-            'service_provider' => 'required|string',
-        ], $request);
+            'provider' => 'required|string',
+        ], $request, [
+            'phone.required' => 'Phone number is required.',
+            'phone.integer' => 'Invalid phone number. Must not start with zero.',
+            'phone.digits_between' => 'The phone number must be between 9 and 12 digits long.',
+            'account_no.integer' => 'Invalid account number. Must not start with zero.',
+            'amount.integer' => 'Invalid amount. Must not start with zero.',
+            'provider.required' => 'Service provider(telco) is required.',
+        ]);
 
         return Utility::billPayment(
-            $request->input('accountNumber'),
+            $request->input('account_no'),
             $request->input('amount'),
-            $request->input('provider')
+            $request->input('provider'),
+            $request->input('phone'),
         );
     }
 
@@ -88,9 +103,16 @@ class Controller extends BaseController
      *
      * @param Request $request
      * @return array
+     * @throws KyandaException
      */
     public function registerCallbackURL(Request $request): array
     {
+        $this->validateRequest([
+            'callback_url' => 'required|url',
+        ], $request, [
+            'callback_url.url' => 'Invalid callback URL.',
+        ]);
+
         return Notification::registerCallbackURL($request->input('callback_url'));
     }
 
@@ -108,9 +130,9 @@ class Controller extends BaseController
     /**
      * @throws KyandaException
      */
-    public function validateRequest(array $rules, Request $request)
+    public function validateRequest(array $rules, Request $request, $messages = [])
     {
-        $validation = Validator::make($request->all(), $rules);
+        $validation = Validator::make($request->all(), $rules, $messages);
 
         if ($validation->fails()) {
             throw new KyandaException($validation->errors()->first());

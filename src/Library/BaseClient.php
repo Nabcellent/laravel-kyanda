@@ -11,18 +11,14 @@ use GuzzleHttp\ClientInterface;
  */
 class BaseClient
 {
-    public function __construct(
-        /**
-         * @var ClientInterface
-         */
-        public ClientInterface $clientInterface,
-
-        /**
-         * @var bool
-         * Determine whether merchant id will be attached at the start or end
-         */
-        protected bool            $attachMerchantStart = false
-    )
+    /**
+     *
+     * @param ClientInterface $clientInterface
+     * @param bool            $attachMerchantStart
+     * @var bool
+     * Determine whether merchant id will be attached at the start or end
+     */
+    public function __construct(public ClientInterface $clientInterface, protected bool $attachMerchantStart = false)
     {
     }
 }
