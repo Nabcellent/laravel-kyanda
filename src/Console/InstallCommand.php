@@ -31,8 +31,6 @@ class InstallCommand extends Command
     {
         $this->info('Installing Kyanda Scaffolding...');
 
-        $this->info('Publishing Kyanda Provider...');
-
         if (File::exists(config_path('kyanda.php'))) {
             if ($this->shouldOverwriteConfig()) {
                 $this->info('Overwriting configuration file...');
