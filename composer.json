@@ -6,11 +6,11 @@
     "Kyanda",
     "Payments",
     "Bank",
-    "mobile Money",
+    "Mobile Money",
     "Utility Payments",
     "Payment Collections"
   ],
-  "description": "Kyanda API library",
+  "description": "Kyanda API Library",
   "license": "MIT",
   "require": {
     "php": "^8.0|^8.1",
@@ -26,7 +26,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Nabcellent\\Kyanda\\": "src"
+      "Nabcellent\\Kyanda\\": "src",
+      "Nabcellent\\Kyanda\\Database\\Factories\\": "database/factories"
     }
   },
   "autoload-dev": {
@@ -35,7 +36,7 @@
     }
   },
   "scripts": {
-    "test": "phpunit",
+    "test": "phpunit --testdox",
     "test-coverage": "phpunit --coverage-clover coverage.xml",
     "test-coverage-html": "phpunit --coverage-html coverage",
     "check-style": "phpcs -p --standard=PSR12 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src",

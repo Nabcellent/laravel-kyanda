@@ -16,7 +16,7 @@ class KyandaTransactionTest extends TestCase
     /** @test */
     function a_transaction_has_correct_attributes()
     {
-        $request = KyandaTransaction::create([
+        $request = KyandaTransaction::factory()->create([
             'transaction_reference' => 'KYAAPI677833',
             'category' => 'UtilityPayment',
             'source' => 'PaymentWallet',
@@ -46,7 +46,7 @@ class KyandaTransactionTest extends TestCase
     /** @test */
     function a_transaction_has_unique_transaction_reference()
     {
-        KyandaTransaction::create([
+        KyandaTransaction::factory()->create([
             'transaction_reference' => 'KYAAPI677833',
             'category' => 'UtilityPayment',
             'source' => 'PaymentWallet',
@@ -61,7 +61,7 @@ class KyandaTransactionTest extends TestCase
         ]);
 
         try {
-            KyandaTransaction::create([
+            KyandaTransaction::factory()->create([
                 'transaction_reference' => 'KYAAPI677833',
                 'category' => 'UtilityPayment',
                 'source' => 'PaymentWallet',
@@ -77,5 +77,34 @@ class KyandaTransactionTest extends TestCase
         } catch (QueryException $e) {
             $this->assertStringContainsString("UNIQUE constraint failed", $e->getMessage());
         }
+    }
+
+    /** @test */
+    function a_request_has_one_transaction()
+    {
+        $request = KyandaRequest::factory()->create([
+            'status_code' => '0000',
+            'status' => 'Success',
+            'merchant_reference' => 'KYAAPI677833',
+            'message' => 'Your request has been posted successfully!'
+        ]);
+
+        $transaction = KyandaTransaction::factory()->create([
+            'transaction_reference' => 'KYAAPI677833',
+            'category' => 'UtilityPayment',
+            'source' => 'PaymentWallet',
+            'destination' => '0715330000',
+            'merchant_id' => 'kyanda',
+            'details' => ['biller_receiptNo' => '0105781244210'],
+            'status' => 'Success',
+            'status_code' => '0000',
+            'message' => 'Your request has been processed successfully.',
+            'amount' => '1500',
+            'transaction_date' => Carbon::createFromFormat('Ymdhis', '20210401091002'),
+        ]);
+
+        $transactionRequest = $transaction->request;
+
+        $this->assertEquals($transaction->transaction_reference, $transactionRequest->merchant_reference);
     }
 }
