@@ -49,8 +49,20 @@ class TransactionStatusCommand extends Command
     {
         $results = $this->kyanda->queryTransactionStatus();
 
-        foreach ($results as $reference => $message) {
-            $this->comment("$reference ---> $message");
+        if (count($results['successful'])) {
+            $this->info("Successful queries: ");
+
+            foreach ($results['successful'] as $reference => $message) {
+                $this->comment(" * $reference ---> $message");
+            }
+        }
+
+        if (count($results['errors'])) {
+            $this->info("Failed queries: ");
+
+            foreach ($results['errors'] as $reference => $message) {
+                $this->comment(" * $reference ---> $message");
+            }
         }
     }
 }
