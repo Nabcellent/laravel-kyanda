@@ -27,7 +27,7 @@ class CreateKyandaTransactionsTable extends Migration
 
                 $table->string('status');
                 $table->integer('status_code');
-                $table->string('message');
+                $table->string('message')->nullable();
                 $table->json('details');
 
                 $table->integer('amount');
