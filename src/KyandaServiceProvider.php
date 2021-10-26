@@ -4,6 +4,7 @@ namespace Nabcellent\Kyanda;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
+use Nabcellent\Kyanda\Console\TransactionStatusCommand;
 use Nabcellent\Kyanda\Library\Account;
 use Nabcellent\Kyanda\Library\BaseClient;
 use Nabcellent\Kyanda\Library\Notification;
@@ -105,6 +106,7 @@ class KyandaServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 Console\InstallCommand::class,
+                TransactionStatusCommand::class
             ]);
         }
     }
