@@ -51,10 +51,16 @@ class Kyanda
                     'status' => $status['details']->status,
                     'status_code' => $status['status'],
                     'amount' => $status['details']->amount,
-                    'transaction_date' => Carbon::createFromFormat('d-m-Y g:i a', $status['details']->transactionDate),
+                    'transaction_date' => Carbon::createFromFormat(
+                        'd-m-Y g:i a',
+                        $status['details']->transactionDate
+                    ),
                 ];
 
-                $callback = KyandaTransaction::updateOrCreate(['transaction_reference' => $status['details']->transactionRef], $data);
+                $callback = KyandaTransaction::updateOrCreate(
+                    ['transaction_reference' => $status['details']->transactionRef],
+                    $data
+                );
 
                 $this->fireKyandaEvent($callback);
             } catch (Exception | GuzzleException $e) {

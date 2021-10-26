@@ -23,17 +23,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class KyandaRequest extends Model
 {
-    use HasFactory;
-
     protected $guarded = ['id'];
 
     public function transaction(): HasOne
     {
         return $this->hasOne(KyandaTransaction::class, 'transaction_reference', 'merchant_reference');
-    }
-
-    protected static function newFactory(): \Nabcellent\Kyanda\Database\Factories\KyandaRequestFactory
-    {
-        return \Nabcellent\Kyanda\Database\Factories\KyandaRequestFactory::new();
     }
 }

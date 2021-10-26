@@ -7,7 +7,7 @@ use Nabcellent\Kyanda\Models\KyandaRequest;
 
 /**
  * @method static array|KyandaRequest airtimePurchase(int $phone, int $amount, int $relationId = null)
- * @method static array|KyandaRequest billPayment(int $accountNumber, int $amount, string $provider, int $phone, int $relationId = null)
+ * @method static array billPayment(int $account, int $amount, string $provider, int $phone, int $relationId = null)
  *
  * @see \Nabcellent\Kyanda\Library\Utility
  */
