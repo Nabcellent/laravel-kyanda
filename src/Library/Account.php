@@ -11,8 +11,7 @@ use Nabcellent\Kyanda\Exceptions\KyandaException;
  */
 class Account extends Core
 {
-//    TODO: account balance
-//    Add Account balance function/process here
+    //  Check account balance
     /**
      * @return array
      * @throws KyandaException
@@ -20,12 +19,12 @@ class Account extends Core
      */
     public function balance(): array
     {
-        return (array) $this->request('account_balance', []);
+        return $this->request('account_balance', []);
     }
 
 
-//    TODO: transaction status
-//    Add transaction check function/process here
+
+    //  Check transaction status
     /**
      * @param string $reference
      * @return array
@@ -40,6 +39,6 @@ class Account extends Core
             "transactionRef" => $reference,
         ];
 
-        return (array) $this->request('transaction_status', $body);
+        return $this->request('transaction_status', $body);
     }
 }
