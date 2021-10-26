@@ -13,7 +13,7 @@
   "description": "Kyanda API Library",
   "license": "MIT",
   "require": {
-    "php": "^8.0|^8.1",
+    "php": "^7.4|^8.0",
     "guzzlehttp/guzzle": "^7.3",
     "illuminate/support": "^8.64",
     "ext-json": "*",

@@ -34,7 +34,7 @@ class UtilityTest extends MockServerTestCase
 
         $res = (new Utility($this->_client))->airtimePurchase("700000000", 10);
 
-        $this->assertInstanceOf(KyandaRequest::class, $res);
+        $this->assertIsArray($res);
     }
 
     /** @test */
@@ -93,7 +93,7 @@ class UtilityTest extends MockServerTestCase
 
         $res = (new Utility($this->_client))->billPayment(765432100, 10, Providers::DSTV, 765432100);
 
-        $this->assertInstanceOf(KyandaRequest::class, $res);
+        $this->assertIsArray($res);
     }
 
     /** @test */

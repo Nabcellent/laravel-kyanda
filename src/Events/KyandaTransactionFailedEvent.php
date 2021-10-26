@@ -13,12 +13,15 @@ class KyandaTransactionFailedEvent
     use InteractsWithSockets;
     use SerializesModels;
 
+    public KyandaTransaction $transaction;
+
 //    TODO: Change this when error returned is confirmed
 
     /**
      * @param KyandaTransaction $transaction
      */
-    public function __construct(public KyandaTransaction $transaction)
+    public function __construct(KyandaTransaction $transaction)
     {
+        $this->transaction = $transaction;
     }
 }
