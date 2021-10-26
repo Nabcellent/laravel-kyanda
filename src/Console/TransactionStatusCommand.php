@@ -49,6 +49,8 @@ class TransactionStatusCommand extends Command
     {
         $results = $this->kyanda->queryTransactionStatus();
 
-        $this->info(json_encode($results));
+        foreach ($results as $reference => $message) {
+            $this->comment("$reference ---> $message");
+        }
     }
 }
