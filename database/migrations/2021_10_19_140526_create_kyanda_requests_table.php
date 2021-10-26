@@ -16,7 +16,7 @@ class CreateKyandaRequestsTable extends Migration
         Schema::create(
             'kyanda_requests',
             function (Blueprint $table) {
-                $table->id();
+                $table->bigIncrements('id');
 
                 $table->string('status');
                 $table->integer('status_code');
