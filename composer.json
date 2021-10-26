@@ -14,8 +14,8 @@
   "license": "MIT",
   "require": {
     "php": "^7.4|^8.0",
-    "guzzlehttp/guzzle": "^7.3",
-    "illuminate/support": "^8.64",
+    "guzzlehttp/guzzle": "^6.0|^7.0",
+    "illuminate/support": "^7.0|^8.0",
     "ext-json": "*",
     "ext-openssl": "*"
   },
