@@ -16,7 +16,7 @@ class KyandaRequestTest extends TestCase
     /** @test */
     function a_request_has_correct_attributes()
     {
-        $request = KyandaRequest::factory()->create([
+        $request = KyandaRequest::create([
             'status_code' => '0000',
             'status' => 'Success',
             'merchant_reference' => 'KYAAPI677833',
@@ -32,7 +32,7 @@ class KyandaRequestTest extends TestCase
     /** @test */
     function a_request_has_unique_merchant_reference()
     {
-        KyandaRequest::factory()->create([
+        KyandaRequest::create([
             'status_code' => '0000',
             'status' => 'Success',
             'merchant_reference' => 'KYAAPI677833',
@@ -40,7 +40,7 @@ class KyandaRequestTest extends TestCase
         ]);
 
         try {
-            KyandaRequest::factory()->create([
+            KyandaRequest::create([
                 'status_code' => '0000',
                 'status' => 'Success',
                 'merchant_reference' => 'KYAAPI677833',
@@ -54,14 +54,14 @@ class KyandaRequestTest extends TestCase
     /** @test */
     function a_request_has_one_transaction()
     {
-        $request = KyandaRequest::factory()->create([
+        $request = KyandaRequest::create([
             'status_code' => '0000',
             'status' => 'Success',
             'merchant_reference' => 'KYAAPI677833',
             'message' => 'Your request has been posted successfully!'
         ]);
 
-        $transaction = KyandaTransaction::factory()->create([
+        $transaction = KyandaTransaction::create([
             'transaction_reference' => 'KYAAPI677833',
             'category' => 'UtilityPayment',
             'source' => 'PaymentWallet',

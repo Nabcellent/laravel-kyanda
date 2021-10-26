@@ -52,7 +52,7 @@ abstract class MockServerTestCase extends TestCase
                 'status' => 'Success',
                 'transactionDate' => '23-05-2021 10:29 pm',
                 'transactionFee' => '50',
-                'transactionRef' => 'KYAAPI_____',
+                'transactionRef' => 'KYAAPI677833',
                 'amount' => '1500'
             ]
         ],
@@ -66,6 +66,22 @@ abstract class MockServerTestCase extends TestCase
             "status" => "Failed",
             "status_code" => "5000",
             "transactiontxt" => "Unexpected error has occurred."
+        ],
+        'transaction_status_failed' => [
+            'status' => '1101',
+            'details' => [
+                'category' => 'BankPayout',
+                'source' => 'PaymentWallet',
+                'destination' => '2042581154',
+                'MerchantID' => 'kyanda',
+                'details' => [],
+                'requestMetadata' => [],
+                'status' => 'Failed',
+                'transactionDate' => '23-05-2021 10:29 pm',
+                'transactionFee' => '50',
+                'transactionRef' => 'KYAAPI677834',
+                'amount' => '1500'
+            ]
         ],
     ];
 }

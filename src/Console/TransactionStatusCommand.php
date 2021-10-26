@@ -66,7 +66,7 @@ class TransactionStatusCommand extends Command
         }
 
         if (empty($results['successful']) && empty($results['errors'])) {
-            $this->info("Nothing to query... all transactions seem to be ok.");
+            $this->comment("Nothing to query... all transactions seem to be ok.");
         }
     }
 }

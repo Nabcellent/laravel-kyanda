@@ -6,7 +6,6 @@ use GuzzleHttp\Psr7\Response;
 use Nabcellent\Kyanda\Exceptions\KyandaException;
 use Nabcellent\Kyanda\Library\Providers;
 use Nabcellent\Kyanda\Library\Utility;
-use Nabcellent\Kyanda\Models\KyandaRequest;
 use Nabcellent\Kyanda\Tests\MockServerTestCase;
 
 
