@@ -23,6 +23,8 @@ class CreateKyandaRequestsTable extends Migration
                 $table->string('merchant_reference')->unique();
                 $table->string('message');
 
+                $table->foreignId('relation_id')->nullable();
+
                 $table->timestamps();
             }
         );
