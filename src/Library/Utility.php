@@ -17,14 +17,15 @@ class Utility extends Core
 //    TODO: airtime purchase
 //    Add airtime purchase function/process here
     /**
-     * @param int  $phone
-     * @param int  $amount
+     * @param int $phone
+     * @param int $amount
+     * @param int|null $relationId
      * @param bool $save
      * @return array|KyandaRequest
      * @throws GuzzleException
      * @throws KyandaException
      */
-    public function airtimePurchase(int $phone, int $amount, bool $save = true): array
+    public function airtimePurchase(int $phone, int $amount, int $relationId = null, bool $save = true): array
     {
         $telco = $this->getTelcoFromPhone($phone);
         $phone = $this->formatPhoneNumber($phone);
@@ -41,7 +42,7 @@ class Utility extends Core
         $response = $this->request('airtime', $body);
 
         if ($save) {
-            return (array) $this->saveRequest($response);
+            return (array) $this->saveRequest($response, $relationId);
         }
 
         return $response;
@@ -50,11 +51,12 @@ class Utility extends Core
 //    TODO: bill payment
 //    Add bill payment function/process here
     /**
-     * @param int    $accountNo
-     * @param int    $amount
+     * @param int $accountNo
+     * @param int $amount
      * @param string $provider
-     * @param int    $phone
-     * @param bool   $save
+     * @param int $phone
+     * @param int|null $relationId
+     * @param bool $save
      * @return array|KyandaRequest
      * @throws GuzzleException
      * @throws KyandaException
@@ -64,6 +66,7 @@ class Utility extends Core
         int $amount,
         string $provider,
         int $phone,
+        int $relationId = null,
         bool $save = true
     ): array {
 //        TODO: Should we allow initiator phone as fn parameter?
@@ -96,7 +99,7 @@ class Utility extends Core
         $response = $this->request('bill', $body);
 
         if ($save) {
-            return (array) $this->saveRequest($response);
+            return (array) $this->saveRequest($response, $relationId);
         }
 
         return $response;
@@ -106,14 +109,15 @@ class Utility extends Core
     /**
      * @throws KyandaException
      */
-    private function saveRequest(array $response): KyandaRequest
+    private function saveRequest(array $response, int $relationId = null): KyandaRequest
     {
         if ($response['status_code'] == 0000) {
             $request = KyandaRequest::factory()->create([
                 'status_code'        => $response['status_code'],
                 'status'             => $response['status'],
                 'merchant_reference' => $response['transactionId'],
-                'message'            => $response['transactiontxt']
+                'message'            => $response['transactiontxt'],
+                'relation_id'        => $relationId
             ]);
 
 //            TODO: Should we make multiple event types? i.e. KyandaAirtimeRequestEvent, KyandaBillRequestEvent ...

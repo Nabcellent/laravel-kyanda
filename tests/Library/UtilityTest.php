@@ -18,7 +18,7 @@ class UtilityTest extends MockServerTestCase
             new Response(200, ['Content_type' => 'application/json'],
                 json_encode($this->mockResponses['request_success'])));
 
-        $res = (new Utility($this->_client))->airtimePurchase(765432100, 10, false);
+        $res = (new Utility($this->_client))->airtimePurchase(765432100, 10, null, false);
 
         $this->assertIsArray($res);
         $this->assertEquals('0000', $res['status_code']);
@@ -77,7 +77,7 @@ class UtilityTest extends MockServerTestCase
             new Response(200, ['Content_type' => 'application/json'],
                 json_encode($this->mockResponses['request_success'])));
 
-        $res = (new Utility($this->_client))->billPayment(765432100, 10, Providers::DSTV, 765432100, false);
+        $res = (new Utility($this->_client))->billPayment(765432100, 10, Providers::DSTV, 765432100, null, false);
 
         $this->assertIsArray($res);
         $this->assertEquals('0000', $res['status_code']);
