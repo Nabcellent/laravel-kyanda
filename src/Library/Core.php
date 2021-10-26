@@ -20,14 +20,19 @@ use function strlen;
  */
 class Core
 {
+    private BaseClient $baseClient;
+
+    protected bool $attachMerchantStart;
 
     /**
      *
      * @param BaseClient $baseClient
      * @param bool $attachMerchantStart
      */
-    public function __construct(private BaseClient $baseClient, protected bool $attachMerchantStart = false)
+    public function __construct(BaseClient $baseClient, bool $attachMerchantStart = false)
     {
+        $this->baseClient = $baseClient;
+        $this->attachMerchantStart = $attachMerchantStart;
     }
 
 //    TODO: This should be private but figure out testing
@@ -87,7 +92,7 @@ class Core
         }
     }
 
-    private function buildSignature(array $items): bool|string
+    private function buildSignature(array $items): string
     {
 //        Check for notification body
         if (isset($items['callbackURL'])) {
@@ -114,14 +119,26 @@ class Core
         $equReg = '/^(?:254|\+254|0)?(7(6[3-6])[0-9]{6})$/';
         $faibaReg = '/^(?:254|\+254|0)?(747[0-9]{6})$/';
 
-        $result = match (1) {
-            preg_match($safReg, $phone) => Providers::SAFARICOM,
-            preg_match($airReg, $phone) => Providers::AIRTEL,
-            preg_match($telReg, $phone) => Providers::TELKOM,
-            preg_match($equReg, $phone) => Providers::EQUITEL,
-            preg_match($faibaReg, $phone) => Providers::FAIBA,
-            default => null
-        };
+        switch (1) {
+            case preg_match($safReg, $phone):
+                $result = Providers::SAFARICOM;
+                break;
+            case preg_match($airReg, $phone):
+                $result = Providers::AIRTEL;
+                break;
+            case preg_match($telReg, $phone):
+                $result = Providers::TELKOM;
+                break;
+            case preg_match($equReg, $phone):
+                $result = Providers::EQUITEL;
+                break;
+            case preg_match($faibaReg, $phone):
+                $result = Providers::FAIBA;
+                break;
+            default:
+                $result = null;
+                break;
+        }
 
         if (!$result) {
             throw new KyandaException("Phone does not seem to be valid or supported");

@@ -24,7 +24,7 @@ class Utility extends Core
      * @throws GuzzleException
      * @throws KyandaException
      */
-    public function airtimePurchase(int $phone, int $amount, bool $save = true): array | KyandaRequest
+    public function airtimePurchase(int $phone, int $amount, bool $save = true): array
     {
         $telco = $this->getTelcoFromPhone($phone);
         $phone = $this->formatPhoneNumber($phone);
@@ -41,7 +41,7 @@ class Utility extends Core
         $response = $this->request('airtime', $body);
 
         if ($save) {
-            return $this->saveRequest($response);
+            return (array) $this->saveRequest($response);
         }
 
         return $response;
@@ -65,7 +65,7 @@ class Utility extends Core
         string $provider,
         int $phone,
         bool $save = true
-    ): array | KyandaRequest {
+    ): array {
 //        TODO: Should we allow initiator phone as fn parameter?
 
 //        TODO: Refactor this to testable function...seems ok
@@ -96,7 +96,7 @@ class Utility extends Core
         $response = $this->request('bill', $body);
 
         if ($save) {
-            return $this->saveRequest($response);
+            return (array) $this->saveRequest($response);
         }
 
         return $response;
@@ -105,12 +105,11 @@ class Utility extends Core
 
     /**
      * @throws KyandaException
-     * @noinspection PhpUndefinedMethodInspection
      */
     private function saveRequest(array $response): KyandaRequest
     {
         if ($response['status_code'] == 0000) {
-            $request = KyandaRequest::create([
+            $request = KyandaRequest::factory()->create([
                 'status_code'        => $response['status_code'],
                 'status'             => $response['status'],
                 'merchant_reference' => $response['transactionId'],
