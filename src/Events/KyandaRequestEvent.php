@@ -13,10 +13,14 @@ class KyandaRequestEvent
     use InteractsWithSockets;
     use SerializesModels;
 
+
+    public KyandaRequest $request;
+
     /**
      * @param KyandaRequest $request
      */
-    public function __construct(public KyandaRequest $request)
+    public function __construct(KyandaRequest $request)
     {
+        $this->request = $request;
     }
 }
