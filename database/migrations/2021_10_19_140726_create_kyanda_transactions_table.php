@@ -16,7 +16,7 @@ class CreateKyandaTransactionsTable extends Migration
         Schema::create(
             'kyanda_transactions',
             function (Blueprint $table) {
-                $table->id();
+                $table->bigIncrements('id');
 
                 $table->string('transaction_reference')->unique();
 
