@@ -28,8 +28,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class KyandaTransaction extends Model
 {
-    use HasFactory;
-
     protected $guarded = ['id'];
 
     protected $dates = [
@@ -45,8 +43,4 @@ class KyandaTransaction extends Model
         return $this->hasOne(KyandaRequest::class, 'merchant_reference', 'transaction_reference');
     }
 
-    protected static function newFactory(): \Nabcellent\Kyanda\Database\Factories\KyandaTransactionFactory
-    {
-        return \Nabcellent\Kyanda\Database\Factories\KyandaTransactionFactory::new();
-    }
 }
