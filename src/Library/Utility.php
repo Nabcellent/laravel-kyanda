@@ -117,6 +117,7 @@ class Utility extends Core
             ]);
 
 //            TODO: Should we make multiple event types? i.e. KyandaAirtimeRequestEvent, KyandaBillRequestEvent ...
+            /** @var KyandaRequest $request */
             event(new KyandaRequestEvent($request));
             return $request;
         }

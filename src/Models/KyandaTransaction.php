@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Nabcellent\Kyanda\Database\Factories\KyandaTransactionFactory;
 
 /**
  * Nabcellent\Kyanda\Models\KyandaTransaction
@@ -46,8 +45,8 @@ class KyandaTransaction extends Model
         return $this->hasOne(KyandaRequest::class, 'merchant_reference', 'transaction_reference');
     }
 
-    protected static function newFactory(): KyandaTransactionFactory
+    protected static function newFactory(): \Nabcellent\Kyanda\Database\Factories\KyandaTransactionFactory
     {
-        return KyandaTransactionFactory::new();
+        return \Nabcellent\Kyanda\Database\Factories\KyandaTransactionFactory::new();
     }
 }
