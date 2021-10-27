@@ -73,7 +73,7 @@ class Controller extends BaseController
     /**
      * @throws KyandaException
      */
-    public function billPayment(Request $request): KyandaRequest
+    public function billPayment(Request $request): array
     {
         $this->validateRequest([
             'phone' => 'required|integer|digits_between:9,12',
