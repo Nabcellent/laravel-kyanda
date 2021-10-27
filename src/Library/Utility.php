@@ -167,6 +167,5 @@ class Utility extends Core
         }
 
         return true;
-
     }
 }
