@@ -39,30 +39,35 @@ class Kyanda
 //                    continue;
 //                }
 
-                $success[$request->merchant_reference] = $status['details']->status;
+                $success[$request->merchant_reference] = $status['details']->Status;
 
                 $data = [
                     'transaction_reference' => $status['details']->transactionRef,
-                    'category' => $status['details']->category,
+                    'category' => $status['details']->Category,
                     'source' => $status['details']->source,
-                    'destination' => $status['details']->destination,
                     'merchant_id' => $status['details']->MerchantID,
                     'details' => $status['details']->details,
-                    'status' => $status['details']->status,
+                    'destination' => $status['details']->Phone,
+                    'status' => $status['details']->Status,
+                    'message' => $status['details']->message,
                     'status_code' => $status['status'],
-                    'amount' => $status['details']->amount,
+                    'amount' => $status['details']->Amount,
                     'transaction_date' => Carbon::createFromFormat(
                         'd-m-Y g:i a',
-                        $status['details']->transactionDate
+                        $status['details']->Posted_Time
                     ),
                 ];
 
-                $callback = KyandaTransaction::updateOrCreate(
+                $transaction = KyandaTransaction::updateOrCreate(
                     ['transaction_reference' => $status['details']->transactionRef],
                     $data
                 );
 
-                $this->fireKyandaEvent($callback);
+                $request->update([
+                    'status' => $transaction->status
+                ]);
+
+                $this->fireKyandaEvent($transaction);
             } catch (Exception | GuzzleException $e) {
                 $errors[$request->merchant_reference] = $e->getMessage();
             }

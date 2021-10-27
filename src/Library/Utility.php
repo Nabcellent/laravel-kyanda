@@ -90,8 +90,8 @@ class Utility extends Core
 
 //        TODO: Confirm whether initiator phone is necessary
         $body = [
-            'amount'         => $amount,
-            'account'        => $accountNo,
+            'amount'         => (string)$amount,
+            'account'        => (string)$accountNo,
             'telco'          => $provider,
             'initiatorPhone' => $phone,
         ];
@@ -111,11 +111,11 @@ class Utility extends Core
      */
     private function saveRequest(array $response, int $relationId = null): KyandaRequest
     {
-        if ($response['status_code'] == 0000) {
+        if (in_array($response['status_code'], [0000, 1100])) {
             $request = KyandaRequest::create([
                 'status_code'        => $response['status_code'],
                 'status'             => $response['status'],
-                'merchant_reference' => $response['transactionId'],
+                'merchant_reference' => $response['merchant_reference'],
                 'message'            => $response['transactiontxt'],
                 'relation_id'        => $relationId
             ]);
