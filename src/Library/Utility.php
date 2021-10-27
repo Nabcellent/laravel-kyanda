@@ -27,6 +27,8 @@ class Utility extends Core
      */
     public function airtimePurchase(int $phone, int $amount, int $relationId = null, bool $save = true): array
     {
+        $this->validate("AIRTIME", $amount);
+
         $telco = $this->getTelcoFromPhone($phone);
         $phone = $this->formatPhoneNumber($phone);
 
@@ -69,9 +71,6 @@ class Utility extends Core
         int $relationId = null,
         bool $save = true
     ): array {
-//        TODO: Should we allow initiator phone as fn parameter?
-
-//        TODO: Refactor this to testable function...seems ok
         $allowedProviders = [
             Providers::KPLC_PREPAID,
             Providers::KPLC_POSTPAID,
@@ -81,6 +80,8 @@ class Utility extends Core
             Providers::STARTIMES,
             Providers::NAIROBI_WTR
         ];
+
+        $this->validate($provider, $amount);
 
         if (!in_array(strtoupper($provider), $allowedProviders)) {
             throw new KyandaException("Provider does not seem to be valid or supported");
@@ -128,5 +129,39 @@ class Utility extends Core
 
 //        TODO: We should throw relevant exceptions based on api response
         throw new KyandaException($response['transactiontxt']);
+    }
+
+
+    /**
+     * @throws KyandaException
+     */
+    private function validate(string $validationType, int $amount)
+    {
+        $min = 0;
+        $max = 0;
+
+        switch ($validationType) {
+            case "AIRTIME":
+                $min = config('kyanda.limits.AIRTIME.min', 10);
+                $max = config('kyanda.limits.AIRTIME.max', 10000);
+
+                break;
+
+            case Providers::KPLC_POSTPAID:
+                $min = config('kyanda.limits.bills.KPLC_POSTPAID.min', 100);
+                $max = config('kyanda.limits.bills.KPLC_POSTPAID.max', 35000);
+
+                break;
+
+            default:
+                return true;
+        }
+
+        if ($amount < $min || $amount > $max) {
+            throw new KyandaException("Amount needs to be between $min and $max.");
+        }
+
+        return true;
+
     }
 }

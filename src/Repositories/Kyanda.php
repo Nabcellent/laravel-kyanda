@@ -82,7 +82,7 @@ class Kyanda
     private function fireKyandaEvent(KyandaTransaction $kyandaCallback): void
     {
 //        TODO: Check on proper status codes
-        if ($kyandaCallback['status_code'] == 0000 || $kyandaCallback['status_code'] == 200) {
+        if (in_array($kyandaCallback['status_code'], [0000])) {
             event(new KyandaTransactionSuccessEvent($kyandaCallback));
         } else {
             event(new KyandaTransactionFailedEvent($kyandaCallback));

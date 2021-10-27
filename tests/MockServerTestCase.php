@@ -43,32 +43,33 @@ abstract class MockServerTestCase extends TestCase
         'transaction_status' => [
             'status' => '200',
             'details' => [
-                'category' => 'BankPayout',
-                'source' => 'PaymentWallet',
-                'destination' => '2042581154',
-                'MerchantID' => 'kyanda',
-                'details' => [],
-                'requestMetadata' => [],
-                'status' => 'Success',
-                'transactionDate' => '23-05-2021 10:29 pm',
-                'transactionFee' => '50',
-                'transactionRef' => 'KYAAPI677833',
-                'amount' => '1500'
-            ]
-        ],
-        'query_transaction_status' => [
-            'status' => '200',
-            'details' => [
                 'Category' => 'BankPayout',
                 'source' => 'PaymentWallet',
                 'Phone' => '2042581154',
                 'MerchantID' => 'kyanda',
                 'details' => [],
                 'Status' => 'Success',
-                'status_code' => 'Success',
+                'status_code' => '0000',
                 'message' => 'Your request has been processed.',
                 'Posted_Time' => '23-05-2021 10:29 pm',
                 'transactionFee' => '50',
+                'transactionRef' => 'KYAAPI677833',
+                'Amount' => '1500'
+            ]
+        ],
+        'query_transaction_status' => [
+            'status' => '0000',
+            'details' => [
+                'Category' => 'BankPayout',
+                'source' => 'PaymentWallet',
+                'Phone' => '213220',
+                'MerchantID' => 'kyanda',
+                'details' => [],
+                'Status' => 'Success',
+                'status_code' => '0000',
+                'message' => 'Your request has been processed.',
+                'Posted_Time' => '23-05-2021 10:29 pm',
+//                'transactionFee' => '50',
                 'transactionRef' => 'KYAAPI677833',
                 'Amount' => '1500'
             ]
@@ -84,20 +85,37 @@ abstract class MockServerTestCase extends TestCase
             "status_code" => "5000",
             "transactiontxt" => "Unexpected error has occurred."
         ],
-        'transaction_status_failed' => [
-            'status' => '1101',
+        'query_transaction_status_failed' => [
+            'status' => '1102',
             'details' => [
-                'category' => 'BankPayout',
+                'Category' => 'BankPayout',
                 'source' => 'PaymentWallet',
-                'destination' => '2042581154',
+                'Phone' => '2042581154',
                 'MerchantID' => 'kyanda',
                 'details' => [],
-                'requestMetadata' => [],
-                'status' => 'Failed',
-                'transactionDate' => '23-05-2021 10:29 pm',
+                'Status' => 'Failed',
+                'status_code' => '1101',
+                'message' => 'Your request has been processed.',
+                'Posted_Time' => '23-05-2021 10:29 pm',
                 'transactionFee' => '50',
                 'transactionRef' => 'KYAAPI677834',
-                'amount' => '1500'
+                'Amount' => '1500'
+            ]
+        ],
+        'query_transaction_status_failed_2' => [
+            'status' => '1102',
+            'details' => [
+                'Category' => 'BankPayout',
+                'source' => 'PaymentWallet',
+                'Phone' => '2042581154',
+                'MerchantID' => 'kyanda',
+                'details' => [],
+                'Status' => 'Success',
+                'status_code' => 'Success',
+                'message' => 'Your request has been processed.',
+                'Posted_Time' => '23-05-2021 10:29 pm',
+                'transactionRef' => 'KYAAPI677835',
+                'Amount' => '1500'
             ]
         ],
     ];

@@ -67,4 +67,26 @@ return [
    |
    */
     'api_key' => env('KYANDA_API_KEY'),
+
+
+    /*
+   |--------------------------------------------------------------------------
+   | LIMITS
+   |--------------------------------------------------------------------------
+   |
+   | Limits - Will be given by Kyanda and used to validate
+   |
+   */
+    'limits' => [
+        'AIRTIME.min' => 10,
+        'AIRTIME.max' => 10000,
+
+        'bills' => [
+            'KPLC_POSTPAID.min' => 100,
+            'KPLC_POSTPAID.max' => 35000,
+
+            'KPLC_PREPAID.min' => 100,
+            'KPLC_PREPAID.max' => 35000,
+        ]
+    ],
 ];
