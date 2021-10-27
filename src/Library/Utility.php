@@ -111,7 +111,7 @@ class Utility extends Core
      */
     private function saveRequest(array $response, int $relationId = null): KyandaRequest
     {
-        if ($response['status_code'] == 0000) {
+        if (in_array($response['status_code'], [0000, 1100])) {
             $request = KyandaRequest::create([
                 'status_code'        => $response['status_code'],
                 'status'             => $response['status'],
