@@ -54,7 +54,7 @@ class Controller extends BaseController
      *
      * @throws KyandaException
      */
-    public function airtimePurchase(Request $request): KyandaRequest
+    public function airtimePurchase(Request $request): array
     {
         $this->validateRequest([
             'phone' => 'required|integer|digits_between:9,12',
