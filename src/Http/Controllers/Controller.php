@@ -116,7 +116,7 @@ class Controller extends BaseController
                 'callback_url.url' => 'Invalid callback URL.',
             ]);
 
-            $url = $request->input('callback_usl');
+            $url = $request->input('callback_url');
         }
 
         return Notification::registerCallbackURL($url);
