@@ -22,7 +22,7 @@ class CreateKyandaTransactionsTable extends Migration
 
                 $table->string('category');
                 $table->string('source');
-                $table->string('destination');
+                $table->string('destination')->nullable();
                 $table->string('merchant_id');
 
                 $table->string('status');

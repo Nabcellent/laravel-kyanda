@@ -39,7 +39,7 @@ class Kyanda
 //                    continue;
 //                }
 
-                $success[$request->merchant_reference] = $status['details']->status;
+                $success[$request->merchant_reference] = $status['details']->Status;
 
                 $data = [
                     'transaction_reference' => $status['details']->transactionRef,
