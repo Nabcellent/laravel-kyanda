@@ -13,7 +13,9 @@ Route::prefix('/kyanda/billing')->namespace(Controller::class)->name('kyanda.')-
 //    Route::any('mobile-payout/create', '$routes');
 //    Route::any('bank-payout/create', '$routes');
 //    Route::any('checkout/create', '$routes');
+});
 
-    Route::post('callback-url/create', [Controller::class, 'registerCallbackURL'])->name('register.callback');
-    Route::post('/kyanda/callbacks/notification', [Controller::class, 'instantPaymentNotification']);
+Route::prefix('/callbacks')->namespace(Controller::class)->name('kyanda.callback.')->group(function () {
+    Route::post('/register', [Controller::class, 'registerCallbackURL'])->name('register');
+    Route::post('/notification', [Controller::class, 'instantPaymentNotification'])->name('notification');
 });
