@@ -9,7 +9,7 @@ Route::prefix('/kyanda')->namespace(Controller::class)->name('kyanda.')->group(f
         Route::post('transaction-status', [Controller::class, 'transactionStatus'])->name('transaction.status');
 
         Route::post('airtime/create', [Controller::class, 'airtimePurchase'])->name('airtime.purchase');
-        Route::post('bill/create', [Controller::class, 'billPayment'])->name('bill.payment');
+        Route::post('bill/create', [Controller::class, 'billPayment'])->name('bill.payment');s
 
 //    Route::any('mobile-payout/create', '$routes');
 //    Route::any('bank-payout/create', '$routes');
