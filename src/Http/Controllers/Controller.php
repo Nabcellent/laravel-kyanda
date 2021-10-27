@@ -107,13 +107,19 @@ class Controller extends BaseController
      */
     public function registerCallbackURL(Request $request): array
     {
-        $this->validateRequest([
-            'callback_url' => 'required|url',
-        ], $request, [
-            'callback_url.url' => 'Invalid callback URL.',
-        ]);
+        $url = config('kyanda.urls.callback');
 
-        return Notification::registerCallbackURL($request->input('callback_url'));
+        if(!$url) {
+            $this->validateRequest([
+                'callback_url' => 'required|url',
+            ], $request, [
+                'callback_url.url' => 'Invalid callback URL.',
+            ]);
+
+            $url = $request->input('callback_url');
+        }
+
+        return Notification::registerCallbackURL($url);
     }
 
     public function instantPaymentNotification(Request $request)
