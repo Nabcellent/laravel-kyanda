@@ -5,6 +5,7 @@ namespace Nabcellent\Kyanda\Tests\Models;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Nabcellent\Kyanda\Library\Providers;
 use Nabcellent\Kyanda\Models\KyandaRequest;
 use Nabcellent\Kyanda\Models\KyandaTransaction;
 use Nabcellent\Kyanda\Tests\TestCase;
@@ -86,6 +87,7 @@ class KyandaTransactionTest extends TestCase
             'status_code' => '0000',
             'status' => 'Success',
             'merchant_reference' => 'KYAAPI677833',
+            'provider' => Providers::SAFARICOM,
             'message' => 'Your request has been posted successfully!'
         ]);
 

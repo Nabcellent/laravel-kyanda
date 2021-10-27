@@ -3,6 +3,7 @@
 namespace Nabcellent\Kyanda\Tests\Unit;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Nabcellent\Kyanda\Library\Providers;
 use Nabcellent\Kyanda\Models\KyandaRequest;
 use Nabcellent\Kyanda\Tests\MockServerTestCase;
 
@@ -55,6 +56,7 @@ class TransactionStatusCommandTest extends MockServerTestCase
             'status_code' => '0000',
             'status' => 'Success',
             'merchant_reference' => 'KYAAPI677834',
+            'provider' => Providers::SAFARICOM,
             'message' => 'Your request has been posted successfully!'
         ]);
 

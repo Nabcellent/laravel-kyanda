@@ -3,6 +3,7 @@
 namespace Nabcellent\Kyanda\Tests\Repositories;
 
 use GuzzleHttp\Psr7\Response;
+use Nabcellent\Kyanda\Library\Providers;
 use Nabcellent\Kyanda\Models\KyandaRequest;
 use Nabcellent\Kyanda\Models\KyandaTransaction;
 use Nabcellent\Kyanda\Repositories\Kyanda;
@@ -27,6 +28,7 @@ class KyandaTest extends MockServerTestCase
             'status_code' => '0000',
             'status' => 'Success',
             'merchant_reference' => 'KYAAPI677833',
+            'provider' => Providers::SAFARICOM,
             'message' => 'Your request has been posted successfully!'
         ]);
 
@@ -34,6 +36,7 @@ class KyandaTest extends MockServerTestCase
             'status_code' => '0000',
             'status' => 'Success',
             'merchant_reference' => 'KYAAPI677834',
+            'provider' => Providers::SAFARICOM,
             'message' => 'Your request has been posted successfully!'
         ]);
 
@@ -59,6 +62,7 @@ class KyandaTest extends MockServerTestCase
             'status_code' => '0000',
             'status' => 'Success',
             'merchant_reference' => 'KYAAPI677835',
+            'provider' => Providers::SAFARICOM,
             'message' => 'Your request has been posted successfully!'
         ]);
 
@@ -81,6 +85,7 @@ class KyandaTest extends MockServerTestCase
             'status_code' => '0000',
             'status' => 'Success',
             'merchant_reference' => 'KYAAPI677833',
+            'provider' => Providers::SAFARICOM,
             'message' => 'Your request has been posted successfully!'
         ]);
 
