@@ -77,7 +77,7 @@ class UtilityTest extends MockServerTestCase
             new Response(200, ['Content_type' => 'application/json'],
                 json_encode($this->mockResponses['request_success'])));
 
-        $res = (new Utility($this->_client))->billPayment(765432100, 10, Providers::DSTV, 765432100, null, false);
+        $res = (new Utility($this->_client))->billPayment(765432100, 100, Providers::DSTV, 765432100, null, false);
 
         $this->assertIsArray($res);
         $this->assertEquals('0000', $res['status_code']);
@@ -101,5 +101,13 @@ class UtilityTest extends MockServerTestCase
         $this->expectException(KyandaException::class);
 
         (new Utility($this->_client))->billPayment(765432100, 10, Providers::SAFARICOM, 765432100);
+    }
+
+    /** @test */
+    function bill_payment_fails_on_invalid_amount()
+    {
+        $this->expectException(KyandaException::class);
+
+        (new Utility($this->_client))->billPayment(765432100, 10, Providers::KPLC_POSTPAID, 765432100, null, false);
     }
 }
