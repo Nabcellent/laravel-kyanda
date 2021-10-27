@@ -142,9 +142,13 @@ class Controller extends BaseController
         ];
 
         try {
-            KyandaTransaction::updateOrCreate([
+            $transaction = KyandaTransaction::updateOrCreate([
                 'transaction_reference' => $data['transaction_reference']
             ], $data);
+
+            $transaction->request->update([
+                'status' => $transaction->status
+            ]);
         } catch (QueryException $e) {
             Log::info('Error updating instant payment notification. - ' . $e->getMessage());
         }
