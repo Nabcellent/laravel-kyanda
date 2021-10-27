@@ -45,7 +45,6 @@ class Kyanda
                     'transaction_reference' => $status['details']->transactionRef,
                     'category' => $status['details']->Category,
                     'source' => $status['details']->source,
-                    'destination' => $status['details']->destination,
                     'merchant_id' => $status['details']->MerchantID,
                     'details' => $status['details']->details,
                     'status' => $status['details']->Status,
