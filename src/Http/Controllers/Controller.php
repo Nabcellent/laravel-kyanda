@@ -2,6 +2,7 @@
 
 namespace Nabcellent\Kyanda\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -124,10 +125,29 @@ class Controller extends BaseController
 
     public function instantPaymentNotification(Request $request)
     {
+        $data = [
+            'transaction_reference' => $request->input('transactionRef'),
+            'category' => $request->input('category'),
+            'source' => $request->input('source'),
+            'merchant_id' => $request->input('MerchantID'),
+            'details' => $request->input('details'),
+            'status' => $request->input('status'),
+            'destination' => $request->input('destination'),
+            'message' => $request->input('message'),
+            'status_code' => $request->input('status_code'),
+            'amount' => $request->input('amount'),
+            'transaction_date' => Carbon::createFromFormat(
+                'd-m-Y g:i a',
+                $request->input('transactionDate')
+            ),
+        ];
+
         try {
-            KyandaTransaction::updateOrCreate($request->only('transactionRef'), $request->all());
+            KyandaTransaction::updateOrCreate([
+                'transaction_reference' => $data['transaction_reference']
+            ], $data);
         } catch (QueryException $e) {
-            Log::info('Error updating instant payment notification.');
+            Log::info('Error updating instant payment notification. - ' . $e->getMessage());
         }
     }
 
