@@ -15,7 +15,6 @@ use Nabcellent\Kyanda\Exceptions\KyandaException;
 use Nabcellent\Kyanda\Facades\Account;
 use Nabcellent\Kyanda\Facades\Notification;
 use Nabcellent\Kyanda\Facades\Utility;
-use Nabcellent\Kyanda\Models\KyandaRequest;
 use Nabcellent\Kyanda\Models\KyandaTransaction;
 
 class Controller extends BaseController

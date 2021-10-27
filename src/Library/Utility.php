@@ -90,8 +90,8 @@ class Utility extends Core
 
 //        TODO: Confirm whether initiator phone is necessary
         $body = [
-            'amount'         => $amount,
-            'account'        => $accountNo,
+            'amount'         => (string)$amount,
+            'account'        => (string)$accountNo,
             'telco'          => $provider,
             'initiatorPhone' => $phone,
         ];
