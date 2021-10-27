@@ -47,6 +47,7 @@ class Kyanda
                     'source' => $status['details']->source,
                     'merchant_id' => $status['details']->MerchantID,
                     'details' => $status['details']->details,
+                    'destination' => $status['details']->Phone,
                     'status' => $status['details']->Status,
                     'message' => $status['details']->message,
                     'status_code' => $status['status'],
@@ -57,12 +58,16 @@ class Kyanda
                     ),
                 ];
 
-                $callback = KyandaTransaction::updateOrCreate(
+                $transaction = KyandaTransaction::updateOrCreate(
                     ['transaction_reference' => $status['details']->transactionRef],
                     $data
                 );
 
-                $this->fireKyandaEvent($callback);
+                $request->update([
+                    'status' => $transaction->status
+                ]);
+
+                $this->fireKyandaEvent($transaction);
             } catch (Exception | GuzzleException $e) {
                 $errors[$request->merchant_reference] = $e->getMessage();
             }

@@ -56,10 +56,27 @@ abstract class MockServerTestCase extends TestCase
                 'amount' => '1500'
             ]
         ],
+        'query_transaction_status' => [
+            'status' => '200',
+            'details' => [
+                'Category' => 'BankPayout',
+                'source' => 'PaymentWallet',
+                'Phone' => '2042581154',
+                'MerchantID' => 'kyanda',
+                'details' => [],
+                'Status' => 'Success',
+                'status_code' => 'Success',
+                'message' => 'Your request has been processed.',
+                'Posted_Time' => '23-05-2021 10:29 pm',
+                'transactionFee' => '50',
+                'transactionRef' => 'KYAAPI677833',
+                'Amount' => '1500'
+            ]
+        ],
         'request_success' => [
             "status" => "Success",
             "status_code" => "0000",
-            "transactionId" => "KYAAPI165394",
+            "merchant_reference" => "KYAAPI165394",
             "transactiontxt" => "Your request has been posted successfully!"
         ],
         'request_failed' => [

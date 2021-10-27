@@ -7,7 +7,6 @@ use Nabcellent\Kyanda\Models\KyandaRequest;
 use Nabcellent\Kyanda\Models\KyandaTransaction;
 use Nabcellent\Kyanda\Repositories\Kyanda;
 use Nabcellent\Kyanda\Tests\MockServerTestCase;
-use function PHPUnit\Framework\assertEquals;
 
 class KyandaTest extends MockServerTestCase
 {
@@ -40,7 +39,7 @@ class KyandaTest extends MockServerTestCase
     {
         $this->mock->append(
             new Response(200, ['Content_type' => 'application/json'],
-                json_encode($this->mockResponses['transaction_status'])));
+                json_encode($this->mockResponses['query_transaction_status'])));
         $this->mock->append(
             new Response(200, ['Content_type' => 'application/json'],
                 json_encode($this->mockResponses['transaction_status_failed'])));
