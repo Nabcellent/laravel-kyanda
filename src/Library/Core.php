@@ -73,18 +73,9 @@ class Core
     {
         $endpoint = Endpoints::build($endpoint);
 
-        //        TODO: Refactor try catch; throwing on successful response but even 201?? how?
-//                        why only client exception being caught?
-
         try {
             $response = $this->sendRequest($endpoint, $body);
             $_body = json_decode($response->getBody());
-
-//        TODO: What about 201? Is this necessary?
-            if ($response->getStatusCode() !== 200) {
-                $message = $_body->status_code . ' - ' . $_body->transactiontxt;
-                throw new KyandaException($message);
-            }
 
             return (array)$_body;
         } catch (ClientException | ServerException $exception) {
