@@ -79,19 +79,18 @@ class CoreTest extends MockServerTestCase
 
 
     /** @test */
-    function successful_request_throws_error_when_server_is_not_200()
+    function request_sets_merchant_reference_on_client_error()
     {
-        //    TODO: Confirm what this test below does...!
-
         $this->mock->append(
             new Response(301, ['Content_type' => 'application/json'],
                 json_encode($this->mockResponses['request_failed'])));
 
         Config::set('kyanda.urls.base', 'http://localhost');
 
-        $this->expectException(KyandaException::class);
+        $res = (new \Nabcellent\Kyanda\Library\Core($this->_client))->request('test', []);
 
-        (new \Nabcellent\Kyanda\Library\Core($this->_client))->request('test', []);
+        $this->assertArrayHasKey('merchant_reference', $res);
+
     }
 
     /** @test */

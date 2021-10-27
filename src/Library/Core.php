@@ -77,7 +77,11 @@ class Core
             $response = $this->sendRequest($endpoint, $body);
             $_body = json_decode($response->getBody());
 
-            return (array)$_body;
+            if ($response->getStatusCode() !== 200) {
+                $_body->merchant_reference = $_body->transactionId;
+            }
+
+            return (array) $_body;
         } catch (ClientException | ServerException $exception) {
             throw new KyandaException($exception->getResponse()->getBody());
         }
