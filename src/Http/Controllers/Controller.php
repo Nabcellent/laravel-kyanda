@@ -15,6 +15,7 @@ use Nabcellent\Kyanda\Exceptions\KyandaException;
 use Nabcellent\Kyanda\Facades\Account;
 use Nabcellent\Kyanda\Facades\Notification;
 use Nabcellent\Kyanda\Facades\Utility;
+use Nabcellent\Kyanda\Models\KyandaRequest;
 use Nabcellent\Kyanda\Models\KyandaTransaction;
 
 class Controller extends BaseController
@@ -58,13 +59,12 @@ class Controller extends BaseController
     {
         $this->validateRequest([
             'phone' => 'required|integer|digits_between:9,12',
-            'amount' => 'required|integer|min:10'
+            'amount' => ['required|integer']
         ], $request, [
             'phone.required' => 'Phone number is required.',
             'phone.integer' => 'Invalid phone number. Must not start with zero.',
             'phone.digits_between' => 'The phone number must be between 9 and 12 digits long.',
             'amount.integer' => 'Invalid amount. Must not start with zero.',
-            'amount.min' => 'Minimum allowed amount is KSH.10/=',
         ]);
 
         return Utility::airtimePurchase($request->input('phone'), $request->input('amount'));
@@ -96,6 +96,7 @@ class Controller extends BaseController
             $request->input('phone'),
         );
     }
+
 
 
     /**
