@@ -115,7 +115,7 @@ class Utility extends Core
             $request = KyandaRequest::create([
                 'status_code'        => $response['status_code'],
                 'status'             => $response['status'],
-                'merchant_reference' => $response['transactionId'],
+                'merchant_reference' => $response['merchant_reference'],
                 'message'            => $response['transactiontxt'],
                 'relation_id'        => $relationId
             ]);

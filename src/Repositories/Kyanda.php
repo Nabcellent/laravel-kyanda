@@ -43,17 +43,18 @@ class Kyanda
 
                 $data = [
                     'transaction_reference' => $status['details']->transactionRef,
-                    'category' => $status['details']->category,
+                    'category' => $status['details']->Category,
                     'source' => $status['details']->source,
                     'destination' => $status['details']->destination,
                     'merchant_id' => $status['details']->MerchantID,
                     'details' => $status['details']->details,
-                    'status' => $status['details']->status,
+                    'status' => $status['details']->Status,
+                    'message' => $status['details']->message,
                     'status_code' => $status['status'],
-                    'amount' => $status['details']->amount,
+                    'amount' => $status['details']->Amount,
                     'transaction_date' => Carbon::createFromFormat(
                         'd-m-Y g:i a',
-                        $status['details']->transactionDate
+                        $status['details']->Posted_Time
                     ),
                 ];
 
