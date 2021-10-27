@@ -14,7 +14,9 @@ use Nabcellent\Kyanda\Models\KyandaRequest;
  */
 class Utility extends Core
 {
-//    TODO: airtime purchase
+
+    private string $provider;
+
 //    Add airtime purchase function/process here
     /**
      * @param int $phone
@@ -29,7 +31,7 @@ class Utility extends Core
     {
         $this->validate("AIRTIME", $amount);
 
-        $telco = $this->getTelcoFromPhone($phone);
+        $this->provider = $this->getTelcoFromPhone($phone);
         $phone = $this->formatPhoneNumber($phone);
 
 //        TODO: Amount Limits? Amount validation?
@@ -37,7 +39,7 @@ class Utility extends Core
         $body = [
             'amount'         => $amount,
             'phone'          => $phone,
-            'telco'          => $telco,
+            'telco'          => $this->provider,
             'initiatorPhone' => $phone,
         ];
 
@@ -87,13 +89,15 @@ class Utility extends Core
             throw new KyandaException("Provider does not seem to be valid or supported");
         }
 
+        $this->provider = $provider;
+
         $phone = $this->formatPhoneNumber($phone);
 
 //        TODO: Confirm whether initiator phone is necessary
         $body = [
             'amount'         => (string)$amount,
             'account'        => (string)$accountNo,
-            'telco'          => $provider,
+            'telco'          => $this->provider,
             'initiatorPhone' => $phone,
         ];
 
@@ -118,6 +122,7 @@ class Utility extends Core
                 'status'             => $response['status'],
                 'merchant_reference' => $response['merchant_reference'],
                 'message'            => $response['transactiontxt'],
+                'provider'           => $this->provider,
                 'relation_id'        => $relationId
             ]);
 

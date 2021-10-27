@@ -22,6 +22,7 @@ class CreateKyandaRequestsTable extends Migration
                 $table->integer('status_code');
                 $table->string('merchant_reference')->unique();
                 $table->string('message');
+                $table->string('provider');
 
                 $table->unsignedBigInteger('relation_id')->nullable();
                 $table->index('relation_id');
