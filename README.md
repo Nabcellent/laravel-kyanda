@@ -23,9 +23,9 @@ composer require nabcellent/laravel-kyanda
 
 The package will automatically register itself.
 
-You can publish the config file with:
+You can publish the config file with the following command:
 ```bash
-php artisan vendor:publish --provider="Nabcellent\Kyanda\KyandaServiceProvider" --tag="kyanda-config"
+php artisan kyanda:install
 ```
 
 ### Getting Started
