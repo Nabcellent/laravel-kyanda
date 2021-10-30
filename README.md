@@ -25,7 +25,7 @@ The package will automatically register itself.
 
 You can publish the config file with the following command:
 ```bash
-php artisan kyanda:install"
+php artisan kyanda:install
 ```
 
 ### Getting Started
