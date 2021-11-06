@@ -18,6 +18,7 @@ class Utility extends Core
     private string $provider;
 
 //    Add airtime purchase function/process here
+
     /**
      * @param int $phone
      * @param int $amount
@@ -37,16 +38,16 @@ class Utility extends Core
 //        TODO: Amount Limits? Amount validation?
 //        TODO: Should we allow initiator phone as fn parameter?
         $body = [
-            'amount'         => $amount,
-            'phone'          => $phone,
-            'telco'          => $this->provider,
+            'amount' => $amount,
+            'phone' => $phone,
+            'telco' => $this->provider,
             'initiatorPhone' => $phone,
         ];
 
         $response = $this->request('airtime', $body);
 
         if ($save) {
-            return (array) $this->saveRequest($response, $relationId);
+            return (array)$this->saveRequest($response, $relationId);
         }
 
         return $response;
@@ -66,13 +67,14 @@ class Utility extends Core
      * @throws KyandaException
      */
     public function billPayment(
-        int $accountNo,
-        int $amount,
+        int    $accountNo,
+        int    $amount,
         string $provider,
-        int $phone,
-        int $relationId = null,
-        bool $save = true
-    ): array {
+        int    $phone,
+        int    $relationId = null,
+        bool   $save = true
+    ): array
+    {
         $allowedProviders = [
             Providers::KPLC_PREPAID,
             Providers::KPLC_POSTPAID,
@@ -95,16 +97,16 @@ class Utility extends Core
 
 //        TODO: Confirm whether initiator phone is necessary
         $body = [
-            'amount'         => (string)$amount,
-            'account'        => (string)$accountNo,
-            'telco'          => $this->provider,
+            'amount' => (string)$amount,
+            'account' => (string)$accountNo,
+            'telco' => $this->provider,
             'initiatorPhone' => $phone,
         ];
 
         $response = $this->request('bill', $body);
 
         if ($save) {
-            return (array) $this->saveRequest($response, $relationId);
+            return (array)$this->saveRequest($response, $relationId);
         }
 
         return $response;
@@ -116,24 +118,26 @@ class Utility extends Core
      */
     private function saveRequest(array $response, int $relationId = null): KyandaRequest
     {
-        if (in_array($response['status_code'], [0000, 1100])) {
+        try {
             $request = KyandaRequest::create([
-                'status_code'        => $response['status_code'],
-                'status'             => $response['status'],
+                'status_code' => $response['status_code'],
+                'status' => $response['status'],
                 'merchant_reference' => $response['merchant_reference'],
-                'message'            => $response['transactiontxt'],
-                'provider'           => $this->provider,
-                'relation_id'        => $relationId
+                'message' => $response['transactiontxt'],
+                'provider' => $this->provider,
+                'relation_id' => $relationId
             ]);
 
-//            TODO: Should we make multiple event types? i.e. KyandaAirtimeRequestEvent, KyandaBillRequestEvent ...
-            /** @var KyandaRequest $request */
+//            /** @var KyandaRequest $request */
             event(new KyandaRequestEvent($request));
             return $request;
-        }
+
+        } catch (\Exception $e) {
 
 //        TODO: We should throw relevant exceptions based on api response
-        throw new KyandaException($response['transactiontxt']);
+            throw new KyandaException($e->getMessage());
+        }
+
     }
 
 

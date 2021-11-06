@@ -27,17 +27,12 @@ class Kyanda
     public function queryTransactionStatus(): array
     {
         /** @var KyandaRequest[] $kyandaRequests */
-        $kyandaRequests = KyandaRequest::whereDoesntHave('transaction')->get();
+        $kyandaRequests = KyandaRequest::where('status', '<>', 'Failed')->whereDoesntHave('transaction')->get();
         $success = $errors = [];
 
         foreach ($kyandaRequests as $request) {
             try {
                 $status = $this->account->transactionStatus($request->merchant_reference);
-
-//                if (isset($status->message)) {
-//                    $errors[$request->merchant_reference] = $status->message;
-//                    continue;
-//                }
 
                 $success[$request->merchant_reference] = $status['details']->Status;
 

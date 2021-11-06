@@ -83,7 +83,8 @@ abstract class MockServerTestCase extends TestCase
         'request_failed' => [
             "status" => "Failed",
             "status_code" => "5000",
-            "transactiontxt" => "Unexpected error has occurred."
+            'transactionId' => "KYAAPI677834",
+            "transactiontxt" => "Unexpected erro;r has occurred."
         ],
         'query_transaction_status_failed' => [
             'status' => '1102',
