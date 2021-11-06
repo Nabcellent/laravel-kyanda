@@ -62,7 +62,7 @@ class Kyanda
                     'status' => $transaction->status
                 ]);
 
-                $this->fireKyandaEvent($transaction);
+                self::fireKyandaEvent($transaction);
             } catch (Exception | GuzzleException $e) {
                 $errors[$request->merchant_reference] = $e->getMessage();
             }
@@ -74,7 +74,7 @@ class Kyanda
      * @param KyandaTransaction $kyandaCallback
      * @return void
      */
-    private function fireKyandaEvent(KyandaTransaction $kyandaCallback): void
+    public static function fireKyandaEvent(KyandaTransaction $kyandaCallback): void
     {
 //        TODO: Check on proper status codes
         if (in_array($kyandaCallback['status_code'], [0000])) {
