@@ -17,6 +17,7 @@ use Nabcellent\Kyanda\Facades\Notification;
 use Nabcellent\Kyanda\Facades\Utility;
 use Nabcellent\Kyanda\Models\KyandaRequest;
 use Nabcellent\Kyanda\Models\KyandaTransaction;
+use Nabcellent\Kyanda\Repositories\Kyanda;
 
 class Controller extends BaseController
 {
@@ -150,6 +151,8 @@ class Controller extends BaseController
             $transaction->request->update([
                 'status' => $transaction->status
             ]);
+
+            Kyanda::fireKyandaEvent($transaction);
         } catch (QueryException $e) {
             Log::info('Error updating instant payment notification. - ' . $e->getMessage());
         }
