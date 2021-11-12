@@ -42,5 +42,4 @@ class KyandaTransaction extends Model
     {
         return $this->hasOne(KyandaRequest::class, 'merchant_reference', 'transaction_reference');
     }
-
 }

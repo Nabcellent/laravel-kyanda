@@ -67,14 +67,13 @@ class Utility extends Core
      * @throws KyandaException
      */
     public function billPayment(
-        int    $accountNo,
-        int    $amount,
+        int $accountNo,
+        int $amount,
         string $provider,
-        int    $phone,
-        int    $relationId = null,
-        bool   $save = true
-    ): array
-    {
+        int $phone,
+        int $relationId = null,
+        bool $save = true
+    ): array {
         $allowedProviders = [
             Providers::KPLC_PREPAID,
             Providers::KPLC_POSTPAID,
@@ -131,13 +130,10 @@ class Utility extends Core
 //            /** @var KyandaRequest $request */
             event(new KyandaRequestEvent($request));
             return $request;
-
         } catch (\Exception $e) {
-
 //        TODO: We should throw relevant exceptions based on api response
             throw new KyandaException($e->getMessage());
         }
-
     }
 
 
@@ -171,6 +167,5 @@ class Utility extends Core
         }
 
         return true;
-
     }
 }

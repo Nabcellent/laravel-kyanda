@@ -109,7 +109,7 @@ class Controller extends BaseController
     {
         $url = config('kyanda.urls.callback');
 
-        if(!$url) {
+        if (!$url) {
             $this->validateRequest([
                 'callback_url' => 'required|url',
             ], $request, [
