@@ -15,7 +15,6 @@ use Nabcellent\Kyanda\Exceptions\KyandaException;
 use Nabcellent\Kyanda\Facades\Account;
 use Nabcellent\Kyanda\Facades\Notification;
 use Nabcellent\Kyanda\Facades\Utility;
-use Nabcellent\Kyanda\Models\KyandaRequest;
 use Nabcellent\Kyanda\Models\KyandaTransaction;
 use Nabcellent\Kyanda\Repositories\Kyanda;
 
@@ -60,7 +59,7 @@ class Controller extends BaseController
     {
         $this->validateRequest([
             'phone' => 'required|integer|digits_between:9,12',
-            'amount' => ['required|integer']
+            'amount' => 'required|integer'
         ], $request, [
             'phone.required' => 'Phone number is required.',
             'phone.integer' => 'Invalid phone number. Must not start with zero.',
