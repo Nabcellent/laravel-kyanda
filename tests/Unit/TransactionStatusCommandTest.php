@@ -55,7 +55,7 @@ class TransactionStatusCommandTest extends MockServerTestCase
         KyandaRequest::create([
             'status_code' => '0000',
             'status' => 'Success',
-            'merchant_reference' => 'KYAAPI677834',
+            'reference' => 'KYAAPI677834',
             'provider' => Providers::SAFARICOM,
             'message' => 'Your request has been posted successfully!'
         ]);

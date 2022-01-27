@@ -126,7 +126,7 @@ class Controller extends BaseController
     public function instantPaymentNotification(Request $request)
     {
         $data = [
-            'transaction_reference' => $request->input('transactionRef'),
+            'reference' => $request->input('transactionRef'),
             'category' => $request->input('category'),
             'source' => $request->input('source'),
             'merchant_id' => $request->input('MerchantID'),
@@ -144,7 +144,7 @@ class Controller extends BaseController
 
         try {
             $transaction = KyandaTransaction::updateOrCreate([
-                'transaction_reference' => $data['transaction_reference']
+                'reference' => $data['reference']
             ], $data);
 
             $transaction->request->update([

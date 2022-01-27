@@ -121,7 +121,7 @@ class Utility extends Core
             $request = KyandaRequest::create([
                 'status_code' => $response['status_code'],
                 'status' => $response['status'],
-                'merchant_reference' => $response['merchant_reference'],
+                'reference' => $response['merchant_reference'],
                 'message' => $response['transactiontxt'],
                 'provider' => $this->provider,
                 'relation_id' => $relationId
@@ -142,9 +142,6 @@ class Utility extends Core
      */
     private function validate(string $validationType, int $amount)
     {
-        $min = 0;
-        $max = 0;
-
         switch ($validationType) {
             case "AIRTIME":
                 $min = config('kyanda.limits.AIRTIME.min', 10);

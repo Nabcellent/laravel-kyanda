@@ -18,7 +18,7 @@ class CreateKyandaTransactionsTable extends Migration
             function (Blueprint $table) {
                 $table->bigIncrements('id');
 
-                $table->string('transaction_reference')->unique();
+                $table->string('reference')->unique();
 
                 $table->string('category');
                 $table->string('source');
