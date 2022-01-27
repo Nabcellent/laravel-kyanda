@@ -20,7 +20,7 @@ class CreateKyandaRequestsTable extends Migration
 
                 $table->string('status');
                 $table->integer('status_code');
-                $table->string('merchant_reference')->unique();
+                $table->string('reference')->unique();
                 $table->string('message');
                 $table->string('provider');
 

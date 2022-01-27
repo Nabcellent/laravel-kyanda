@@ -20,14 +20,14 @@ class KyandaRequestTest extends TestCase
         $request = KyandaRequest::create([
             'status_code' => '0000',
             'status' => 'Success',
-            'merchant_reference' => 'KYAAPI677833',
+            'reference' => 'KYAAPI677833',
             'provider' => Providers::SAFARICOM,
             'message' => 'Your request has been posted successfully!'
         ]);
 
         $this->assertEquals(0000, $request->status_code);
         $this->assertEquals('Success', $request->status);
-        $this->assertEquals('KYAAPI677833', $request->merchant_reference);
+        $this->assertEquals('KYAAPI677833', $request->reference);
         $this->assertEquals('Your request has been posted successfully!', $request->message);
     }
 
@@ -37,7 +37,7 @@ class KyandaRequestTest extends TestCase
         KyandaRequest::create([
             'status_code' => '0000',
             'status' => 'Success',
-            'merchant_reference' => 'KYAAPI677833',
+            'reference' => 'KYAAPI677833',
             'provider' => Providers::SAFARICOM,
             'message' => 'Your request has been posted successfully!'
         ]);
@@ -46,7 +46,7 @@ class KyandaRequestTest extends TestCase
             KyandaRequest::create([
                 'status_code' => '0000',
                 'status' => 'Success',
-                'merchant_reference' => 'KYAAPI677833',
+                'reference' => 'KYAAPI677833',
                 'provider' => Providers::SAFARICOM,
                 'message' => 'Your request has been posted successfully!'
             ]);
@@ -61,13 +61,13 @@ class KyandaRequestTest extends TestCase
         $request = KyandaRequest::create([
             'status_code' => '0000',
             'status' => 'Success',
-            'merchant_reference' => 'KYAAPI677833',
+            'reference' => 'KYAAPI677833',
             'provider' => Providers::SAFARICOM,
             'message' => 'Your request has been posted successfully!'
         ]);
 
         $transaction = KyandaTransaction::create([
-            'transaction_reference' => 'KYAAPI677833',
+            'reference' => 'KYAAPI677833',
             'category' => 'UtilityPayment',
             'source' => 'PaymentWallet',
             'destination' => '0715330000',
@@ -84,7 +84,7 @@ class KyandaRequestTest extends TestCase
 
         $this->assertEquals($requestTransaction->status_code, (int)$transaction->status_code);
         $this->assertEquals($requestTransaction->status, $transaction->status);
-        $this->assertEquals($requestTransaction->transaction_reference, $request->merchant_reference);
+        $this->assertEquals($requestTransaction->reference, $request->reference);
         $this->assertEquals($requestTransaction->amount, $transaction->amount);
     }
 }

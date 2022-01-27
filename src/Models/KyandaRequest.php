@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int $id
  * @property string $status
  * @property int $status_code
- * @property string $merchant_reference
+ * @property string $reference
  * @property string $description
  * @property string $message
  * @property Carbon|null $created_at
@@ -27,6 +27,6 @@ class KyandaRequest extends Model
 
     public function transaction(): HasOne
     {
-        return $this->hasOne(KyandaTransaction::class, 'transaction_reference', 'merchant_reference');
+        return $this->hasOne(KyandaTransaction::class, 'reference', 'reference');
     }
 }
