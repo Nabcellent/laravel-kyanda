@@ -67,14 +67,13 @@ class Utility extends Core
      * @throws KyandaException
      */
     public function billPayment(
-        int    $accountNo,
-        int    $amount,
+        int $accountNo,
+        int $amount,
         string $provider,
-        int    $phone,
-        int    $relationId = null,
-        bool   $save = true
-    ): array
-    {
+        int $phone,
+        int $relationId = null,
+        bool $save = true
+    ): array {
         $allowedProviders = [
             Providers::KPLC_PREPAID,
             Providers::KPLC_POSTPAID,
@@ -122,7 +121,7 @@ class Utility extends Core
             $request = KyandaRequest::create([
                 'status_code' => $response['status_code'],
                 'status' => $response['status'],
-                'merchant_reference' => $response['merchant_reference'],
+                'reference' => $response['merchant_reference'],
                 'message' => $response['transactiontxt'],
                 'provider' => $this->provider,
                 'relation_id' => $relationId
@@ -131,13 +130,10 @@ class Utility extends Core
 //            /** @var KyandaRequest $request */
             event(new KyandaRequestEvent($request));
             return $request;
-
         } catch (\Exception $e) {
-
 //        TODO: We should throw relevant exceptions based on api response
             throw new KyandaException($e->getMessage());
         }
-
     }
 
 
@@ -146,9 +142,6 @@ class Utility extends Core
      */
     private function validate(string $validationType, int $amount)
     {
-        $min = 0;
-        $max = 0;
-
         switch ($validationType) {
             case "AIRTIME":
                 $min = config('kyanda.limits.AIRTIME.min', 10);

@@ -10,10 +10,6 @@ Route::prefix('/kyanda')->namespace(Controller::class)->name('kyanda.')->group(f
 
         Route::post('airtime/create', [Controller::class, 'airtimePurchase'])->name('airtime.purchase');
         Route::post('bill/create', [Controller::class, 'billPayment'])->name('bill.payment');
-
-//    Route::any('mobile-payout/create', '$routes');
-//    Route::any('bank-payout/create', '$routes');
-//    Route::any('checkout/create', '$routes');
     });
 
     Route::prefix('/callbacks')->name('callback.')->group(function () {

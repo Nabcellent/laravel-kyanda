@@ -40,6 +40,6 @@ class KyandaTransaction extends Model
 
     public function request(): HasOne
     {
-        return $this->hasOne(KyandaRequest::class, 'merchant_reference', 'transaction_reference');
+        return $this->hasOne(KyandaRequest::class, 'reference', 'reference');
     }
 }

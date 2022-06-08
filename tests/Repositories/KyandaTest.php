@@ -27,7 +27,7 @@ class KyandaTest extends MockServerTestCase
         KyandaRequest::create([
             'status_code' => '0000',
             'status' => 'Success',
-            'merchant_reference' => 'KYAAPI677833',
+            'reference' => 'KYAAPI677833',
             'provider' => Providers::SAFARICOM,
             'message' => 'Your request has been posted successfully!'
         ]);
@@ -35,7 +35,7 @@ class KyandaTest extends MockServerTestCase
         KyandaRequest::create([
             'status_code' => '0000',
             'status' => 'Success',
-            'merchant_reference' => 'KYAAPI677834',
+            'reference' => 'KYAAPI677834',
             'provider' => Providers::SAFARICOM,
             'message' => 'Your request has been posted successfully!'
         ]);
@@ -49,7 +49,7 @@ class KyandaTest extends MockServerTestCase
 
         $res = $this->repository->queryTransactionStatus();
 
-        $transaction = KyandaTransaction::whereTransactionReference("KYAAPI677833")->first();
+        $transaction = KyandaTransaction::whereReference("KYAAPI677833")->first();
 
         $this->assertEquals($res['successful']['KYAAPI677833'], $transaction->status);
     }
@@ -61,7 +61,7 @@ class KyandaTest extends MockServerTestCase
         KyandaRequest::create([
             'status_code' => '0000',
             'status' => 'Success',
-            'merchant_reference' => 'KYAAPI677835',
+            'reference' => 'KYAAPI677835',
             'provider' => Providers::SAFARICOM,
             'message' => 'Your request has been posted successfully!'
         ]);
@@ -72,7 +72,7 @@ class KyandaTest extends MockServerTestCase
 
         $res = $this->repository->queryTransactionStatus();
 
-        $transaction = KyandaTransaction::whereTransactionReference("KYAAPI677835")->first();
+        $transaction = KyandaTransaction::whereReference("KYAAPI677835")->first();
 
         $this->assertEquals($res['successful']['KYAAPI677835'], $transaction->status);
     }
@@ -84,7 +84,7 @@ class KyandaTest extends MockServerTestCase
         KyandaRequest::create([
             'status_code' => '0000',
             'status' => 'Success',
-            'merchant_reference' => 'KYAAPI677833',
+            'reference' => 'KYAAPI677833',
             'provider' => Providers::SAFARICOM,
             'message' => 'Your request has been posted successfully!'
         ]);

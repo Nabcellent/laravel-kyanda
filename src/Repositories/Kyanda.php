@@ -32,12 +32,12 @@ class Kyanda
 
         foreach ($kyandaRequests as $request) {
             try {
-                $status = $this->account->transactionStatus($request->merchant_reference);
+                $status = $this->account->transactionStatus($request->reference);
 
-                $success[$request->merchant_reference] = $status['details']->Status;
+                $success[$request->reference] = $status['details']->Status;
 
                 $data = [
-                    'transaction_reference' => $status['details']->transactionRef,
+                    'reference' => $status['details']->transactionRef,
                     'category' => $status['details']->Category,
                     'source' => $status['details']->source,
                     'merchant_id' => $status['details']->MerchantID,
@@ -54,7 +54,7 @@ class Kyanda
                 ];
 
                 $transaction = KyandaTransaction::updateOrCreate(
-                    ['transaction_reference' => $status['details']->transactionRef],
+                    ['reference' => $status['details']->transactionRef],
                     $data
                 );
 
@@ -64,7 +64,7 @@ class Kyanda
 
                 self::fireKyandaEvent($transaction);
             } catch (Exception | GuzzleException $e) {
-                $errors[$request->merchant_reference] = $e->getMessage();
+                $errors[$request->reference] = $e->getMessage();
             }
         }
         return ['successful' => $success, 'errors' => $errors];
