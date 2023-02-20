@@ -7,9 +7,6 @@ on:
       - master
       - dev-dr
       - red.dev
-#   pull_request:
-#     branches:
-#       - master
   workflow_dispatch:
 
 jobs:
@@ -18,53 +15,44 @@ jobs:
 
     strategy:
       matrix:
-        operating-system: [ubuntu-latest]
-        php-versions: [ '8.0', 8.1, 8.2 ]
+        operating-system: [ ubuntu-latest ]
+        php: [ 8.0, 8.1, 8.2 ]
         laravel: [ '6', '7', '8', 10 ]
-#         dependency-stability: [ 'prefer-none' ]
+        stability: [ 'prefer-stable' ]
 
-    name: P${{ matrix.php-versions }} - L${{ matrix.laravel }} - ${{ matrix.dependency-stability }} - ${{ matrix.operating-system}}
+    name: P${{ matrix.php }} - Laravel${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.operating-system}}
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Install PHP versions
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php-versions }}
-    - name: Get Composer Cache Directory 2
-      id: composer-cache
-      run: |
-        echo "::set-output name=dir::$(composer config cache-files-dir)"
-    - uses: actions/cache@v2
-      id: actions-cache
-      with:
-        path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-${{ matrix.laravel }}-composer-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-${{ matrix.laravel }}-composer-
-    - name: Cache PHP dependencies
-      uses: actions/cache@v2
-      id: vendor-cache
-      with:
-        path: vendor
-        key: ${{ runner.OS }}-${{ matrix.laravel }}-build-${{ hashFiles('**/composer.lock') }}
-    - name: Install Dependencies
-      if: steps.vendor-cache.outputs.cache-hit != 'true'
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - uses: actions/checkout@v3
+      - name: Install PHP versions
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+      - name: Get Composer Cache Directory 2
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - uses: actions/cache@v2
+        id: actions-cache
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-${{ matrix.laravel }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.laravel }}-composer-
+      - name: Cache PHP dependencies
+        uses: actions/cache@v2
+        id: vendor-cache
+        with:
+          path: vendor
+          key: ${{ runner.OS }}-${{ matrix.laravel }}-build-${{ hashFiles('**/composer.lock') }}
 
-    - name: Update Dependencies with latest stable
-      if: matrix.dependency-stability == 'prefer-stable'
-      run: composer update --prefer-stable
-    - name: Update Dependencies with lowest stable
-      if: matrix.dependency-stability == 'prefer-lowest'
-      run: composer update --prefer-stable --prefer-lowest
+      - name: Install Dependencies
+        if: steps.vendor-cache.outputs.cache-hit != 'true'
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
+      - name: Update Dependencies
+        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
 
-#     - name: Show dir
-#       run: pwd
-#     - name: PHP Version
-#       run: php --version
-
-# Code quality
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
-      run: vendor/bin/phpunit --testdox
+      # Code quality
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        run: vendor/bin/phpunit --testdox
