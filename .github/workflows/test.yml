@@ -20,7 +20,7 @@ jobs:
       matrix:
         operating-system: [ubuntu-latest]
         php-versions: [ '8.0' ]
-        laravel: [ '6', '7', '8' ]
+        laravel: [ '6', '7', '8', 10 ]
 #         dependency-stability: [ 'prefer-none' ]
 
     name: P${{ matrix.php-versions }} - L${{ matrix.laravel }} - ${{ matrix.dependency-stability }} - ${{ matrix.operating-system}}
