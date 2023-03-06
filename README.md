@@ -6,7 +6,7 @@
 [![Total Downloads](https://poser.pugx.org/nabcellent/laravel-kyanda/downloads)](https://packagist.org/packages/nabcellent/laravel-kyanda)
 [![License](https://poser.pugx.org/nabcellent/laravel-kyanda/license)](https://github.com/Nabcellent/laravel-kyanda/blob/master/LICENSE.md)
 
-This is a <i>Laravel 8</i> package that interfaces with [Kyanda](https://kyanda.co.ke/) Payments Api.
+This is a <i>Laravel</i> package that interfaces with [Kyanda](https://kyanda.co.ke/) Payments Api.
 The API enables you to initiate mobile payments, disburse payments to mobile and bank, purchase airtime & bundles* and to pay for utility bills.
 
 Check out their [api documentation](https://kyanda.co.ke/developer/index.html).
