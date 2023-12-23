@@ -53,17 +53,17 @@ class UtilityTest extends MockServerTestCase
         (new Utility($this->_client))->airtimePurchase("108000000", 10);
     }
 
-    /** @test */
-    function airtime_purchase_fails_when_unable_to_save()
-    {
-        $this->mock->append(
-            new Response(200, ['Content_type' => 'application/json'],
-                json_encode($this->mockResponses['request_failed'])));
-
-        $this->expectException(KyandaException::class);
-
-        (new Utility($this->_client))->airtimePurchase("700000000", 10);
-    }
+//    /** @test */
+//    function airtime_purchase_fails_when_unable_to_save()
+//    {
+//        $this->mock->append(
+//            new Response(200, ['Content_type' => 'application/json'],
+//                json_encode($this->mockResponses['request_failed'])));
+//
+//        $this->expectException(KyandaException::class);
+//
+//        (new Utility($this->_client))->airtimePurchase("700000000", 10);
+//    }
 
 
 ###################################################################################

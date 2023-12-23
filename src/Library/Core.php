@@ -77,7 +77,13 @@ class Core
             $response = $this->sendRequest($endpoint, $body);
             $_body = json_decode($response->getBody());
 
-            if ($response->getStatusCode() !== 200) {
+//            TODO: The below was failing on Notification Register because there is no transactionId in the response.
+//                  Firstly why do we have !== shouldn't it be === ??? and why only assign when not successful???
+//                  This Kyanda Api is confused
+//            Just realized, this is code to handle failed transactions.
+//              It returns transactionId instead of the usual merchant_reference (Confirm)
+//              Added the Isset to handle reponses that don't contain transctionId such as notification register resp
+            if ($response->getStatusCode() !== 200 && isset($_body->transactionId)) {
                 $_body->merchant_reference = $_body->transactionId;
             }
 
